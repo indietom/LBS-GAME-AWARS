@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Content;
 
 namespace LbsGameAwards
 {
-    class GameObject
+    abstract class GameObject
     {
         public Vector2 Pos { get; set; }
 
@@ -39,6 +39,7 @@ namespace LbsGameAwards
 
         public float Rotation { get; set; }
         public float Scale = 1.0f;
+        public float Z { get; set; }
 
         public Color color { get; set; }
 
@@ -86,8 +87,8 @@ namespace LbsGameAwards
             Rectangle soruceRectangle = new Rectangle(SpriteCoords.X, SpriteCoords.Y, Size.X, Size.Y);
             Vector2 origin = Vector2.Zero;
             if (rotated) origin = new Vector2(Size.X / 2, Size.Y / 2);
-            if(!rotateOnRad) spriteBatch.Draw(spritesheet, Pos, soruceRectangle, color, Rotation, origin, Scale, SpriteEffects.None, 1.0f);
-            else spriteBatch.Draw(spritesheet, Pos, soruceRectangle, color, (Rotation * (float)Math.PI/180), origin, Scale, SpriteEffects.None, 1.0f);
+            if(!rotateOnRad) spriteBatch.Draw(spritesheet, Pos, soruceRectangle, color, Rotation, origin, Scale, SpriteEffects.None, Z);
+            else spriteBatch.Draw(spritesheet, Pos, soruceRectangle, color, (Rotation * (float)Math.PI/180), origin, Scale, SpriteEffects.None, Z);
         }
     }
 }

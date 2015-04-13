@@ -31,10 +31,12 @@ namespace LbsGameAwards
             base.Initialize();
         }
 
+        Texture2D spritesheet;
+
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
+            spritesheet = Content.Load<Texture2D>("spritesheet");
         }
 
         protected override void UnloadContent()
@@ -53,6 +55,10 @@ namespace LbsGameAwards
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
+
+            spriteBatch.Begin(SpriteSortMode.FrontToBack, null, null, null, null);
+
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }
