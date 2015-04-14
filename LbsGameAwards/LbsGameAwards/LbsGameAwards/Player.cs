@@ -18,6 +18,10 @@ namespace LbsGameAwards
         byte maxRespawnCount;
         byte direction;
         byte shootDirection;
+        byte gunType;
+
+        short fireRate;
+        short maxFireRate;
 
         Keys walkLeft = Keys.A;
         Keys walkRight = Keys.D;
@@ -37,7 +41,7 @@ namespace LbsGameAwards
             Pos = new Vector2(320, 240);
             SetSize(32);
             SpriteCoords = new Point(1, 1);
-            Z = 0;
+            Z = 0.1f;
             Speed = 0.5f;
             friction = 0.90f;
             inputActive = true;
@@ -113,6 +117,14 @@ namespace LbsGameAwards
                     if (keyboard.IsKeyDown(shootDown)) shootDirection = 6;
                     if (keyboard.IsKeyDown(shootUp)) shootDirection = 2;
                 }
+                if ((keyboard.IsKeyDown(shootDown) || keyboard.IsKeyDown(shootUp) || keyboard.IsKeyDown(shootRight) || keyboard.IsKeyDown(shootLeft)) && fireRate <= 0)
+                {
+                    if(gunType == 0)
+                    {
+                        Game1.projectiles.Add(new Projectile(GetCenter + new Vector2(-4, -8), shootDirection * -45, 7, 1, 0, 0));
+                        fireRate = 1;
+                    }
+                }
             }
         }
 
@@ -121,12 +133,25 @@ namespace LbsGameAwards
             
         }
 
+        public void AssignFireRates()
+        {
+            switch(gunType)
+            {
+                case 0:
+                    maxFireRate = 16;
+                    break;
+            }
+        }
+
         public void Update()
         {
+            AssignFireRates();
             Movment();
             Input();
             SpriteCoords = new Point(SpriteCoords.X, Frame(shootDirection));
-            Console.WriteLine(shootDirection);
+
+            fireRate = (fireRate >= 1) ? (short)(fireRate + 1) : fireRate;
+            fireRate = (fireRate >= maxFireRate) ? (short)0 : fireRate;
         }
     }
 }

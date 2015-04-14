@@ -42,6 +42,8 @@ namespace LbsGameAwards
         public float Z { get; set; }
 
         public short CurrentFrame { get; set; }
+        public short MinFrame { get; set; }
+        public short MaxFrame { get; set; }
         public short AnimationCount { get; set; }
         public short MaxAnimationCount { get; set; }
 
@@ -53,9 +55,27 @@ namespace LbsGameAwards
         public bool rotated;
         public bool destroy;
 
+        public void Animate()
+        {
+            if(AnimationCount >= MaxAnimationCount)
+            {
+                CurrentFrame += 1;
+                AnimationCount = 0;
+            }
+            if(CurrentFrame >= MaxFrame)
+            {
+                CurrentFrame = MinFrame;
+            }
+        }
+
         public int Frame(int cell)
         {
             return cell * 32 + 1 + cell;
+        }
+
+        public int Frame(int cell, int size)
+        {
+            return cell * size + 1 + cell;
         }
 
         public float Lerp(float s, float e, float t)
@@ -77,8 +97,8 @@ namespace LbsGameAwards
         {
             if (!rotateOnRad) Angle2 = (Angle * (float)Math.PI / 180);
             if (rotateOnRad) Angle2 = Angle;
-            VelX = ((float)Math.Cos(Angle) * Speed);
-            VelY = ((float)Math.Sin(Angle) * Speed);
+            VelX = ((float)Math.Cos(Angle2) * Speed);
+            VelY = ((float)Math.Sin(Angle2) * Speed);
         }
 
         public float AimAt(Vector2 target)

@@ -11,9 +11,6 @@ using Microsoft.Xna.Framework.Media;
 
 namespace LbsGameAwards
 {
-    /// <summary>
-    /// This is the main type for your game
-    /// </summary>
     public class Game1 : Microsoft.Xna.Framework.Game
     {
         GraphicsDeviceManager graphics;
@@ -27,6 +24,7 @@ namespace LbsGameAwards
         }
 
         static internal List<Player> players = new List<Player>();
+        static internal List<Projectile> projectiles = new List<Projectile>();
 
         protected override void Initialize()
         {
@@ -51,9 +49,17 @@ namespace LbsGameAwards
         {
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 this.Exit();
+            
             foreach (Player p in players)
                 p.Update();
 
+            foreach (Projectile p in projectiles)
+                p.Update();
+
+            if(Keyboard.GetState().IsKeyDown(Keys.F1))
+            {
+                
+            }
             base.Update(gameTime);
         }
 
@@ -63,6 +69,8 @@ namespace LbsGameAwards
 
             spriteBatch.Begin(SpriteSortMode.FrontToBack, null, null, null, null);
             foreach (Player p in players)
+                p.DrawSprite(spriteBatch, spritesheet);
+            foreach (Projectile p in projectiles)
                 p.DrawSprite(spriteBatch, spritesheet);
             spriteBatch.End();
 
