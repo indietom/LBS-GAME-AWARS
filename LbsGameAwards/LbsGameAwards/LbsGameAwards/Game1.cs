@@ -26,8 +26,11 @@ namespace LbsGameAwards
             Content.RootDirectory = "Content";
         }
 
+        static internal List<Player> players = new List<Player>();
+
         protected override void Initialize()
         {
+            players.Add(new Player());
             base.Initialize();
         }
 
@@ -48,6 +51,8 @@ namespace LbsGameAwards
         {
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 this.Exit();
+            foreach (Player p in players)
+                p.Update();
 
             base.Update(gameTime);
         }
@@ -57,7 +62,8 @@ namespace LbsGameAwards
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             spriteBatch.Begin(SpriteSortMode.FrontToBack, null, null, null, null);
-
+            foreach (Player p in players)
+                p.DrawSprite(spriteBatch, spritesheet);
             spriteBatch.End();
 
             base.Draw(gameTime);

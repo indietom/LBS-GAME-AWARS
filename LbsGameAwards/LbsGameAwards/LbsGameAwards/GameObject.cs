@@ -41,13 +41,22 @@ namespace LbsGameAwards
         public float Scale = 1.0f;
         public float Z { get; set; }
 
-        public Color color { get; set; }
+        public short CurrentFrame { get; set; }
+        public short AnimationCount { get; set; }
+        public short MaxAnimationCount { get; set; }
+
+        public Color color = Color.White;
 
         public Color OrginalColor { get; set; }
 
         public bool rotateOnRad;
         public bool rotated;
         public bool destroy;
+
+        public int Frame(int cell)
+        {
+            return cell * 32 + 1 + cell;
+        }
 
         public float Lerp(float s, float e, float t)
         {
@@ -82,7 +91,7 @@ namespace LbsGameAwards
             return (float)Math.Sqrt((Pos.X - target.X) * (Pos.X - target.X) + (Pos.Y - target.Y) * (Pos.Y - target.Y));
         }
 
-        public void Draw(SpriteBatch spriteBatch, Texture2D spritesheet)
+        public void DrawSprite(SpriteBatch spriteBatch, Texture2D spritesheet)
         {
             Rectangle soruceRectangle = new Rectangle(SpriteCoords.X, SpriteCoords.Y, Size.X, Size.Y);
             Vector2 origin = Vector2.Zero;
