@@ -56,8 +56,6 @@ namespace LbsGameAwards
             foreach (Projectile p in projectiles)
                 p.Update();
             
-            GraphicsDevice
-
             if(Keyboard.GetState().IsKeyDown(Keys.F1))
             {
                 
