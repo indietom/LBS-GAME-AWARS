@@ -10,6 +10,8 @@ namespace LbsGameAwards
     {
         sbyte hp;
 
+        float attackDistance;
+
         byte type;
         byte direction;
 
@@ -33,6 +35,18 @@ namespace LbsGameAwards
 
         public void Update()
         {
+            foreach(Projectile p in Game1.projectiles)
+            {
+               if(p.HitBox().Intersects(HitBox()))
+               {
+                   if(hurtCount <= 0)
+                   {
+                       hp -= (sbyte)p.Damege;
+                       hurtCount = 1;
+                   }
+                   p.destroy = true;
+               }
+            }
             HurtUpdate();
         }
 
@@ -40,6 +54,7 @@ namespace LbsGameAwards
         {
             if(hurtCount >= 1)
             {
+                hurtCount += 1;
                 color = Color.Red;
                 invisible = true;
             }
@@ -47,6 +62,7 @@ namespace LbsGameAwards
             {
                 color = OrginalColor;
                 invisible = false;
+                hurtCount = 0;
             }
         }
 
@@ -56,7 +72,7 @@ namespace LbsGameAwards
             {
                 case 0:
                     maxAttackCount = 16;
-                    hp = 1;
+                    hp = 2;
                     MaxAnimationCount = 4;
                     MaxFrame = 4;
                     SpriteCoords = new Point(1, 331);

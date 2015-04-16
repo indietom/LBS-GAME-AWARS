@@ -17,7 +17,7 @@ namespace LbsGameAwards
 
         public Rectangle HitBox()
         {
-            if(rotated)
+            if(!rotated)
             {
                 return new Rectangle((int)Pos.X, (int)Pos.Y, Size.X, Size.Y);
             }

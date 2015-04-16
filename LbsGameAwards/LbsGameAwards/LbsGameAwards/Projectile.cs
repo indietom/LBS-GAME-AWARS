@@ -10,7 +10,7 @@ namespace LbsGameAwards
     {
         byte movmentType;
         byte spriteType;
-        byte damege;
+        public byte Damege { get; set; }
 
         short lifeTime;
         short maxLifeTime;
@@ -23,7 +23,7 @@ namespace LbsGameAwards
             Pos = pos2;
             Angle = angle2;
             Speed = speed2;
-            damege = damege2;
+            Damege = damege2;
             movmentType = movmentType2;
             spriteType = spriteType2;
             AssignSpriteType();

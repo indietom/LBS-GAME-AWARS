@@ -26,6 +26,7 @@ namespace LbsGameAwards
         static internal List<Player> players = new List<Player>();
         static internal List<Projectile> projectiles = new List<Projectile>();
         static internal List<Explosion> explosions = new List<Explosion>();
+        static internal List<Enemy> enemies = new List<Enemy>(); 
 
         protected override void Initialize()
         {
@@ -60,9 +61,12 @@ namespace LbsGameAwards
             foreach (Explosion e in explosions)
                 e.Update();
 
+            foreach (Enemy e in enemies)
+                e.Update();
+
             if(Keyboard.GetState().IsKeyDown(Keys.F1))
             {
-                explosions.Add(new Explosion(new Vector2(320, 240), 32, Color.Orange));
+                if(enemies.Count == 0) enemies.Add(new Enemy(new Vector2(320, 240), 0));
             }
 
             for (int i = projectiles.Count() - 1; i >= 0; i--)
@@ -84,6 +88,8 @@ namespace LbsGameAwards
             foreach (Projectile p in projectiles)
                 p.DrawSprite(spriteBatch, spritesheet);
             foreach (Explosion e in explosions)
+                e.DrawSprite(spriteBatch, spritesheet);
+            foreach (Enemy e in enemies)
                 e.DrawSprite(spriteBatch, spritesheet);
             spriteBatch.End();
 
