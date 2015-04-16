@@ -13,6 +13,7 @@ namespace LbsGameAwards
 
         public bool inputActive;
         public bool dead;
+        public bool invisible;
 
         byte respawnCount;
         byte maxRespawnCount;
@@ -22,6 +23,8 @@ namespace LbsGameAwards
 
         short fireRate;
         short maxFireRate;
+        short invisibleCount;
+        short maxInvisibleCount;
 
         Keys walkLeft = Keys.A;
         Keys walkRight = Keys.D;
