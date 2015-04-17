@@ -11,6 +11,7 @@ namespace LbsGameAwards
         sbyte hp;
 
         float attackDistance;
+        float desierdAngle;
 
         byte type;
         byte direction;
@@ -33,20 +34,31 @@ namespace LbsGameAwards
             maxHurtCount = 8;
         }
 
+        public void CheckHealth()
+        {
+            foreach (Projectile p in Game1.projectiles)
+            {
+                if (p.HitBox().Intersects(HitBox()))
+                {
+                    if (hurtCount <= 0)
+                    {
+                        hp -= (sbyte)p.Damege;
+                        hurtCount = 1;
+                    }
+                    p.destroy = true;
+                }
+            }
+        }
+
+        public void AttackUpdate()
+        {
+
+        }
+
         public void Update()
         {
-            foreach(Projectile p in Game1.projectiles)
-            {
-               if(p.HitBox().Intersects(HitBox()))
-               {
-                   if(hurtCount <= 0)
-                   {
-                       hp -= (sbyte)p.Damege;
-                       hurtCount = 1;
-                   }
-                   p.destroy = true;
-               }
-            }
+            AttackUpdate();
+            CheckHealth();
             HurtUpdate();
         }
 

@@ -101,9 +101,12 @@ namespace LbsGameAwards
             VelY = ((float)Math.Sin(Angle2) * Speed);
         }
 
-        public float AimAt(Vector2 target)
+        public float AimAt(Vector2 target, bool rad)
         {
-            return (float)Math.Atan2(target.Y - Pos.Y, target.X - Pos.X);
+            if(rad)
+                return (float)Math.Atan2(target.Y - Pos.Y, target.X - Pos.X);
+            else
+                return (float)Math.Atan2(target.Y - Pos.Y, target.X - Pos.X) * 180 / (float)Math.PI;
         }
 
         public float DistanceTo(Vector2 target)
