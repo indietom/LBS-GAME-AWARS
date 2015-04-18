@@ -18,6 +18,7 @@ namespace LbsGameAwards
 
         bool attacking;
         bool invisible;
+        bool followPlayer;
 
         short attackCount;
         short maxAttackCount;
@@ -26,6 +27,7 @@ namespace LbsGameAwards
 
         public Enemy(Vector2 pos2, byte type2)
         {
+            followPlayer = true;
             Pos = pos2;
             type = type2;
             AssignType();
@@ -52,14 +54,49 @@ namespace LbsGameAwards
 
         public void AttackUpdate()
         {
+            switch(type)
+            {
+                case 0:
+                    AngleMath();
+                    rotateOnRad = false;
+                    foreach (Player p in Game1.players)
+                    {
+                        desierdAngle = AimAt(p.Pos, false);
+                        if (DistanceTo(p.Pos) > attackDistance) followPlayer = true;
+                        else
+                        {
+                            Angle = desierdAngle;
+                            followPlayer = false;
+                        }
+                    }
 
+                    if(followPlayer)
+                    {
+                        foreach (Player p in Game1.players)
+                        {
+                            desierdAngle = AimAt(p.Pos, false);
+                        }
+
+                        if (Angle > desierdAngle) Angle -= 2f;
+                        if (Angle < desierdAngle) Angle += 2f;
+
+                        if(Angle < 0 && desierdAngle > 0 || Angle > 0 && desierdAngle < 0) Angle *= -1;
+
+                        Pos += Vel;
+                    }
+                    break;
+            }
         }
 
         public void Update()
         {
+            Z = GetCenter.Y / 1000;
             AttackUpdate();
             CheckHealth();
             HurtUpdate();
+            Animate();
+            AnimationCount += 1;
+            SpriteCoords = new Point(Frame(CurrentFrame), SpriteCoords.Y);
         }
 
         public void HurtUpdate()
@@ -84,9 +121,11 @@ namespace LbsGameAwards
             {
                 case 0:
                     maxAttackCount = 16;
+                    attackDistance = 16;
                     hp = 2;
                     MaxAnimationCount = 4;
                     MaxFrame = 4;
+                    Speed = 1f;
                     SpriteCoords = new Point(1, 331);
                     SetSize(32);
                     break;

@@ -148,6 +148,8 @@ namespace LbsGameAwards
 
         public void Update()
         {
+            Z = GetCenter.Y / 1000;
+
             AssignFireRates();
             Movment();
             Input();
