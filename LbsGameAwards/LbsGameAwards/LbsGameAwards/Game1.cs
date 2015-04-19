@@ -75,6 +75,9 @@ namespace LbsGameAwards
             for (int i = explosions.Count - 1; i >= 0; i--)
                 if (explosions[i].destroy) explosions.RemoveAt(i);
 
+            for (int i = enemies.Count - 1; i >= 0; i--)
+                if (enemies[i].destroy) enemies.RemoveAt(i);
+
             base.Update(gameTime);
         }
 

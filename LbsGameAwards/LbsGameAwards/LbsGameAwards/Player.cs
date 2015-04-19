@@ -10,6 +10,7 @@ namespace LbsGameAwards
     class Player : GameObject
     {
         float friction;
+        float maxSpeed;
 
         public bool inputActive;
         public bool dead;
@@ -46,6 +47,7 @@ namespace LbsGameAwards
             SpriteCoords = new Point(1, 1);
             Z = 0.1f;
             Speed = 0.5f;
+            maxSpeed = 3;
             friction = 0.90f;
             inputActive = true;
         }
@@ -68,19 +70,19 @@ namespace LbsGameAwards
 
             if(inputActive)
             {
-                if(keyboard.IsKeyDown(walkLeft))
+                if(keyboard.IsKeyDown(walkLeft) && VelX > -maxSpeed)
                 {
                     VelX -= Speed;
                 }
-                if(keyboard.IsKeyDown(walkRight))
+                if (keyboard.IsKeyDown(walkRight) && VelX < maxSpeed)
                 {
                     VelX += Speed;
                 }
-                if (keyboard.IsKeyDown(walkUp))
+                if (keyboard.IsKeyDown(walkUp) && VelY > -maxSpeed)
                 {
                     VelY -= Speed;
                 }
-                if (keyboard.IsKeyDown(walkDown))
+                if (keyboard.IsKeyDown(walkDown) && VelY < maxSpeed)
                 {
                     VelY += Speed;
                 }
