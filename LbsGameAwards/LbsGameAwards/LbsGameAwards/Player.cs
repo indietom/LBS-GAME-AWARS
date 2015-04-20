@@ -50,6 +50,8 @@ namespace LbsGameAwards
             maxSpeed = 3;
             friction = 0.90f;
             inputActive = true;
+            MaxFrame = 4;
+            MaxAnimationCount = 4;
         }
 
         public void Movment()
@@ -73,18 +75,28 @@ namespace LbsGameAwards
                 if(keyboard.IsKeyDown(walkLeft) && VelX > -maxSpeed)
                 {
                     VelX -= Speed;
+                    if(!keyboard.IsKeyDown(walkDown) && !keyboard.IsKeyDown(walkUp)) AnimationCount += 1;
                 }
                 if (keyboard.IsKeyDown(walkRight) && VelX < maxSpeed)
                 {
                     VelX += Speed;
+                    if (!keyboard.IsKeyDown(walkDown) && !keyboard.IsKeyDown(walkUp)) AnimationCount += 1;
                 }
                 if (keyboard.IsKeyDown(walkUp) && VelY > -maxSpeed)
                 {
                     VelY -= Speed;
+                    AnimationCount += 1;
                 }
                 if (keyboard.IsKeyDown(walkDown) && VelY < maxSpeed)
                 {
                     VelY += Speed;
+                    AnimationCount += 1;
+                }
+
+                if (!keyboard.IsKeyDown(walkLeft) && !keyboard.IsKeyDown(walkRight) && !keyboard.IsKeyDown(walkDown) && !keyboard.IsKeyDown(walkUp))
+                {
+                    CurrentFrame = MinFrame;
+                    AnimationCount = 0;
                 }
 
                 if(keyboard.IsKeyDown(shootRight))
@@ -155,7 +167,9 @@ namespace LbsGameAwards
             AssignFireRates();
             Movment();
             Input();
-            SpriteCoords = new Point(SpriteCoords.X, Frame(shootDirection));
+            
+            SpriteCoords = new Point(Frame(CurrentFrame), Frame(shootDirection));
+            Animate();
 
             fireRate = (fireRate >= 1) ? (short)(fireRate + 1) : fireRate;
             fireRate = (fireRate >= maxFireRate) ? (short)0 : fireRate;

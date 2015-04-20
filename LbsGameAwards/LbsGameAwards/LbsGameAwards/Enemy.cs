@@ -51,7 +51,7 @@ namespace LbsGameAwards
             Random random = new Random();
             if(hp <= 0)
             {
-                for (int i = 0; i < 5; i++)
+                for (int i = 0; i < 10; i++)
                 {
                     Game1.explosions.Add(new Explosion(Pos+new Vector2(random.Next(-Size.X/2, Size.X/2), random.Next(-Size.Y/2, Size.Y/2)), 32, bloodColor));
                 }
