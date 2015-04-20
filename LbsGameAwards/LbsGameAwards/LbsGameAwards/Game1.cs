@@ -66,7 +66,7 @@ namespace LbsGameAwards
 
             if(Keyboard.GetState().IsKeyDown(Keys.F1))
             {
-                if(enemies.Count == 0) enemies.Add(new Enemy(new Vector2(320, 240), 0));
+                if(enemies.Count == 0) enemies.Add(new Enemy(new Vector2(320, 240), 1));
             }
 
             for (int i = projectiles.Count() - 1; i >= 0; i--)
@@ -92,8 +92,12 @@ namespace LbsGameAwards
                 p.DrawSprite(spriteBatch, spritesheet);
             foreach (Explosion e in explosions)
                 e.DrawSprite(spriteBatch, spritesheet);
+
             foreach (Enemy e in enemies)
+            {
                 e.DrawSprite(spriteBatch, spritesheet);
+                e.Draw(spriteBatch, spritesheet);
+            }
             spriteBatch.End();
 
             base.Draw(gameTime);
