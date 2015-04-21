@@ -18,7 +18,7 @@ namespace LbsGameAwards
         public bool enemy;
         public bool explosive;
 
-        public Projectile(Vector2 pos2, float angle2, float speed2, byte damege2, byte movmentType2, byte spriteType2)
+        public Projectile(Vector2 pos2, float angle2, float speed2, byte damege2, byte movmentType2, byte spriteType2, bool enemy2)
         {
             Pos = pos2;
             Angle = angle2;
@@ -26,7 +26,21 @@ namespace LbsGameAwards
             Damege = damege2;
             movmentType = movmentType2;
             spriteType = spriteType2;
+            enemy = enemy2; 
             AssignSpriteType();
+        }
+
+        public Projectile(Vector2 pos2, float angle2, float speed2, byte damege2, byte movmentType2, byte spriteType2, bool enemy2, float z2)
+        {
+            Pos = pos2;
+            Angle = angle2;
+            Speed = speed2;
+            Damege = damege2;
+            movmentType = movmentType2;
+            spriteType = spriteType2;
+            enemy = enemy2;
+            AssignSpriteType();
+            Z = z2;
         }
 
         public void Movment()
@@ -67,7 +81,13 @@ namespace LbsGameAwards
             }
             else
             {
-
+                switch (spriteType)
+                {
+                    case 0:
+                        SetSize(8);
+                        SpriteCoords = new Point(175, 1);
+                        break;
+                }
             }
         }
     }

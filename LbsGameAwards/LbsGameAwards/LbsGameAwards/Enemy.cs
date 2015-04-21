@@ -11,15 +11,15 @@ namespace LbsGameAwards
     class Enemy : GameObject
     {
         sbyte hp;
+        
+        byte type;
+        byte direction;
 
         float attackDistance;
         float desierdAngle;
         float turnSpeed;
         float orginalSpeed;
         float shootAngle;
-
-        byte type;
-        byte direction;
 
         bool attacking;
         bool invisible;
@@ -29,12 +29,17 @@ namespace LbsGameAwards
         short maxAttackCount;
         short hurtCount;
         short maxHurtCount;
+        short changeDirectionCount;
 
         Color bloodColor;
 
         Rectangle turretHitBox;
 
         Vector2 turretPos;
+
+        Vector2 target;
+        Vector2 tankTarget;
+        Vector2 newTankTarget;
 
         int tag;
 
@@ -68,7 +73,7 @@ namespace LbsGameAwards
             {
                 if (type == 1 && hp > 5)
                 {
-                    if (p.HitBox().Intersects(turretHitBox))
+                    if (p.HitBox().Intersects(turretHitBox) && !p.enemy)
                     {
                         if (hurtCount <= 0)
                         {
@@ -80,7 +85,7 @@ namespace LbsGameAwards
                 }
                 else
                 {
-                    if (p.HitBox().Intersects(HitBox()))
+                    if (p.HitBox().Intersects(HitBox()) && !p.enemy)
                     {
                         if (hurtCount <= 0)
                         {
@@ -95,6 +100,7 @@ namespace LbsGameAwards
 
         public void AttackUpdate()
         {
+            Random random = new Random();
             switch(type)
             {
                 case 0:
@@ -111,6 +117,23 @@ namespace LbsGameAwards
                         }
                     }
                     TurnTwoards();
+                    break;
+                case 1:
+                    if (hp > 5) attackCount += 1;
+                    else attackCount = 0;
+
+                    foreach(Player p in Game1.players)
+                    {
+                        target = new Vector2(Lerp(target.X, p.GetCenter.X, 0.05f), Lerp(target.Y, p.GetCenter.Y, 0.05f));
+                    }
+
+                    shootAngle = AimAt(target, false);
+
+                    if (attackCount == maxAttackCount || attackCount == maxAttackCount + 8 || attackCount == maxAttackCount + 16)
+                    {
+                        Game1.projectiles.Add(new Projectile(turretPos + new Vector2(-4, -3.5f), shootAngle+random.Next(-16, 17), 5, 1, 0, 0, true, Z+0.001f));
+                    }
+                    attackCount = (attackCount >= (short)(maxAttackCount + 32)) ? (short)0 : attackCount;
                     break;
             }
         }
@@ -140,6 +163,8 @@ namespace LbsGameAwards
 
         public void Update()
         {
+            Random random = new Random();
+
             Z = GetCenter.Y / 1000;
             AttackUpdate();
             CheckHealth();
@@ -153,6 +178,18 @@ namespace LbsGameAwards
                 case 1:
                     turretHitBox = new Rectangle((int)turretPos.X-16, (int)turretPos.Y-16, 32, 32);
                     turretPos = Pos;
+
+                    Rotation = AimAt(tankTarget, false);
+
+                    tankTarget = new Vector2(Lerp(tankTarget.X, newTankTarget.X, 0.007f), Lerp(tankTarget.Y, newTankTarget.Y, 0.007f));
+
+                    changeDirectionCount += 1;
+                    if(changeDirectionCount >= 128)
+                    {
+                        newTankTarget = new Vector2(random.Next(640 - 64), random.Next(480 - 64));
+                        if (DistanceTo(newTankTarget) >= 128)
+                            changeDirectionCount = 0;
+                    }
                     break;
             }
 
@@ -215,6 +252,7 @@ namespace LbsGameAwards
                     hp = 10;
                     SpriteCoords = new Point(199, 331);
                     Speed = 0.5f;
+                    maxAttackCount = 32;
                     break;
             }
         }

@@ -138,7 +138,7 @@ namespace LbsGameAwards
                 {
                     if(gunType == 0)
                     {
-                        Game1.projectiles.Add(new Projectile(GetCenter + new Vector2(-4, -8), shootDirection * -45, 7, 1, 0, 0));
+                        Game1.projectiles.Add(new Projectile(GetCenter + new Vector2(-4, -8), shootDirection * -45, 7, 1, 0, 0, false));
                         fireRate = 1;
                     }
                 }
