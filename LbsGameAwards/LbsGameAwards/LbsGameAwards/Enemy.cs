@@ -190,6 +190,11 @@ namespace LbsGameAwards
                         if (DistanceTo(newTankTarget) >= 128)
                             changeDirectionCount = 0;
                     }
+
+                    AngleMath();
+                    Angle = Rotation;
+                    Pos += Vel;
+
                     break;
             }
 
