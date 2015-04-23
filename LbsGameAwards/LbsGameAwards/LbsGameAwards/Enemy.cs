@@ -30,6 +30,7 @@ namespace LbsGameAwards
         short hurtCount;
         short maxHurtCount;
         short changeDirectionCount;
+        short animationOffset;
 
         Color bloodColor;
 
@@ -51,7 +52,6 @@ namespace LbsGameAwards
             AssignType();
             orginalSpeed = Speed;
             OrginalColor = color;
-            Z = 1.0f;
             maxHurtCount = 8;
             tag = Globals.CurrentEnemyTag+1;
             Globals.CurrentEnemyTag = tag;
@@ -85,7 +85,7 @@ namespace LbsGameAwards
                 }
                 else
                 {
-                    if (p.HitBox().Intersects(HitBox()) && !p.enemy)
+                    if (p.HitBox().Intersects(HitBox()) && !p.enemy && type != 2)
                     {
                         if (hurtCount <= 0)
                         {
@@ -135,6 +135,12 @@ namespace LbsGameAwards
                     }
                     attackCount = (attackCount >= (short)(maxAttackCount + 32)) ? (short)0 : attackCount;
                     break;
+                case 2:
+                    foreach(Player p in Game1.players)
+                    {
+                        
+                    }
+                    break;
             }
         }
 
@@ -165,13 +171,13 @@ namespace LbsGameAwards
         {
             Random random = new Random();
 
-            Z = GetCenter.Y / 1000;
+            if(type != 2) Z = GetCenter.Y / 1000;
             AttackUpdate();
             CheckHealth();
             HurtUpdate();
             Animate();
             AnimationCount += 1;
-            if(MaxFrame > 0) SpriteCoords = new Point(Frame(CurrentFrame), SpriteCoords.Y);
+            if (MaxFrame > 0) SpriteCoords = new Point(Frame(CurrentFrame, Size.X) + animationOffset, SpriteCoords.Y);
 
             switch(type)
             {
@@ -258,6 +264,15 @@ namespace LbsGameAwards
                     SpriteCoords = new Point(199, 331);
                     Speed = 0.5f;
                     maxAttackCount = 32;
+                    break;
+                case 2:
+                    MaxFrame = 6;
+                    SpriteCoords = new Point(232, 265);
+                    SetSize(16);
+                    animationOffset = (short)(SpriteCoords.X - 1);
+                    hp = 1;
+                    Z = 0.01f;
+                    MaxAnimationCount = 8;
                     break;
             }
         }
