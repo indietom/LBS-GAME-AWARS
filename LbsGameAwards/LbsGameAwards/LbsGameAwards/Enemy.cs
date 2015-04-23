@@ -49,13 +49,13 @@ namespace LbsGameAwards
             followPlayer = true;
             Pos = pos2;
             type = type2;
-            AssignType();
+            bloodColor = Color.LightGreen;
             orginalSpeed = Speed;
             OrginalColor = color;
             maxHurtCount = 8;
-            tag = Globals.CurrentEnemyTag+1;
+            tag = Globals.CurrentEnemyTag + 1;
             Globals.CurrentEnemyTag = tag;
-            bloodColor = Color.LightGreen;
+            AssignType();
         }
 
         public void CheckHealth()
@@ -65,7 +65,8 @@ namespace LbsGameAwards
             {
                 for (int i = 0; i < 10; i++)
                 {
-                    Game1.explosions.Add(new Explosion(Pos+new Vector2(random.Next(-Size.X/2, Size.X/2), random.Next(-Size.Y/2, Size.Y/2)), (byte)Size.X, bloodColor));
+                    if (rotated) Game1.explosions.Add(new Explosion(Pos + new Vector2(random.Next(-Size.X, Size.X / 2), random.Next(-Size.Y, Size.Y / 2)), (byte)Size.X, bloodColor));
+                    else Game1.explosions.Add(new Explosion(Pos + new Vector2(random.Next(-Size.X / 2, Size.X / 2), random.Next(-Size.Y / 2, Size.Y / 2)), (byte)Size.X, bloodColor));
                 }
                 destroy = true;
             }
@@ -138,7 +139,11 @@ namespace LbsGameAwards
                 case 2:
                     foreach(Player p in Game1.players)
                     {
-                        
+                        if(p.HitBox().Intersects(HitBox()))
+                        {
+                            Game1.explosions.Add(new Explosion(GetCenter + new Vector2(-32, -32), 64, Color.Orange));
+                            destroy = true;
+                        }
                     }
                     break;
             }
@@ -264,6 +269,7 @@ namespace LbsGameAwards
                     SpriteCoords = new Point(199, 331);
                     Speed = 0.5f;
                     maxAttackCount = 32;
+                    bloodColor = Color.Orange;
                     break;
                 case 2:
                     MaxFrame = 6;

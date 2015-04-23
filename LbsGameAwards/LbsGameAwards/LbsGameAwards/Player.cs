@@ -26,6 +26,8 @@ namespace LbsGameAwards
         short maxFireRate;
         short invisibleCount;
         short maxInvisibleCount;
+        short spawnCount;
+        short maxSpawnCount = 128*2;
 
         Keys walkLeft = Keys.A;
         Keys walkRight = Keys.D;
@@ -147,7 +149,46 @@ namespace LbsGameAwards
 
         public void CheckHealth()
         {
-            
+            spawnCount = (dead) ? (short)(spawnCount + 1) : spawnCount;
+            if(spawnCount == maxSpawnCount/2-1)
+            {
+                Pos = new Vector2(-64, 240 - 16);
+                CurrentFrame = 0;
+                spawnCount += 1;
+            }
+            if(dead && spawnCount < maxSpawnCount/2)
+            {
+                spawnCount += 1;
+
+                inputActive = false;
+                SpriteCoords = new Point(Frame(CurrentFrame), 265);
+
+                MaxAnimationCount = 8;
+                AnimationCount += 1;
+
+                MaxFrame = 7;
+                if (CurrentFrame == MaxFrame-1)
+                    AnimationCount = 0;
+            }
+            if (dead && spawnCount > maxSpawnCount / 2)
+            {
+                MaxFrame = 4;
+                MaxAnimationCount = (short)(Lerp(Pos.X, 320, 0.001f)/30);
+                Console.WriteLine(Lerp(Pos.X, 320, 0.001f));
+                SpriteCoords = new Point(Frame(CurrentFrame), 1);
+                AnimationCount += 1;
+                Pos = new Vector2(Lerp(Pos.X, 320, 0.03f), Pos.Y);
+            }
+
+            if (spawnCount >= maxSpawnCount)
+            {
+                SpriteCoords = new Point(Frame(CurrentFrame), 1);
+                CurrentFrame = 0;
+                dead = false;
+                inputActive = true;
+                MaxAnimationCount = 4;
+                spawnCount = 0;
+            }
         }
 
         public void AssignFireRates()
@@ -167,8 +208,9 @@ namespace LbsGameAwards
             AssignFireRates();
             Movment();
             Input();
-            
-            SpriteCoords = new Point(Frame(CurrentFrame), Frame(shootDirection));
+            CheckHealth();
+   
+            if(!dead) SpriteCoords = new Point(Frame(CurrentFrame), Frame(shootDirection));
             Animate();
 
             fireRate = (fireRate >= 1) ? (short)(fireRate + 1) : fireRate;
