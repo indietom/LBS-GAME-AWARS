@@ -27,7 +27,7 @@ namespace LbsGameAwards
         short invisibleCount;
         short maxInvisibleCount;
         short spawnCount;
-        short maxSpawnCount = 128*2;
+        short maxSpawnCount = 128*4;
 
         Keys walkLeft = Keys.A;
         Keys walkRight = Keys.D;
@@ -152,6 +152,7 @@ namespace LbsGameAwards
             spawnCount = (dead) ? (short)(spawnCount + 1) : spawnCount;
             if(spawnCount == maxSpawnCount/2-1)
             {
+                Game1.explosions.Add(new Explosion(Pos, 32, Color.Red));
                 Pos = new Vector2(-64, 240 - 16);
                 CurrentFrame = 0;
                 spawnCount += 1;
@@ -173,11 +174,10 @@ namespace LbsGameAwards
             if (dead && spawnCount > maxSpawnCount / 2)
             {
                 MaxFrame = 4;
-                MaxAnimationCount = (short)(Lerp(Pos.X, 320, 0.001f)/30);
-                Console.WriteLine(Lerp(Pos.X, 320, 0.001f));
+                MaxAnimationCount = (short)(Lerp(Pos.X, 320, 0.001f)/10);
                 SpriteCoords = new Point(Frame(CurrentFrame), 1);
                 AnimationCount += 1;
-                Pos = new Vector2(Lerp(Pos.X, 320, 0.03f), Pos.Y);
+                Pos = new Vector2(Lerp(Pos.X, 320, 0.008f), Pos.Y);
             }
 
             if (spawnCount >= maxSpawnCount)

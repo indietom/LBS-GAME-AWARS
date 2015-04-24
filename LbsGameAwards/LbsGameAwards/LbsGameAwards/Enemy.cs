@@ -50,12 +50,12 @@ namespace LbsGameAwards
             Pos = pos2;
             type = type2;
             bloodColor = Color.LightGreen;
-            orginalSpeed = Speed;
-            OrginalColor = color;
             maxHurtCount = 8;
             tag = Globals.CurrentEnemyTag + 1;
             Globals.CurrentEnemyTag = tag;
             AssignType();
+            orginalSpeed = Speed;
+            OrginalColor = color;
         }
 
         public void CheckHealth()
@@ -88,6 +88,7 @@ namespace LbsGameAwards
                 {
                     if (p.HitBox().Intersects(HitBox()) && !p.enemy && type != 2)
                     {
+                        if (type == 3) Speed = -5;
                         if (hurtCount <= 0)
                         {
                             Hp -= (sbyte)p.Damege;
@@ -102,6 +103,22 @@ namespace LbsGameAwards
         public void AttackUpdate()
         {
             Random random = new Random();
+
+            foreach(Player p in Game1.players)
+            {
+                if (attackCount >= maxAttackCount)
+                {
+                    if(DistanceTo(p.Pos) <= attackDistance) p.dead = true;
+                    attackCount = 0;
+                }
+                attacking = ((DistanceTo(p.Pos) <= attackDistance));
+            }
+
+            if(attacking)
+                attackCount += 1;
+            else
+                attackCount = 0;
+
             switch(type)
             {
                 case 0:
@@ -126,6 +143,8 @@ namespace LbsGameAwards
                     foreach(Player p in Game1.players)
                     {
                         target = new Vector2(Lerp(target.X, p.GetCenter.X, 0.05f), Lerp(target.Y, p.GetCenter.Y, 0.05f));
+                        if (p.HitBox().Intersects(HitBox()))
+                            p.dead = true;
                     }
 
                     shootAngle = AimAt(target, false);
@@ -145,6 +164,17 @@ namespace LbsGameAwards
                             destroy = true;
                         }
                     }
+                    break;
+                case 3:
+                    foreach (Player p in Game1.players)
+                    {
+                        target = new Vector2(Lerp(target.X, p.Pos.X, 0.08f), Lerp(target.Y, p.Pos.Y, 0.08f));
+                        if(!attacking) Speed = Lerp(Speed, orginalSpeed, 0.04f);
+                        else Speed = 0;
+                    }
+                    Angle = AimAt(target, false);
+                    AngleMath();
+                    Pos += Vel;
                     break;
             }
         }
@@ -205,7 +235,6 @@ namespace LbsGameAwards
                     AngleMath();
                     Angle = Rotation;
                     Pos += Vel;
-
                     break;
             }
 
@@ -279,6 +308,18 @@ namespace LbsGameAwards
                     Hp = 1;
                     Z = 0.01f;
                     MaxAnimationCount = 8;
+                    break;
+                case 3:
+                    SpriteCoords = new Point(67, 496);
+                    SetSize(24);
+                    MaxFrame = 14;
+                    MaxAnimationCount = 4;
+                    animationOffset = (short)(SpriteCoords.X - 1);
+                    Speed = 2;
+                    Hp = 2;
+                    attackDistance = 8*2;
+                    maxAttackCount = 16;
+                    bloodColor = Color.Orange;
                     break;
             }
         }
