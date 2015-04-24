@@ -137,6 +137,7 @@ namespace LbsGameAwards
                             followPlayer = false;
                         }
                     }
+                    Speed = Lerp(Speed, orginalSpeed, 0.1f);
                     TurnTwoards();
                     break;
                 case 1:
@@ -245,10 +246,10 @@ namespace LbsGameAwards
             {
                 if(e.HitBox().Intersects(HitBox()) && e.type == type)
                 {
-                    if(e.tag < tag)
+                    if(e.tag < tag && e.tag != tag)
                     {
                         //Pos -= Vel;
-                        if (e.type == 3) Speed -= 0.1f;
+                        Speed -= 0.1f;
                     }
                 }
             }
