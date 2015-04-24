@@ -66,7 +66,7 @@ namespace LbsGameAwards
 
             if(Keyboard.GetState().IsKeyDown(Keys.F1))
             {
-                if(enemies.Count == 0) enemies.Add(new Enemy(new Vector2(320, 240), 1));
+                if(enemies.Count <= 10) enemies.Add(new Enemy(new Vector2(320, 240), 3));
             }
 
             for (int i = projectiles.Count() - 1; i >= 0; i--)

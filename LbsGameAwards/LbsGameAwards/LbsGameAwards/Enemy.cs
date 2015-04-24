@@ -106,7 +106,7 @@ namespace LbsGameAwards
 
             foreach(Player p in Game1.players)
             {
-                if (attackCount >= maxAttackCount)
+                if (attackCount >= maxAttackCount && type != 1)
                 {
                     if(DistanceTo(p.Pos) <= attackDistance) p.dead = true;
                     attackCount = 0;
@@ -114,10 +114,13 @@ namespace LbsGameAwards
                 attacking = ((DistanceTo(p.Pos) <= attackDistance));
             }
 
-            if(attacking)
-                attackCount += 1;
-            else
-                attackCount = 0;
+            if (type != 1)
+            {
+                if (attacking)
+                    attackCount += 1;
+                else
+                    attackCount = 0;
+            }
 
             switch(type)
             {
@@ -242,9 +245,10 @@ namespace LbsGameAwards
             {
                 if(e.HitBox().Intersects(HitBox()) && e.type == type)
                 {
-                    if(e.tag > tag)
+                    if(e.tag < tag)
                     {
-
+                        //Pos -= Vel;
+                        if (e.type == 3) Speed -= 0.1f;
                     }
                 }
             }
