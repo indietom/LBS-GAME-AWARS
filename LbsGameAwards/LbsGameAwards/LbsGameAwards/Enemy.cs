@@ -10,7 +10,7 @@ namespace LbsGameAwards
 {
     class Enemy : GameObject
     {
-        sbyte hp;
+        public sbyte Hp { get; set; }
         
         byte type;
         byte direction;
@@ -61,7 +61,7 @@ namespace LbsGameAwards
         public void CheckHealth()
         {
             Random random = new Random();
-            if(hp <= 0)
+            if(Hp <= 0)
             {
                 for (int i = 0; i < 10; i++)
                 {
@@ -72,13 +72,13 @@ namespace LbsGameAwards
             }
             foreach (Projectile p in Game1.projectiles)
             {
-                if (type == 1 && hp > 5)
+                if (type == 1 && Hp > 5)
                 {
                     if (p.HitBox().Intersects(turretHitBox) && !p.enemy)
                     {
                         if (hurtCount <= 0)
                         {
-                            hp -= (sbyte)p.Damege;
+                            Hp -= (sbyte)p.Damege;
                             hurtCount = 1;
                         }
                         p.destroy = true;
@@ -90,7 +90,7 @@ namespace LbsGameAwards
                     {
                         if (hurtCount <= 0)
                         {
-                            hp -= (sbyte)p.Damege;
+                            Hp -= (sbyte)p.Damege;
                             hurtCount = 1;
                         }
                         p.destroy = true;
@@ -120,7 +120,7 @@ namespace LbsGameAwards
                     TurnTwoards();
                     break;
                 case 1:
-                    if (hp > 5) attackCount += 1;
+                    if (Hp > 5) attackCount += 1;
                     else attackCount = 0;
 
                     foreach(Player p in Game1.players)
@@ -141,7 +141,7 @@ namespace LbsGameAwards
                     {
                         if(p.HitBox().Intersects(HitBox()))
                         {
-                            Game1.explosions.Add(new Explosion(GetCenter + new Vector2(-32, -32), 64, Color.Orange));
+                            Game1.explosions.Add(new Explosion(GetCenter + new Vector2(-32, -32), 64, Color.Orange, true, true));
                             destroy = true;
                         }
                     }
@@ -241,7 +241,7 @@ namespace LbsGameAwards
         {
             if(type == 1)
             {
-                if(hp > 5) spriteBatch.Draw(spritesheet, turretPos, new Rectangle(265, 331, 32, 32), color, (shootAngle * (float)Math.PI/180), new Vector2(turretHitBox.Width/2, turretHitBox.Height/2), 1.0f, SpriteEffects.None, Z+0.01f);
+                if(Hp > 5) spriteBatch.Draw(spritesheet, turretPos, new Rectangle(265, 331, 32, 32), color, (shootAngle * (float)Math.PI/180), new Vector2(turretHitBox.Width/2, turretHitBox.Height/2), 1.0f, SpriteEffects.None, Z+0.01f);
             }
         }
 
@@ -253,7 +253,7 @@ namespace LbsGameAwards
                 case 0:
                     maxAttackCount = 16;
                     attackDistance = 32;
-                    hp = 2;
+                    Hp = 2;
                     MaxAnimationCount = 8;
                     MaxFrame = 4;
                     Angle = random.Next(-180, 180);
@@ -265,7 +265,7 @@ namespace LbsGameAwards
                 case 1:
                     rotated = true;
                     SetSize(64);
-                    hp = 10;
+                    Hp = 10;
                     SpriteCoords = new Point(199, 331);
                     Speed = 0.5f;
                     maxAttackCount = 32;
@@ -276,7 +276,7 @@ namespace LbsGameAwards
                     SpriteCoords = new Point(232, 265);
                     SetSize(16);
                     animationOffset = (short)(SpriteCoords.X - 1);
-                    hp = 1;
+                    Hp = 1;
                     Z = 0.01f;
                     MaxAnimationCount = 8;
                     break;
