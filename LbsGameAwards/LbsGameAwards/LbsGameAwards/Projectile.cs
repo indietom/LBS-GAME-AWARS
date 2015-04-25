@@ -62,6 +62,8 @@ namespace LbsGameAwards
                 AnimationCount += 1;
             }
 
+            Z = GetCenter.Y / 1000;
+
             Movment();
         }
 

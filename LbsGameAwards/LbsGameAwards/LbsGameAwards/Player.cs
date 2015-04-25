@@ -52,6 +52,7 @@ namespace LbsGameAwards
             maxSpeed = 3;
             friction = 0.90f;
             inputActive = true;
+            gunType = 2;
             MaxFrame = 4;
             MaxAnimationCount = 4;
         }
@@ -69,6 +70,8 @@ namespace LbsGameAwards
 
         public void Input()
         {
+            Random random = new Random();
+
             prevKeyboard = keyboard;
             keyboard = Keyboard.GetState();
 
@@ -136,12 +139,33 @@ namespace LbsGameAwards
                     if (keyboard.IsKeyDown(shootDown)) shootDirection = 6;
                     if (keyboard.IsKeyDown(shootUp)) shootDirection = 2;
                 }
-                if ((keyboard.IsKeyDown(shootDown) || keyboard.IsKeyDown(shootUp) || keyboard.IsKeyDown(shootRight) || keyboard.IsKeyDown(shootLeft)) && fireRate <= 0)
+                
+                if ((keyboard.IsKeyDown(shootDown) || keyboard.IsKeyDown(shootUp) || keyboard.IsKeyDown(shootRight) || keyboard.IsKeyDown(shootLeft)))
                 {
-                    if(gunType == 0)
+                    if(gunType == 0 && fireRate <= 0)
                     {
                         Game1.projectiles.Add(new Projectile(GetCenter + new Vector2(-4, -8), shootDirection * -45, 7, 1, 0, 0, false));
                         fireRate = 1;
+                    }
+
+                    if (gunType == 1)
+                    {
+                        if(fireRate == 0 || fireRate == 8 || fireRate == 8*2 ) Game1.projectiles.Add(new Projectile(GetCenter + new Vector2(-4, -8), (shootDirection * -45)+random.Next(-8, 9), 7, 1, 0, 0, false));
+                        fireRate += 1;
+                    }
+
+                    if (gunType == 2 && fireRate <= 0)
+                    {
+                        for (int i = -1; i < 2; i++ )
+                            Game1.projectiles.Add(new Projectile(GetCenter + new Vector2(-4, -8),(shootDirection * -45)+i*8, 7, 1, 0, 0, false));
+                        fireRate = 1;
+                    }
+                }
+                else
+                {
+                    if(gunType == 1)
+                    {
+                        fireRate = 0;
                     }
                 }
             }
@@ -205,7 +229,13 @@ namespace LbsGameAwards
             switch(gunType)
             {
                 case 0:
-                    maxFireRate = 16;
+                    maxFireRate = 24;
+                    break;
+                case 1:
+                    maxFireRate = 64;
+                    break;
+                case 2:
+                    maxFireRate = 32;
                     break;
             }
         }
@@ -222,7 +252,7 @@ namespace LbsGameAwards
             if(!dead) SpriteCoords = new Point(Frame(CurrentFrame), Frame(shootDirection));
             Animate();
 
-            fireRate = (fireRate >= 1) ? (short)(fireRate + 1) : fireRate;
+            if(gunType != 1) fireRate = (fireRate >= 1) ? (short)(fireRate + 1) : fireRate;
             fireRate = (fireRate >= maxFireRate) ? (short)0 : fireRate;
         }
     }
