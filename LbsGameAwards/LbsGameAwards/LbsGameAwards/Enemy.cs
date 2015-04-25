@@ -63,10 +63,11 @@ namespace LbsGameAwards
             Random random = new Random();
             if(Hp <= 0)
             {
+                byte tmpExplosionSize = (Size.X >= 32) ? (byte)Size.X : (byte)32;
                 for (int i = 0; i < 10; i++)
                 {
-                    if (rotated) Game1.explosions.Add(new Explosion(Pos + new Vector2(random.Next(-Size.X, Size.X / 2), random.Next(-Size.Y, Size.Y / 2)), (byte)Size.X, bloodColor));
-                    else Game1.explosions.Add(new Explosion(Pos + new Vector2(random.Next(-Size.X / 2, Size.X / 2), random.Next(-Size.Y / 2, Size.Y / 2)), (byte)Size.X, bloodColor));
+                    if (rotated) Game1.explosions.Add(new Explosion(Pos + new Vector2(random.Next(-Size.X, Size.X / 2), random.Next(-Size.Y, Size.Y / 2)), tmpExplosionSize, bloodColor));
+                    else Game1.explosions.Add(new Explosion(Pos + new Vector2(random.Next(-Size.X / 2, Size.X / 2), random.Next(-Size.Y / 2, Size.Y / 2)), tmpExplosionSize, bloodColor));
                 }
                 destroy = true;
             }
