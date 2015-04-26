@@ -211,7 +211,7 @@ namespace LbsGameAwards
         {
             Random random = new Random();
 
-            if(type != 2) Z = GetCenter.Y / 1000;
+            if (type != 2) ZOrder();
             AttackUpdate();
             CheckHealth();
             HurtUpdate();

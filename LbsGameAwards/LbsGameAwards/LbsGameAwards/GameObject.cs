@@ -83,6 +83,11 @@ namespace LbsGameAwards
             return s + t * (e - s);
         }
 
+        public float ZOrder()
+        {
+            return (GetCenter.Y > 0) ? Z = GetCenter.Y / 1000 : 0;
+        }
+
         public void SetSize(int width, int height)
         {
             Size = new Point(width, height);

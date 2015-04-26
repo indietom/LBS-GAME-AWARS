@@ -86,7 +86,7 @@ namespace LbsGameAwards
                 AnimationCount += 1;
             }
 
-            if(spriteType != 1) Z = GetCenter.Y / 1000;
+            if (spriteType != 1) Z = ZOrder();
 
             Movment();
         }

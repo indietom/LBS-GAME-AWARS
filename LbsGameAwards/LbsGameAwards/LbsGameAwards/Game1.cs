@@ -66,7 +66,7 @@ namespace LbsGameAwards
 
             if(Keyboard.GetState().IsKeyDown(Keys.F1))
             {
-                if(enemies.Count == 0) enemies.Add(new Enemy(new Vector2(320, 240), 2));
+                if(enemies.Count == 0) enemies.Add(new Enemy(new Vector2(320, 240), 0));
             }
             if(Mouse.GetState().LeftButton == ButtonState.Pressed)
             {
