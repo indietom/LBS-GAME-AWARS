@@ -46,9 +46,9 @@ namespace LbsGameAwards
             Animate();
             AnimationCount += 1;
             destroy = (CurrentFrame >= MaxFrame - 1) ? true : destroy;
-            dangerous = (CurrentFrame < MaxFrame / 2) ? dangerous : false;
+            dangerous = (CurrentFrame <= (MaxFrame / 2)+1) ? dangerous : false;
             SpriteCoords = new Point(Frame(CurrentFrame, Size.X)+animationOffset, SpriteCoords.Y);
-            
+
             if(dangerous && dangerousToPlayer)
             {
                 foreach(Player p in Game1.players)

@@ -52,7 +52,7 @@ namespace LbsGameAwards
             maxSpeed = 3;
             friction = 0.90f;
             inputActive = true;
-            gunType = 2;
+            gunType = 3;
             MaxFrame = 4;
             MaxAnimationCount = 4;
         }
@@ -160,6 +160,12 @@ namespace LbsGameAwards
                             Game1.projectiles.Add(new Projectile(GetCenter + new Vector2(-4, -8),(shootDirection * -45)+i*8, 7, 1, 0, 0, false));
                         fireRate = 1;
                     }
+
+                    if (gunType == 3 && fireRate <= 0)
+                    {
+                        Game1.projectiles.Add(new Projectile(GetCenter + new Vector2(-4, -8), (shootDirection * -45) + random.Next(-16, 17), 15 + random.Next(-8, 5), 1, 1, 1, false));
+                        fireRate = 1;
+                    }
                 }
                 else
                 {
@@ -236,6 +242,9 @@ namespace LbsGameAwards
                     break;
                 case 2:
                     maxFireRate = 32;
+                    break;
+                case 3:
+                    maxFireRate = 4;
                     break;
             }
         }
