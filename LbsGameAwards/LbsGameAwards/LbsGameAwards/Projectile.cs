@@ -14,6 +14,7 @@ namespace LbsGameAwards
         byte spriteType;
         byte explosionSize;
         public byte Damege { get; set; }
+        byte orginalDamege;
 
         short lifeTime;
         short maxLifeTime;
@@ -32,6 +33,7 @@ namespace LbsGameAwards
             spriteType = spriteType2;
             enemy = enemy2; 
             AssignSpriteType();
+            Damege = orginalDamege;
         }
 
         public Projectile(Vector2 pos2, float angle2, float speed2, byte damege2, byte movmentType2, byte spriteType2, bool enemy2, float z2)
@@ -45,6 +47,7 @@ namespace LbsGameAwards
             enemy = enemy2;
             AssignSpriteType();
             Z = z2;
+            Damege = orginalDamege;
         }
 
         public void Movment()
@@ -84,10 +87,21 @@ namespace LbsGameAwards
             {
                 Animate();
                 AnimationCount += 1;
+                SpriteCoords = new Point(Frame(CurrentFrame, Size.X), SpriteCoords.Y);
             }
 
             if (spriteType != 1) Z = ZOrder();
 
+            if (!enemy)
+            {
+                switch (spriteType)
+                {
+                    case 2:
+                        if (CurrentFrame >= MaxFrame - 1) destroy = true;
+                        break;
+                }
+
+            }
             Movment();
         }
 
@@ -109,6 +123,14 @@ namespace LbsGameAwards
                         maxHeight = 10.0f;
                         Z = 0.9f;
                         rotated = true;
+                        break;
+                    case 2:
+                        SetSize(32);
+                        MinFrame = 5;
+                        MaxFrame = (short)(MinFrame + 9);
+                        CurrentFrame = MinFrame;
+                        SpriteCoords = new Point(Frame(MinFrame), 67);
+                        MaxAnimationCount = 4;
                         break;
                 }
             }
