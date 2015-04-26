@@ -33,7 +33,7 @@ namespace LbsGameAwards
             spriteType = spriteType2;
             enemy = enemy2; 
             AssignSpriteType();
-            Damege = orginalDamege;
+            orginalDamege = Damege;
         }
 
         public Projectile(Vector2 pos2, float angle2, float speed2, byte damege2, byte movmentType2, byte spriteType2, bool enemy2, float z2)
@@ -47,7 +47,7 @@ namespace LbsGameAwards
             enemy = enemy2;
             AssignSpriteType();
             Z = z2;
-            Damege = orginalDamege;
+            orginalDamege = Damege;
         }
 
         public void Movment()
@@ -98,6 +98,7 @@ namespace LbsGameAwards
                 {
                     case 2:
                         if (CurrentFrame >= MaxFrame - 1) destroy = true;
+                        if (CurrentFrame >= MaxFrame - 4) Damege = 0;
                         break;
                 }
 

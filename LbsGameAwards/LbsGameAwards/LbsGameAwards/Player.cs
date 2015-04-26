@@ -28,6 +28,8 @@ namespace LbsGameAwards
         short maxInvisibleCount;
         short spawnCount;
         short maxSpawnCount = 128*2;
+        short ammo;
+        short maxAmmo = 100;
 
         Keys walkLeft = Keys.A;
         Keys walkRight = Keys.D;
@@ -54,6 +56,7 @@ namespace LbsGameAwards
             inputActive = true;
             gunType = 4;
             MaxFrame = 4;
+            ammo = maxAmmo;
             MaxAnimationCount = 4;
         }
 
@@ -203,6 +206,8 @@ namespace LbsGameAwards
             }
             if(dead && spawnCount < maxSpawnCount/2)
             {
+                gunType = 0;
+                ammo = 0;
                 spawnCount += 1;
 
                 inputActive = false;
@@ -252,7 +257,7 @@ namespace LbsGameAwards
                     maxFireRate = 4;
                     break;
                 case 4:
-
+                    maxFireRate = 32;
                     break;
             }
         }
@@ -269,8 +274,20 @@ namespace LbsGameAwards
             if(!dead) SpriteCoords = new Point(Frame(CurrentFrame), Frame(shootDirection));
             Animate();
 
+            gunType = (gunType != 0 && ammo <= 0) ? (byte)0 : gunType;
+
             if(gunType != 1) fireRate = (fireRate >= 1) ? (short)(fireRate + 1) : fireRate;
-            fireRate = (fireRate >= maxFireRate) ? (short)0 : fireRate;
+
+            if(fireRate == 1 && gunType != 4)
+            {
+                ammo -= 1;
+            }
+
+            if(fireRate >= maxFireRate)
+            {
+                if (gunType == 4) ammo -= 1;
+                fireRate = 0;
+            }
         }
     }
 }
