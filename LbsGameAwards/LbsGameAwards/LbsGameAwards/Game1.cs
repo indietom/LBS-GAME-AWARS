@@ -35,11 +35,13 @@ namespace LbsGameAwards
         }
 
         Texture2D spritesheet;
+        SpriteFont font;
 
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
             spritesheet = Content.Load<Texture2D>("spritesheet");
+            font = Content.Load<SpriteFont>("font");
         }
 
         protected override void UnloadContent()
