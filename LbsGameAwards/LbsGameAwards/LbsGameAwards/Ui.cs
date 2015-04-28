@@ -12,13 +12,13 @@ namespace LbsGameAwards
     {
         const byte MAX_AMOUNT_OF_CASES = 5;
 
-        byte currentAmountOfCases = 5; 
+        byte currentAmountOfCases; 
 
         public bool hideUi;
 
         public void Update()
         {
-            currentAmountOfCases = (byte)((Game1.players[0].Ammo / MAX_AMOUNT_OF_CASES)/MAX_AMOUNT_OF_CASES+1);
+            
         }
 
         public void Draw(SpriteBatch spriteBatch, Texture2D spritesheet, SpriteFont font)

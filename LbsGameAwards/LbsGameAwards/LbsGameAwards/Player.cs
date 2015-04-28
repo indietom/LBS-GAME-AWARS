@@ -20,6 +20,7 @@ namespace LbsGameAwards
         byte maxRespawnCount;
         byte direction;
         byte shootDirection;
+        public byte Lives { private set; get; }
         public byte GunType { get; private set; }
 
         short fireRate;
@@ -29,7 +30,7 @@ namespace LbsGameAwards
         short spawnCount;
         short maxSpawnCount = 128*2;
         public short Ammo { get; private set; }
-        short maxAmmo = 100;
+        public short MaxAmmo { get; private set; }
 
         Keys walkLeft = Keys.A;
         Keys walkRight = Keys.D;
@@ -56,7 +57,8 @@ namespace LbsGameAwards
             inputActive = true;
             GunType = 4;
             MaxFrame = 4;
-            Ammo = maxAmmo;
+            MaxAmmo = 100;
+            Ammo = MaxAmmo;
             MaxAnimationCount = 4;
         }
 
@@ -262,6 +264,28 @@ namespace LbsGameAwards
             }
         }
 
+        public void PowerUpLogic()
+        {
+            foreach(PowerUp p in Game1.powerUps)
+            {
+                if(p.HitBox().Intersects(HitBox()))
+                {
+                    if (!p.special)
+                    {
+                        if (GunType != p.Type)
+                        {
+                            GunType = (byte)(p.Type + 1);
+                        }
+                    }
+                    else
+                    {
+                        if (p.Type == 0) Lives += 1;
+                    }
+                    p.destroy = true;
+                }
+            }
+        }
+
         public void Update()
         {
             Z = ZOrder();
@@ -270,7 +294,8 @@ namespace LbsGameAwards
             Movment();
             Input();
             CheckHealth();
-   
+            PowerUpLogic();
+
             if(!dead) SpriteCoords = new Point(Frame(CurrentFrame), Frame(shootDirection));
             Animate();
 

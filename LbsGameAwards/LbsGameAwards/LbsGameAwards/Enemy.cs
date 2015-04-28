@@ -75,7 +75,7 @@ namespace LbsGameAwards
             {
                 if (type == 1 && Hp > 5)
                 {
-                    if (p.HitBox().Intersects(turretHitBox) && !p.enemy)
+                    if (p.HitBox().Intersects(turretHitBox) && !p.enemy && p.Damege > 0)
                     {
                         if (hurtCount <= 0)
                         {
@@ -87,7 +87,7 @@ namespace LbsGameAwards
                 }
                 else
                 {
-                    if (p.HitBox().Intersects(HitBox()) && !p.enemy && type != 2)
+                    if (p.HitBox().Intersects(HitBox()) && !p.enemy && type != 2 && p.Damege > 0)
                     {
                         if (type == 3) Speed = -5;
                         if (hurtCount <= 0)
