@@ -12,13 +12,15 @@ namespace LbsGameAwards
     {
         const byte MAX_AMOUNT_OF_CASES = 5;
 
-        byte currentAmountOfCases; 
+        byte currentAmountOfCases;
 
+        bool writePlayerLives;
         public bool hideUi;
 
         public void Update()
         {
-            
+            currentAmountOfCases = (byte)((Game1.players[0].Ammo / 10));
+            writePlayerLives = (Game1.players[0].Lives <= 5) ? false : true;
         }
 
         public void Draw(SpriteBatch spriteBatch, Texture2D spritesheet, SpriteFont font)
@@ -34,6 +36,18 @@ namespace LbsGameAwards
                 for(int i = 0; i < currentAmountOfCases; i++)
                 {
                     spriteBatch.Draw(spritesheet, new Vector2(45 + i * (20 + 6), 12), new Rectangle(232, 50, 20, 12), Color.White);
+                }
+                if(writePlayerLives)
+                {
+                    spriteBatch.Draw(spritesheet, new Vector2(42, 12+14), new Rectangle(265, 34, 15, 13), Color.White);
+                    spriteBatch.DrawString(font, "x" + Game1.players[0].Lives.ToString(), new Vector2(42 + 16, 12 + 14), Color.Yellow, 0, Vector2.Zero, 0.7f, SpriteEffects.None, 0f);
+                }
+                else
+                {
+                    for(int i = 0; i < Game1.players[0].Lives; i++)
+                    {
+                        spriteBatch.Draw(spritesheet, new Vector2(42+i*15, 12+14), new Rectangle(265, 34, 15, 13), Color.White);
+                    }
                 }
             }
         }

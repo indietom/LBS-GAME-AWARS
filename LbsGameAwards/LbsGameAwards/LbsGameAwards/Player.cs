@@ -9,6 +9,8 @@ namespace LbsGameAwards
 {
     class Player : GameObject
     {
+        public int Score { private set; get; }
+
         float friction;
         float maxSpeed;
 
@@ -57,9 +59,10 @@ namespace LbsGameAwards
             inputActive = true;
             GunType = 4;
             MaxFrame = 4;
-            MaxAmmo = 100;
+            MaxAmmo = 50;
             Ammo = MaxAmmo;
             MaxAnimationCount = 4;
+            Lives = 4;
         }
 
         public void Movment()
@@ -275,6 +278,7 @@ namespace LbsGameAwards
                         if (GunType != p.Type)
                         {
                             GunType = (byte)(p.Type + 1);
+                            Ammo = MaxAmmo;
                         }
                     }
                     else
