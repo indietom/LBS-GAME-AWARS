@@ -28,6 +28,7 @@ namespace LbsGameAwards
         static internal List<Explosion> explosions = new List<Explosion>();
         static internal List<Enemy> enemies = new List<Enemy>();
         static internal List<PowerUp> powerUps = new List<PowerUp>();
+        static internal List<Door> doors = new List<Door>();
 
         static internal Ui ui = new Ui();
 
@@ -72,12 +73,16 @@ namespace LbsGameAwards
             foreach (PowerUp p in powerUps)
                 p.Update();
 
+            foreach (Door d in doors)
+                d.Update();
+
             ui.Update();
 
             if(Keyboard.GetState().IsKeyDown(Keys.F1))
             {
-                if(enemies.Count >= -1) enemies.Add(new Enemy(new Vector2(320, 240), 3));
-                if (powerUps.Count == 0) powerUps.Add(new PowerUp(new Vector2(320, 240), 3, false));
+                //if(enemies.Count >= -1) enemies.Add(new Enemy(new Vector2(320, 240), 3));
+                //if (powerUps.Count == 0) powerUps.Add(new PowerUp(new Vector2(320, 240), 3, false));
+                if (doors.Count == 0) doors.Add(new Door(new Vector2(320 + 128, 240+3), true));
             }
             if(Mouse.GetState().LeftButton == ButtonState.Pressed)
             {
@@ -96,6 +101,9 @@ namespace LbsGameAwards
             for (int i = powerUps.Count - 1; i >= 0; i--)
                 if (powerUps[i].destroy) powerUps.RemoveAt(i);
 
+            for (int i = doors.Count - 1; i >= 0; i--)
+                if (doors[i].destroy) doors.RemoveAt(i);
+
             base.Update(gameTime);
         }
 
@@ -112,6 +120,8 @@ namespace LbsGameAwards
                 e.DrawSprite(spriteBatch, spritesheet);
             foreach (PowerUp p in powerUps)
                 p.Draw(spriteBatch, spritesheet);
+            foreach (Door d in doors)
+                d.DrawSprite(spriteBatch, spritesheet);
 
             foreach (Enemy e in enemies)
             {

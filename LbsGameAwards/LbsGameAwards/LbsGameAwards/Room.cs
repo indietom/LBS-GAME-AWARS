@@ -18,7 +18,7 @@ namespace LbsGameAwards
 
         string mapPath;
 
-        public void Room(string mapPath2, byte tag2)
+        public Room(string mapPath2, byte tag2)
         {
             mapPath = mapPath2;
             Tag = tag2;
@@ -34,6 +34,24 @@ namespace LbsGameAwards
                     spritebatch.Draw(spritesheet, new Vector2(x * 16, y * 16), new Rectangle(map[x, y] * 16, 562, 16, 16), Color.White);
                 }
             }
+        }
+
+        public bool tileIntersection(Rectangle hitBox)
+        {
+            for (int x = 0; x < map.GetLength(1); x++)
+            {
+                for (int y = 0; y < map.GetLength(0); y++)
+                {
+                    if(map[x, y] == 4)
+                    {
+                        if(hitBox.Intersects(new Rectangle(x*16, y*16, 16, 16)))
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
         }
 
         public int[,] LoadLevel(string name)

@@ -55,6 +55,8 @@ namespace LbsGameAwards
         public bool rotated;
         public bool destroy;
 
+        public SpriteEffects spriteEffects = SpriteEffects.None;
+
         public void Animate()
         {
             if(AnimationCount >= MaxAnimationCount)
@@ -124,8 +126,8 @@ namespace LbsGameAwards
             Rectangle soruceRectangle = new Rectangle(SpriteCoords.X, SpriteCoords.Y, Size.X, Size.Y);
             Vector2 origin = Vector2.Zero;
             if (rotated) origin = new Vector2(Size.X / 2, Size.Y / 2);
-            if(rotateOnRad) spriteBatch.Draw(spritesheet, Pos, soruceRectangle, color, Rotation, origin, Scale, SpriteEffects.None, Z);
-            else spriteBatch.Draw(spritesheet, Pos, soruceRectangle, color, (Rotation * (float)Math.PI/180), origin, Scale, SpriteEffects.None, Z);
+            if(rotateOnRad) spriteBatch.Draw(spritesheet, Pos, soruceRectangle, color, Rotation, origin, Scale, spriteEffects, Z);
+            else spriteBatch.Draw(spritesheet, Pos, soruceRectangle, color, (Rotation * (float)Math.PI / 180), origin, Scale, spriteEffects, Z);
         }
     }
 }
