@@ -32,7 +32,7 @@ namespace LbsGameAwards
 
         static internal Ui ui = new Ui();
 
-        Room testRoom = new Room("", 1);
+        Room currentRoom = new Room("", 1);
 
         protected override void Initialize()
         {
@@ -77,6 +77,8 @@ namespace LbsGameAwards
 
             foreach (Door d in doors)
                 d.Update();
+
+            currentRoom.Update();
 
             ui.Update();
 
@@ -130,6 +132,9 @@ namespace LbsGameAwards
                 e.DrawSprite(spriteBatch, spritesheet);
                 e.Draw(spriteBatch, spritesheet);
             }
+
+            //currentRoom.Draw(spriteBatch, spritesheet);
+
             spriteBatch.End();
 
             spriteBatch.Begin();

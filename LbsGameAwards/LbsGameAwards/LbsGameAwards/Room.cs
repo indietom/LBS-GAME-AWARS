@@ -16,9 +16,13 @@ namespace LbsGameAwards
         byte amountOfTypes;
         byte[] enemyTypes;
         byte[] amountOfEnemies;
+        byte doorToSpawnAt;
+        byte randomWaveSize;
 
         short[] enemySpawnCount;
         short[] enemySpawnDelay;
+
+        short totalAmountOfEnemy;
 
         byte[] doorLeadsTo = new byte[4];
 
@@ -39,8 +43,56 @@ namespace LbsGameAwards
             {
                 map = LoadLevel(mapPath);
                 LoadRoom(mapPath + "Room");
-            }
 
+                for (int i = 0; i < amountOfTypes; i++)
+                {
+                    totalAmountOfEnemy += amountOfEnemies[i];
+                }
+            }
+        }
+
+        public void SpawnEnemies()
+        {
+            Random random = new Random();
+            for(int i = 0; i < amountOfTypes; i++)
+            {
+                enemySpawnCount[i] += 1;
+                if(enemySpawnCount[i] >= enemySpawnDelay[i])
+                {
+                    doorToSpawnAt = (byte)random.Next(0, 4);
+                    if(enemyTypes[i] != 1)
+                    {
+                        randomWaveSize = (byte)random.Next(1, 5);
+                        for(int j = 0; j < randomWaveSize; j++)
+                        {
+                            doorToSpawnAt = (byte)random.Next(0, 4);
+                            if(doorToSpawnAt == 0)
+                            {
+                                Game1.enemies.Add(new Enemy(new Vector2(-32, 240 - 16), enemyTypes[i]));
+                            }
+                            if (doorToSpawnAt == 1)
+                            {
+                                Game1.enemies.Add(new Enemy(new Vector2(320 - 16, -32), enemyTypes[i]));
+                            }
+                            if (doorToSpawnAt == 2)
+                            {
+                                Game1.enemies.Add(new Enemy(new Vector2(640+32, 240 - 16), enemyTypes[i]));
+                            }
+                            if (doorToSpawnAt == 3)
+                            {
+                                Game1.enemies.Add(new Enemy(new Vector2(320-16, 480+32), enemyTypes[i]));
+                            }
+                        }
+                    }
+                    totalAmountOfEnemy -= 1;
+                    enemySpawnCount[i] = 0;
+                }
+            }
+        }
+
+        public void Update()
+        {
+            if(totalAmountOfEnemy > 0) SpawnEnemies();
         }
 
         public void Draw(SpriteBatch spritebatch, Texture2D spritesheet)
@@ -54,13 +106,13 @@ namespace LbsGameAwards
             }
         }
 
-        public bool tileIntersection(Rectangle hitBox)
+        public bool tileIntersection(Rectangle hitBox, byte tileId)
         {
             for (int x = 0; x < map.GetLength(1); x++)
             {
                 for (int y = 0; y < map.GetLength(0); y++)
                 {
-                    if(map[x, y] == 4)
+                    if (map[x, y] == tileId)
                     {
                         if(hitBox.Intersects(new Rectangle(x*16, y*16, 16, 16)))
                         {
