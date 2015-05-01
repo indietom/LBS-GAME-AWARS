@@ -13,10 +13,16 @@ namespace LbsGameAwards
     class Room : GameObject
     {
         public byte Tag { private set; get; }
+        byte amountOfMines;
+
+        byte[] doorLeadsTo;
 
         int[,] map;
 
         string mapPath;
+
+        bool cleard;
+        bool spawnMines;
 
         public Room(string mapPath2, byte tag2)
         {

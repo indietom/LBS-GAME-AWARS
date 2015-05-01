@@ -10,6 +10,8 @@ namespace LbsGameAwards
     class Door : GameObject
     {
         byte openingSpeed = 1;
+        byte openCount;
+        byte maxOpenCount = 64;
 
         bool vertical;
         bool open = true;
@@ -46,6 +48,16 @@ namespace LbsGameAwards
             Animate();
             AnimationCount += 1;
             SpriteCoords = new Point(Frame(CurrentFrame), SpriteCoords.Y);
+
+            if(Size.X <= 0 || Size.Y <= 0)
+            {
+                openCount += 1;
+                if(openCount >= maxOpenCount)
+                {
+                    open = false;
+                    openCount = 0;
+                }
+            }
 
             if(open)
             {
