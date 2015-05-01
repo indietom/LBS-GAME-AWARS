@@ -13,13 +13,20 @@ namespace LbsGameAwards
     class Room : GameObject
     {
         public byte Tag { private set; get; }
-        byte amountOfMines;
+        byte amountOfTypes;
+        byte[] enemyTypes;
+        byte[] amountOfEnemies;
 
-        byte[] doorLeadsTo;
+        short[] enemySpawnCount;
+        short[] enemySpawnDelay;
+
+        byte[] doorLeadsTo = new byte[4];
 
         int[,] map;
 
         string mapPath;
+        string doorLine;
+        string[] enemyLine;
 
         bool cleard;
         bool spawnMines;
@@ -58,6 +65,42 @@ namespace LbsGameAwards
                 }
             }
             return false;
+        }
+
+        public void LoadRoom(string path)
+        {
+            StreamReader sr = new StreamReader(path);
+            amountOfTypes = byte.Parse(sr.ReadLine());
+
+            amountOfEnemies = new byte[amountOfTypes];
+            enemyTypes = new byte[amountOfTypes];
+            enemySpawnDelay = new short[amountOfTypes];
+            enemySpawnCount = new short[amountOfTypes];
+
+            enemyLine = new string[amountOfTypes];
+
+            for (int i = 0; i < amountOfTypes; i++)
+            {
+                enemyLine[i] = sr.ReadLine();
+            }
+
+            for (int i = 0; i < amountOfTypes; i++)
+            {
+                enemyTypes[i] = byte.Parse(enemyLine[i].Split('-')[0]);
+                amountOfEnemies[i] = byte.Parse(enemyLine[i].Split('-')[1]);
+                enemySpawnDelay[i] = byte.Parse(enemyLine[i].Split('-')[3]);
+            }
+
+            doorLine = sr.ReadLine();
+
+            for (int i = 0; i < 4; i++)
+            {
+                doorLeadsTo[i] = byte.Parse(doorLine.Split('-')[i]);
+            }
+
+            spawnMines = Convert.ToBoolean(sr.ReadLine());
+
+            sr.Dispose();
         }
 
         public int[,] LoadLevel(string name)

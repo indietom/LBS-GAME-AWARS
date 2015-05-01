@@ -45,6 +45,7 @@ namespace RoomCreator
                 amountOfTypes = int.Parse(Console.ReadLine());
 
                 StreamWriter sw = new StreamWriter(fileName);
+                sw.WriteLine(amountOfTypes);
                 for(int i = 0; i < amountOfTypes; i++)
                 {
                     ColoredText("ENEMY TYPE: ", ConsoleColor.Magenta, false);
