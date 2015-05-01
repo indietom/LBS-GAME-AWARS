@@ -35,7 +35,12 @@ namespace LbsGameAwards
         {
             mapPath = mapPath2;
             Tag = tag2;
-            map = LoadLevel(mapPath);
+            if (mapPath != "")
+            {
+                map = LoadLevel(mapPath);
+                LoadRoom(mapPath + "Room");
+            }
+
         }
 
         public void Draw(SpriteBatch spritebatch, Texture2D spritesheet)
@@ -88,7 +93,7 @@ namespace LbsGameAwards
             {
                 enemyTypes[i] = byte.Parse(enemyLine[i].Split('-')[0]);
                 amountOfEnemies[i] = byte.Parse(enemyLine[i].Split('-')[1]);
-                enemySpawnDelay[i] = byte.Parse(enemyLine[i].Split('-')[3]);
+                enemySpawnDelay[i] = byte.Parse(enemyLine[i].Split('-')[2]);
             }
 
             doorLine = sr.ReadLine();
@@ -101,6 +106,29 @@ namespace LbsGameAwards
             spawnMines = Convert.ToBoolean(sr.ReadLine());
 
             sr.Dispose();
+        }
+
+        public void PrintRoom()
+        {
+            for(int i = 0; i < amountOfTypes; i++)
+            {
+                Console.Write(enemyTypes[i] + "-");
+                Console.Write(amountOfEnemies[i] + "-");
+                Console.Write(enemySpawnDelay[i]);
+                Console.WriteLine("\n");
+            }
+
+            Console.WriteLine("\n");
+
+            for(int i = 0; i < 4; i++)
+            {
+                if(i != 3) Console.Write(doorLeadsTo[i] + "-");
+                else Console.Write(doorLeadsTo[i]);
+            }
+
+            Console.WriteLine("\n");
+
+            Console.WriteLine(spawnMines);
         }
 
         public int[,] LoadLevel(string name)

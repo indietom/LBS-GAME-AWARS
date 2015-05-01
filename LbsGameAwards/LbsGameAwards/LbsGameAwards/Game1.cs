@@ -32,6 +32,8 @@ namespace LbsGameAwards
 
         static internal Ui ui = new Ui();
 
+        Room testRoom = new Room("", 1);
+
         protected override void Initialize()
         {
             players.Add(new Player());
