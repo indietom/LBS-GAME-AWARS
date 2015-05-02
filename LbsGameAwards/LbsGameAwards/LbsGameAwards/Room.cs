@@ -60,13 +60,13 @@ namespace LbsGameAwards
                 if(enemySpawnCount[i] >= enemySpawnDelay[i])
                 {
                     doorToSpawnAt = (byte)random.Next(0, 4);
-                    if(enemyTypes[i] != 1)
+                    if (enemyTypes[i] != 1)
                     {
                         randomWaveSize = (byte)random.Next(1, 5);
-                        for(int j = 0; j < randomWaveSize; j++)
+                        for (int j = 0; j < randomWaveSize; j++)
                         {
                             doorToSpawnAt = (byte)random.Next(0, 4);
-                            if(doorToSpawnAt == 0)
+                            if (doorToSpawnAt == 0)
                             {
                                 Game1.enemies.Add(new Enemy(new Vector2(-32, 240 - 16), enemyTypes[i]));
                             }
@@ -76,12 +76,31 @@ namespace LbsGameAwards
                             }
                             if (doorToSpawnAt == 2)
                             {
-                                Game1.enemies.Add(new Enemy(new Vector2(640+32, 240 - 16), enemyTypes[i]));
+                                Game1.enemies.Add(new Enemy(new Vector2(640 + 32, 240 - 16), enemyTypes[i]));
                             }
                             if (doorToSpawnAt == 3)
                             {
-                                Game1.enemies.Add(new Enemy(new Vector2(320-16, 480+32), enemyTypes[i]));
+                                Game1.enemies.Add(new Enemy(new Vector2(320 - 16, 480 + 32), enemyTypes[i]));
                             }
+                        }
+                    }
+                    else
+                    {
+                        if (doorToSpawnAt == 0)
+                        {
+                            Game1.enemies.Add(new Enemy(new Vector2(-64, 240 - 32), enemyTypes[i]));
+                        }
+                        if (doorToSpawnAt == 1)
+                        {
+                            Game1.enemies.Add(new Enemy(new Vector2(320 - 32, -64), enemyTypes[i]));
+                        }
+                        if (doorToSpawnAt == 2)
+                        {
+                            Game1.enemies.Add(new Enemy(new Vector2(640 + 64, 240 - 32), enemyTypes[i]));
+                        }
+                        if (doorToSpawnAt == 3)
+                        {
+                            Game1.enemies.Add(new Enemy(new Vector2(320 - 32, 480 + 64), enemyTypes[i]));
                         }
                     }
                     totalAmountOfEnemy -= 1;

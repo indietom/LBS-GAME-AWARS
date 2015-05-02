@@ -14,7 +14,7 @@ namespace LbsGameAwards
         byte maxOpenCount = 64;
 
         bool vertical;
-        bool open = true;
+        bool open;
 
         public Door(Vector2 pos2, bool vertical2)
         {
