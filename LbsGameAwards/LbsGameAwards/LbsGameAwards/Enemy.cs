@@ -181,6 +181,23 @@ namespace LbsGameAwards
                     AngleMath();
                     Pos += Vel;
                     break;
+                case 4:
+                    if(attacking)
+                    {
+                        if(attackCount == 32 || attackCount == 48)
+                        {
+                            for(int i = 0; i < 3; i++)
+                            {
+
+                            }
+                        }
+                        Speed = 0;
+                    }
+                    else
+                    {
+                        Speed = Lerp(Speed, orginalSpeed, 0.005f);
+                    }
+                    break;
             }
         }
 
@@ -326,6 +343,17 @@ namespace LbsGameAwards
                     attackDistance = 8*2;
                     maxAttackCount = 16;
                     bloodColor = Color.Orange;
+                    break;
+                case 4:
+                    SpriteCoords = new Point(199, 430);
+                    SetSize(32);
+                    MinFrame = 6;
+                    MaxFrame = (short)(MaxFrame + 6);
+                    Hp = 2;
+                    attackDistance = 64+32;
+                    maxAttackCount = 64;
+                    Speed = 1;
+                    rotated = true;
                     break;
             }
         }

@@ -70,6 +70,12 @@ namespace LbsGameAwards
             }
         }
 
+        // I wanted this for some reason at 2 am, can't remember why
+        public int DeFrame(int spriteCoord)
+        {
+            return ((spriteCoord - 1) / 16) / 2;
+        }
+
         public int Frame(int cell)
         {
             return cell * 32 + 1 + cell;

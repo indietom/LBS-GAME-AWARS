@@ -144,6 +144,11 @@ namespace LbsGameAwards
                         SetSize(8);
                         SpriteCoords = new Point(175, 1);
                         break;
+                    case 1:
+                        SetSize(4);
+                        SpriteCoords = new Point(175, 10);
+                        rotated = true;
+                        break;
                 }
             }
         }
