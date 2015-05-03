@@ -109,7 +109,7 @@ namespace LbsGameAwards
             {
                 if (attackCount >= maxAttackCount && type != 1)
                 {
-                    if(DistanceTo(p.Pos) <= attackDistance) p.dead = true;
+                    if (DistanceTo(p.Pos) <= attackDistance && type != 4) p.dead = true;
                     attackCount = 0;
                 }
                 attacking = ((DistanceTo(p.Pos) <= attackDistance));
@@ -182,21 +182,35 @@ namespace LbsGameAwards
                     Pos += Vel;
                     break;
                 case 4:
+                    AngleMath();
+                    shootAngle = AimAt(target, false);
+                    Angle = shootAngle;
+                    Pos += Vel;
+                    foreach(Player p in Game1.players)
+                    {
+                        target = new Vector2(Lerp(target.X, p.Pos.X, 0.07f), Lerp(target.Y, p.Pos.Y, 0.07f));
+                    }
+                    Rotation = shootAngle;
                     if(attacking)
                     {
                         if(attackCount == 32 || attackCount == 48)
                         {
-                            for(int i = 0; i < 3; i++)
+                            for(int i = -1; i < 2; i++)
                             {
-
+                                Game1.projectiles.Add(new Projectile(Pos, shootAngle + (i * -16), 3, 0, 0, 1, true, Z-0.01f));
                             }
                         }
-                        Speed = 0;
+                        AnimationCount = 0;
+                        CurrentFrame = MinFrame;
+                        Speed = Lerp(Speed, 0, 0.05f);
                     }
                     else
                     {
-                        Speed = Lerp(Speed, orginalSpeed, 0.005f);
+                        Speed = Lerp(Speed, orginalSpeed, 0.05f);
                     }
+      
+                    //Speed = Lerp(Speed, orginalSpeed, 0.1f);
+                    Console.WriteLine(Speed);
                     break;
             }
         }
@@ -348,9 +362,11 @@ namespace LbsGameAwards
                     SpriteCoords = new Point(199, 430);
                     SetSize(32);
                     MinFrame = 6;
-                    MaxFrame = (short)(MaxFrame + 6);
+                    MaxFrame = (short)(MinFrame + 6);
+                    MaxAnimationCount = 8;
+                    CurrentFrame = MinFrame;
                     Hp = 2;
-                    attackDistance = 64+32;
+                    attackDistance = 128+32;
                     maxAttackCount = 64;
                     Speed = 1;
                     rotated = true;

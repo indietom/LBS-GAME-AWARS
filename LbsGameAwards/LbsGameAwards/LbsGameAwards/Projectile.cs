@@ -101,7 +101,15 @@ namespace LbsGameAwards
                         if (CurrentFrame >= MaxFrame - 4) Damege = 0;
                         break;
                 }
-
+            }
+            else
+            {
+                switch(spriteType)
+                {
+                    case 1:
+                        Rotation += 5f;
+                        break;
+                }
             }
 
             Movment();
