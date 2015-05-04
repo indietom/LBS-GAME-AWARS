@@ -29,10 +29,11 @@ namespace LbsGameAwards
         static internal List<Enemy> enemies = new List<Enemy>();
         static internal List<PowerUp> powerUps = new List<PowerUp>();
         static internal List<Door> doors = new List<Door>();
+        static internal List<Loot> loots = new List<Loot>();
 
         static internal Ui ui = new Ui();
 
-        Room currentRoom = new Room("", 1);
+        static internal Room currentRoom = new Room("", 1);
 
         protected override void Initialize()
         {
@@ -42,12 +43,17 @@ namespace LbsGameAwards
 
         Texture2D spritesheet;
         SpriteFont font;
+        SpriteFont smallFont;
+        SpriteFont bigFont;
 
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
             spritesheet = Content.Load<Texture2D>("spritesheet");
             font = Content.Load<SpriteFont>("font");
+            bigFont = Content.Load<SpriteFont>("BigFont");
+            smallFont = Content.Load<SpriteFont>("SmallFont");
+            
         }
 
         protected override void UnloadContent()
@@ -78,6 +84,9 @@ namespace LbsGameAwards
             foreach (Door d in doors)
                 d.Update();
 
+            foreach (Loot l in loots)
+                l.Update();
+
             currentRoom.Update();
 
             ui.Update();
@@ -90,7 +99,7 @@ namespace LbsGameAwards
             }
             if(Mouse.GetState().LeftButton == ButtonState.Pressed)
             {
-                if(explosions.Count == 0) projectiles.Add(new Projectile(new Vector2(Mouse.GetState().X, Mouse.GetState().Y), 0, 3, 0, 0, 1, true));
+                if (loots.Count <= 10) loots.Add(new Loot(new Vector2(Mouse.GetState().X, Mouse.GetState().Y), 0));
             }
 
             for (int i = projectiles.Count() - 1; i >= 0; i--)
@@ -107,6 +116,9 @@ namespace LbsGameAwards
 
             for (int i = doors.Count - 1; i >= 0; i--)
                 if (doors[i].destroy) doors.RemoveAt(i);
+
+            for (int i = loots.Count - 1; i >= 0; i--)
+                if (loots[i].destroy) loots.RemoveAt(i);
 
             base.Update(gameTime);
         }
@@ -126,6 +138,8 @@ namespace LbsGameAwards
                 p.Draw(spriteBatch, spritesheet);
             foreach (Door d in doors)
                 d.DrawSprite(spriteBatch, spritesheet);
+            foreach (Loot l in loots)
+                l.DrawSprite(spriteBatch, spritesheet);
 
             foreach (Enemy e in enemies)
             {
@@ -138,7 +152,7 @@ namespace LbsGameAwards
             spriteBatch.End();
 
             spriteBatch.Begin();
-            ui.Draw(spriteBatch, spritesheet, font);
+            ui.Draw(spriteBatch, spritesheet, smallFont, bigFont);
             spriteBatch.End();
 
             base.Draw(gameTime);

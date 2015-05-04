@@ -14,6 +14,8 @@ namespace LbsGameAwards
 
         byte currentAmountOfCases;
 
+        float displayScore;
+
         bool writePlayerLives;
         public bool hideUi;
 
@@ -21,9 +23,15 @@ namespace LbsGameAwards
         {
             currentAmountOfCases = (byte)((Game1.players[0].Ammo / 10));
             writePlayerLives = (Game1.players[0].Lives <= 5) ? false : true;
+
+            foreach(Player p in Game1.players)
+            {
+                Console.WriteLine(p.Score);
+                displayScore = Lerp(displayScore, p.Score, 0.1f);
+            }
         }
 
-        public void Draw(SpriteBatch spriteBatch, Texture2D spritesheet, SpriteFont font)
+        public void Draw(SpriteBatch spriteBatch, Texture2D spritesheet, SpriteFont smallFont, SpriteFont bigFont)
         {
             if(!hideUi)
             {
@@ -40,7 +48,7 @@ namespace LbsGameAwards
                 if(writePlayerLives)
                 {
                     spriteBatch.Draw(spritesheet, new Vector2(42, 12+14), new Rectangle(265, 34, 15, 13), Color.White);
-                    spriteBatch.DrawString(font, "x" + Game1.players[0].Lives.ToString(), new Vector2(42 + 16, 12 + 14), Color.Yellow, 0, Vector2.Zero, 0.7f, SpriteEffects.None, 0f);
+                    spriteBatch.DrawString(smallFont, "x" + Game1.players[0].Lives.ToString(), new Vector2(42 + 16, 12 + 14), Color.Yellow, 0, Vector2.Zero, 1.0f, SpriteEffects.None, 0f);
                 }
                 else
                 {
@@ -49,6 +57,7 @@ namespace LbsGameAwards
                         spriteBatch.Draw(spritesheet, new Vector2(42+i*15, 12+14), new Rectangle(265, 34, 15, 13), Color.White);
                     }
                 }
+                spriteBatch.DrawString(bigFont, "SCORE: " + Convert.ToInt32(displayScore).ToString(), new Vector2(8, 50), Color.White);
             }
         }
     }

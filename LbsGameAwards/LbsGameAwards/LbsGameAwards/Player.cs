@@ -62,7 +62,7 @@ namespace LbsGameAwards
             MaxAmmo = 50;
             Ammo = MaxAmmo;
             MaxAnimationCount = 4;
-            Lives = 4;
+            Lives = 7;
         }
 
         public void Movment()
@@ -299,6 +299,16 @@ namespace LbsGameAwards
             Input();
             CheckHealth();
             PowerUpLogic();
+
+            foreach(Loot l in Game1.loots)
+            {
+                if(l.HitBox().Intersects(HitBox()))
+                {
+                    Score += l.Worth;
+                    Console.WriteLine(l.Worth);
+                    l.destroy = true;
+                }
+            }
 
             if(!dead) SpriteCoords = new Point(Frame(CurrentFrame), Frame(shootDirection));
             Animate();

@@ -112,6 +112,7 @@ namespace LbsGameAwards
         public void Update()
         {
             if(totalAmountOfEnemy > 0) SpawnEnemies();
+            else cleard = true;
         }
 
         public void Draw(SpriteBatch spritebatch, Texture2D spritesheet)
