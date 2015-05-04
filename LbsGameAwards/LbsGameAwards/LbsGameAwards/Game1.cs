@@ -30,6 +30,7 @@ namespace LbsGameAwards
         static internal List<PowerUp> powerUps = new List<PowerUp>();
         static internal List<Door> doors = new List<Door>();
         static internal List<Loot> loots = new List<Loot>();
+        static internal List<TextEffect> textEffects = new List<TextEffect>();
 
         static internal Ui ui = new Ui();
 
@@ -87,6 +88,9 @@ namespace LbsGameAwards
             foreach (Loot l in loots)
                 l.Update();
 
+            foreach (TextEffect t in textEffects)
+                t.Update();
+
             currentRoom.Update();
 
             ui.Update();
@@ -99,7 +103,7 @@ namespace LbsGameAwards
             }
             if(Mouse.GetState().LeftButton == ButtonState.Pressed)
             {
-                if (loots.Count <= 10) loots.Add(new Loot(new Vector2(Mouse.GetState().X, Mouse.GetState().Y), 0));
+                if (loots.Count <= 10) textEffects.Add(new TextEffect(new Vector2(Mouse.GetState().X, Mouse.GetState().Y), "AYY", new Vector2(100, 100), 0.01f, 0, 1, Color.Red, 100));
             }
 
             for (int i = projectiles.Count() - 1; i >= 0; i--)
@@ -119,6 +123,9 @@ namespace LbsGameAwards
 
             for (int i = loots.Count - 1; i >= 0; i--)
                 if (loots[i].destroy) loots.RemoveAt(i);
+
+            for (int i = textEffects.Count - 1; i >= 0; i--)
+                if (textEffects[i].destroy) textEffects.RemoveAt(i);
 
             base.Update(gameTime);
         }
@@ -152,6 +159,7 @@ namespace LbsGameAwards
             spriteBatch.End();
 
             spriteBatch.Begin();
+            foreach(TextEffect t in textEffects) t.Draw(spriteBatch, bigFont, smallFont);
             ui.Draw(spriteBatch, spritesheet, smallFont, bigFont);
             spriteBatch.End();
 

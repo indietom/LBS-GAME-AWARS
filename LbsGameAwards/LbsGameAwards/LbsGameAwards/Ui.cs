@@ -26,7 +26,6 @@ namespace LbsGameAwards
 
             foreach(Player p in Game1.players)
             {
-                Console.WriteLine(p.Score);
                 displayScore = Lerp(displayScore, p.Score, 0.1f);
             }
         }
