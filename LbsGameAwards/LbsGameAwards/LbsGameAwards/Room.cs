@@ -33,6 +33,7 @@ namespace LbsGameAwards
         string[] enemyLine;
 
         bool cleard;
+        bool hasSpawnedClearText;
         bool spawnMines;
 
         public Room(string mapPath2, byte tag2)
@@ -113,6 +114,15 @@ namespace LbsGameAwards
         {
             if(totalAmountOfEnemy > 0) SpawnEnemies();
             else cleard = true;
+
+            if(cleard)
+            { 
+                if(!hasSpawnedClearText)
+                {
+                    Game1.textEffects.Add(new TextEffect(new Vector2(250, -64), "ROOM CLEARED", new Vector2(250, 240), 0.07f, 0, 1, Color.Gold, 0, true));
+                    hasSpawnedClearText = true;
+                }
+            }
         }
 
         public void Draw(SpriteBatch spritebatch, Texture2D spritesheet)

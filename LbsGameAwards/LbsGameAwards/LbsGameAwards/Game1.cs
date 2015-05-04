@@ -103,7 +103,7 @@ namespace LbsGameAwards
             }
             if(Mouse.GetState().LeftButton == ButtonState.Pressed)
             {
-                if (loots.Count <= 10) textEffects.Add(new TextEffect(new Vector2(Mouse.GetState().X, Mouse.GetState().Y), "AYY", new Vector2(100, 100), 0.01f, 0, 1, Color.Red, 100));
+                if (loots.Count <= 10) loots.Add(new Loot(new Vector2(Mouse.GetState().X, Mouse.GetState().Y), 1));
             }
 
             for (int i = projectiles.Count() - 1; i >= 0; i--)

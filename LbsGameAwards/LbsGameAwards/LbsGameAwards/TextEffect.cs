@@ -24,7 +24,8 @@ namespace LbsGameAwards
 
         Vector2 target;
 
-        public TextEffect(Vector2 pos2, string text2, float angle2, float speed2, byte tag2, byte movmentType2, Color color2, short maxLifeTime2)
+        // :^(
+        public TextEffect(Vector2 pos2, string text2, float angle2, float speed2, byte tag2, byte movmentType2, Color color2, short maxLifeTime2, bool useBigFont2)
         {
             color = color2;
             Pos = pos2;
@@ -34,9 +35,10 @@ namespace LbsGameAwards
             movmentType = movmentType2;
             text = text2;
             maxLifeTime = maxLifeTime2;
+            useBigFont = useBigFont2;
         }
 
-        public TextEffect(Vector2 pos2, string text2, Vector2 target2, float speed2, byte tag2, byte movmentType2, Color color2, short maxLifeTime2)
+        public TextEffect(Vector2 pos2, string text2, Vector2 target2, float speed2, byte tag2, byte movmentType2, Color color2, short maxLifeTime2, bool useBigFont2)
         {
             color = color2;
             Pos = pos2;
@@ -46,15 +48,14 @@ namespace LbsGameAwards
             movmentType = movmentType2;
             text = text2;
             maxLifeTime = maxLifeTime2;
+            useBigFont = useBigFont2;
         }
 
         public void Update()
-        {
-            color = FlashColors(new Color[4]{Color.White, Color.Red, Color.Blue, Color.Green}, 8, true);
-
+        {  
             if(maxLifeTime != 0) lifeTime += 1;
             
-            if(lifeTime >= maxLifeTime)
+            if(lifeTime >= maxLifeTime && maxLifeTime != 0)
             {
                 destroy = true;
             }
@@ -67,6 +68,13 @@ namespace LbsGameAwards
                     break;
                 case 1:
                     Pos = new Vector2(Lerp(Pos.X, target.X, Speed), Lerp(Pos.Y, target.Y, Speed));
+                    break;
+            }
+
+            switch(tag)
+            {
+                case 1:
+                    color = FlashColors(new Color[4] { Color.Yellow, Color.Red, Color.Blue, Color.Green }, 4, true);
                     break;
             }
         }

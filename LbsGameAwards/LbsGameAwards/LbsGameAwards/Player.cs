@@ -305,7 +305,7 @@ namespace LbsGameAwards
                 if(l.HitBox().Intersects(HitBox()))
                 {
                     Score += l.Worth;
-                    Console.WriteLine(l.Worth);
+                    Game1.textEffects.Add(new TextEffect(l.Pos, "+" + l.Worth.ToString(), l.Pos - new Vector2(3, 32), 0.05f, 1, 1, Color.White, 100, false));
                     l.destroy = true;
                 }
             }
