@@ -10,6 +10,8 @@ namespace LbsGameAwards
 {
     class TextEffect : GameObject
     {
+        int alpha;
+
         short intervalCount;
         short lifeTime;
         short maxLifeTime;

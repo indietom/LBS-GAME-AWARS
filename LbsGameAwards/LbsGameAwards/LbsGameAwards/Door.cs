@@ -45,6 +45,7 @@ namespace LbsGameAwards
 
         public void Update()
         {
+            Z = 1f;
             Animate();
             AnimationCount += 1;
             SpriteCoords = new Point(Frame(CurrentFrame), SpriteCoords.Y);

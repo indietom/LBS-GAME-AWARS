@@ -56,7 +56,7 @@ namespace LbsGameAwards
                         spriteBatch.Draw(spritesheet, new Vector2(42+i*15, 12+14), new Rectangle(265, 34, 15, 13), Color.White);
                     }
                 }
-                spriteBatch.DrawString(bigFont, "SCORE: " + Convert.ToInt32(displayScore).ToString(), new Vector2(8, 50), Color.White);
+                spriteBatch.DrawString(bigFont, "SCORE: " + Convert.ToInt32(displayScore).ToString(), new Vector2(8, 50), new Color(0.9f+(Game1.players[0].Score - displayScore) / 10, 0.9f, 0.9f));
             }
         }
     }

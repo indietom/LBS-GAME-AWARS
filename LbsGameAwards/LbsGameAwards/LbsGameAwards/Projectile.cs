@@ -92,6 +92,11 @@ namespace LbsGameAwards
 
             if (spriteType != 1) Z = ZOrder();
 
+            if(Game1.currentRoom.tileIntersection(HitBox(), 4))
+            {
+                destroy = true;
+            }
+
             if (!enemy)
             {
                 switch (spriteType)

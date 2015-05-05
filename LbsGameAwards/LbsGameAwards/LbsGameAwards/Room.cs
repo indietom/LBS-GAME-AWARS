@@ -52,6 +52,15 @@ namespace LbsGameAwards
                 {
                     totalAmountOfEnemy += amountOfEnemies[i];
                 }
+
+                for(int i = 0; i < 5; i++)
+                {
+                    Game1.doors.Add(new Door(new Vector2(0, 160 + 32 * i), false));
+                    Game1.doors.Add(new Door(new Vector2(640-32, 160 + 32 * i), false));
+
+                    Game1.doors.Add(new Door(new Vector2(240 + 32 * i, 0), true));
+                    Game1.doors.Add(new Door(new Vector2(240 + 32 * i, 480-32), true));
+                }
             }
         }
 
@@ -134,8 +143,8 @@ namespace LbsGameAwards
             {
                 for(int y = 0; y < map.GetLength(0); y++)
                 {
-                    //spritebatch.Draw(spritesheet, new Vector2(x * 16, y * 16), new Rectangle(map[y, x] * 16, 562, 16, 16), Color.White);
-                    spritebatch.DrawString(font, map[y, x].ToString(), new Vector2(x * 16, y * 16), new Color(map[y, x]*50, 0, 0));
+                    spritebatch.Draw(spritesheet, new Vector2(x * 16, y * 16), new Rectangle(map[y, x] * 16, 562, 16, 16), Color.White);
+                    //spritebatch.DrawString(font, map[y, x].ToString(), new Vector2(x * 16, y * 16), new Color(map[y, x]*50, 0, 0));
                 }
             }
         }
