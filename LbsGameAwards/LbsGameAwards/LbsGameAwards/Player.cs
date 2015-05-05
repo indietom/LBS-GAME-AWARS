@@ -232,6 +232,13 @@ namespace LbsGameAwards
                 SpriteCoords = new Point(Frame(CurrentFrame), 1);
                 AnimationCount += 1;
                 Pos = new Vector2(Lerp(Pos.X, 320, 0.009f), Pos.Y);
+                foreach(Door d in Game1.doors)
+                {
+                    if(d.Tag == 0)
+                    {
+                        d.open = true;
+                    }
+                }
             }
 
             if (spawnCount >= maxSpawnCount)

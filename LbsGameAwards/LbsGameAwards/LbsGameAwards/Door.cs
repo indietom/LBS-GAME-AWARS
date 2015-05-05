@@ -13,8 +13,10 @@ namespace LbsGameAwards
         byte openCount;
         byte maxOpenCount = 64;
 
+        public byte Tag { private set; get; }
+
         bool vertical;
-        bool open;
+        public bool open;
 
         public Door(Vector2 pos2, bool vertical2)
         {
@@ -36,11 +38,19 @@ namespace LbsGameAwards
             if(Pos.X > 320 && !vertical)
             {
                 spriteEffects = SpriteEffects.FlipHorizontally;
+                Tag = 2;
             }
             if (Pos.Y > 240 && vertical)
             {
                 spriteEffects = SpriteEffects.FlipVertically;
+                Tag = 3;
             }
+
+            if (Tag == 0 && vertical)
+            {
+                Tag = 1;
+            }
+
         }
 
         public void Update()

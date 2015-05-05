@@ -116,6 +116,13 @@ namespace LbsGameAwards
                             Game1.enemies.Add(new Enemy(new Vector2(320 - 32, 480 + 64), enemyTypes[i]));
                         }
                     }
+                    foreach(Door d in Game1.doors)
+                    {
+                        if(d.Tag == doorToSpawnAt)
+                        {
+                            d.open = true;
+                        }
+                    }
                     totalAmountOfEnemy -= 1;
                     enemySpawnCount[i] = 0;
                 }
