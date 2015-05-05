@@ -34,7 +34,7 @@ namespace LbsGameAwards
 
         static internal Ui ui = new Ui();
 
-        static internal Room currentRoom = new Room("", 1);
+        static internal Room currentRoom = new Room("test", 1);
 
         protected override void Initialize()
         {
@@ -100,6 +100,7 @@ namespace LbsGameAwards
                 if(enemies.Count == 0) enemies.Add(new Enemy(new Vector2(320, 240), 4));
                 //if (powerUps.Count == 0) powerUps.Add(new PowerUp(new Vector2(320, 240), 3, false));
                 //if (doors.Count == 0) doors.Add(new Door(new Vector2(320 + 128, 240+3), true));
+                enemies.Clear();
             }
             if(Mouse.GetState().LeftButton == ButtonState.Pressed)
             {
@@ -135,6 +136,9 @@ namespace LbsGameAwards
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             spriteBatch.Begin(SpriteSortMode.FrontToBack, null, null, null, null);
+
+            currentRoom.Draw(spriteBatch, spritesheet, font);
+
             foreach (Player p in players)
                 p.DrawSprite(spriteBatch, spritesheet);
             foreach (Projectile p in projectiles)

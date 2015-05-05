@@ -40,6 +40,9 @@ namespace LbsGameAwards
         {
             mapPath = mapPath2;
             Tag = tag2;
+
+            Globals.ClearScreen();
+
             if (mapPath != "")
             {
                 map = LoadLevel(mapPath);
@@ -113,7 +116,7 @@ namespace LbsGameAwards
         public void Update()
         {
             if(totalAmountOfEnemy > 0) SpawnEnemies();
-            else cleard = true;
+            else if(Game1.enemies.Count <= 0) cleard = true;
 
             if(cleard)
             { 
@@ -125,13 +128,14 @@ namespace LbsGameAwards
             }
         }
 
-        public void Draw(SpriteBatch spritebatch, Texture2D spritesheet)
+        public void Draw(SpriteBatch spritebatch, Texture2D spritesheet, SpriteFont font)
         {
             for(int x = 0; x < map.GetLength(1); x++)
             {
                 for(int y = 0; y < map.GetLength(0); y++)
                 {
-                    spritebatch.Draw(spritesheet, new Vector2(x * 16, y * 16), new Rectangle(map[x, y] * 16, 562, 16, 16), Color.White);
+                    //spritebatch.Draw(spritesheet, new Vector2(x * 16, y * 16), new Rectangle(map[y, x] * 16, 562, 16, 16), Color.White);
+                    spritebatch.DrawString(font, map[y, x].ToString(), new Vector2(x * 16, y * 16), new Color(map[y, x]*50, 0, 0));
                 }
             }
         }
@@ -142,12 +146,9 @@ namespace LbsGameAwards
             {
                 for (int y = 0; y < map.GetLength(0); y++)
                 {
-                    if (map[x, y] == tileId)
+                    if (map[y, x] == tileId && hitBox.Intersects(new Rectangle(x * 16, y * 16, 16, 16)))
                     {
-                        if(hitBox.Intersects(new Rectangle(x*16, y*16, 16, 16)))
-                        {
-                            return true;
-                        }
+                        return true;
                     }
                 }
             }

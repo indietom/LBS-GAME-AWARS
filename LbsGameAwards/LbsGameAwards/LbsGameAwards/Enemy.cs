@@ -263,7 +263,7 @@ namespace LbsGameAwards
                     changeDirectionCount += 1;
                     if(changeDirectionCount >= 128)
                     {
-                        newTankTarget = new Vector2(random.Next(640 - 64), random.Next(480 - 64));
+                        newTankTarget = new Vector2(random.Next(640 - 128), random.Next(480 - 128));
                         if (DistanceTo(newTankTarget) >= 128)
                             changeDirectionCount = 0;
                     }

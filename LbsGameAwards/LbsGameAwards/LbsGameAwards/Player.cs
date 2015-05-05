@@ -290,10 +290,30 @@ namespace LbsGameAwards
             }
         }
 
+        public void TileCollisionLogic()
+        {
+            Rectangle playerBox = new Rectangle((int)Pos.X, (int)Pos.Y + 32-20, 32, 20);
+
+            // Funkar perfekt i blitzplus, fan vad jag hatar programmering ibland :^)
+
+            if (Game1.currentRoom.tileIntersection(new Rectangle((int)Pos.X, (int)((Pos.Y + 12) + VelY), 32, 20), 4))
+            {
+                Pos += new Vector2(0, -VelY);
+                VelY = 0;
+            }
+
+            if (Game1.currentRoom.tileIntersection(new Rectangle((int)(Pos.X + VelX), (int)Pos.Y + 12, 32, 20), 4))
+            {
+                Pos += new Vector2(-VelX, 0);
+                VelX = 0;
+            }
+        }
+
         public void Update()
         {
             Z = ZOrder();
 
+            TileCollisionLogic();
             AssignFireRates();
             Movment();
             Input();
