@@ -93,7 +93,8 @@ namespace LbsGameAwards
 
         public float ZOrder()
         {
-            return (GetCenter.Y > 0) ? Z = GetCenter.Y / 1000 : 0;
+            if(!rotated) return (GetCenter.Y > 0) ? Z = GetCenter.Y / 1000 : 0.01f;
+            else return (Pos.Y > 0) ? Z = GetCenter.Y / 1000 : 0.01f;
         }
 
         public void SetSize(int width, int height)

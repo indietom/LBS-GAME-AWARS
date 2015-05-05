@@ -78,6 +78,11 @@ namespace LbsGameAwards
                     AngleMath();
                     Pos += Vel;
                     break;
+                case 2:
+                    AngleMath();
+                    Pos += Vel;
+                    Speed = Lerp(Speed, 5, Speed/10);
+                    break;
             }
         }
 
@@ -104,6 +109,9 @@ namespace LbsGameAwards
                     case 2:
                         if (CurrentFrame >= MaxFrame - 1) destroy = true;
                         if (CurrentFrame >= MaxFrame - 4) Damege = 0;
+                        break;
+                    case 3:
+                        Rotation = Angle;
                         break;
                 }
             }
@@ -146,6 +154,11 @@ namespace LbsGameAwards
                         CurrentFrame = MinFrame;
                         SpriteCoords = new Point(Frame(MinFrame), 67);
                         MaxAnimationCount = 4;
+                        break;
+                    case 3:
+                        SetSize(16, 8);
+                        SpriteCoords = new Point(199, 1);
+                        rotated = true;
                         break;
                 }
             }

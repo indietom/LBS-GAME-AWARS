@@ -141,6 +141,10 @@ namespace LbsGameAwards
                     Game1.textEffects.Add(new TextEffect(new Vector2(250, -64), "ROOM CLEARED", new Vector2(250, 240), 0.07f, 0, 1, Color.Gold, 0, true));
                     hasSpawnedClearText = true;
                 }
+                foreach (Door d in Game1.doors)
+                {
+                    d.open = true;
+                }
             }
         }
 
