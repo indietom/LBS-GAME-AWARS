@@ -55,7 +55,9 @@ namespace LbsGameAwards
 
         public void Update()
         {
-            Z = 1f;
+            if (Tag == 1) Z = ZOrder();
+            else Z = Game1.players[0].Z + 0.1f;
+            
             Animate();
             AnimationCount += 1;
             SpriteCoords = new Point(Frame(CurrentFrame), SpriteCoords.Y);

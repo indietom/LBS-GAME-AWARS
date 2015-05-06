@@ -97,6 +97,14 @@ namespace LbsGameAwards
 
             if (spriteType != 1) Z = ZOrder();
 
+            foreach(Door d in Game1.doors)
+            {
+                if(d.HitBox().Intersects(HitBox()))
+                {
+                    destroy = true;
+                }
+            }
+
             if(Game1.currentRoom.tileIntersection(HitBox(), 4))
             {
                 destroy = true;

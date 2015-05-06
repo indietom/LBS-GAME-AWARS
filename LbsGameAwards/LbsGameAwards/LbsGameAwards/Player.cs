@@ -311,6 +311,23 @@ namespace LbsGameAwards
 
             // Funkar perfekt i blitzplus, fan vad jag hatar programmering ibland :^)
 
+            foreach(Door d in Game1.doors)
+            {
+                if (!d.open)
+                {
+                    if (d.HitBox().Intersects(new Rectangle((int)Pos.X, (int)((Pos.Y + 12) + VelY), 32, 20)))
+                    {
+                        Pos += new Vector2(0, -VelY);
+                        VelY = 0;
+                    }
+                    if (d.HitBox().Intersects(new Rectangle((int)(Pos.X + VelX), (int)Pos.Y + 12, 32, 20)))
+                    {
+                        Pos += new Vector2(-VelX, 0);
+                        VelX = 0;
+                    }
+                }
+            }
+
             if (Game1.currentRoom.tileIntersection(new Rectangle((int)Pos.X, (int)((Pos.Y + 12) + VelY), 32, 20), 4))
             {
                 Pos += new Vector2(0, -VelY);

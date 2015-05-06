@@ -143,7 +143,7 @@ namespace LbsGameAwards
                 }
                 foreach (Door d in Game1.doors)
                 {
-                    d.open = true;
+                    //d.open = true;
                 }
             }
         }
