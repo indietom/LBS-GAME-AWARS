@@ -31,6 +31,7 @@ namespace LbsGameAwards
         static internal List<Door> doors = new List<Door>();
         static internal List<Loot> loots = new List<Loot>();
         static internal List<TextEffect> textEffects = new List<TextEffect>();
+        static internal List<Particle> particles = new List<Particle>();
 
         static internal Ui ui = new Ui();
 
@@ -91,6 +92,9 @@ namespace LbsGameAwards
             foreach (TextEffect t in textEffects)
                 t.Update();
 
+            foreach (Particle p in particles)
+                p.Update();
+
             currentRoom.Update();
 
             ui.Update();
@@ -104,7 +108,7 @@ namespace LbsGameAwards
             }
             if(Mouse.GetState().LeftButton == ButtonState.Pressed)
             {
-                if (loots.Count <= 10) loots.Add(new Loot(new Vector2(Mouse.GetState().X, Mouse.GetState().Y), 1));
+                if (loots.Count <= 10) particles.Add(new Particle(new Vector2(Mouse.GetState().X, Mouse.GetState().Y), 0, 0, -90, 5));
             }
 
             for (int i = projectiles.Count() - 1; i >= 0; i--)
@@ -127,6 +131,9 @@ namespace LbsGameAwards
 
             for (int i = textEffects.Count - 1; i >= 0; i--)
                 if (textEffects[i].destroy) textEffects.RemoveAt(i);
+
+            for (int i = particles.Count - 1; i >= 0; i--)
+                if (particles[i].destroy) particles.RemoveAt(i);
 
             base.Update(gameTime);
         }
@@ -151,6 +158,8 @@ namespace LbsGameAwards
                 d.DrawSprite(spriteBatch, spritesheet);
             foreach (Loot l in loots)
                 l.DrawSprite(spriteBatch, spritesheet);
+            foreach (Particle p in particles)
+                p.DrawSprite(spriteBatch, spritesheet);
 
             foreach (Enemy e in enemies)
             {

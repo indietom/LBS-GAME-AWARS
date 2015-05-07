@@ -10,6 +10,8 @@ namespace LbsGameAwards
     {
         float maxHeight;
 
+        short smokeCount;
+
         byte movmentType;
         byte spriteType;
         byte explosionSize;
@@ -50,6 +52,15 @@ namespace LbsGameAwards
             orginalDamege = Damege;
         }
 
+        public void OnImpact()
+        {
+            if (explosive)
+            {
+                if (rotated) Game1.explosions.Add(new Explosion(new Vector2(Pos.X - explosionSize / 2, Pos.Y - explosionSize / 2), explosionSize, Color.Orange));
+                else Game1.explosions.Add(new Explosion(Pos, explosionSize, Color.Orange));
+            }
+        }
+
         public void Movment()
         {
             switch(movmentType)
@@ -82,6 +93,12 @@ namespace LbsGameAwards
                     AngleMath();
                     Pos += Vel;
                     Speed = Lerp(Speed, 5, Speed/10);
+                    smokeCount += 1;
+                    if (smokeCount >= 8)
+                    {
+                        Game1.particles.Add(new Particle(Pos, 0, 0, -Angle, 0.01f));
+                        smokeCount = 0;
+                    }
                     break;
             }
         }
@@ -101,6 +118,7 @@ namespace LbsGameAwards
             {
                 if(d.HitBox().Intersects(HitBox()))
                 {
+                    OnImpact();
                     destroy = true;
                 }
             }
@@ -108,6 +126,7 @@ namespace LbsGameAwards
             if(Game1.currentRoom.tileIntersection(HitBox(), 4))
             {
                 destroy = true;
+                OnImpact();
             }
 
             if (!enemy)
@@ -167,6 +186,9 @@ namespace LbsGameAwards
                         SetSize(16, 8);
                         SpriteCoords = new Point(199, 1);
                         rotated = true;
+                        explosive = true;
+                        explosionSize = 32;
+                        Console.WriteLine("e");
                         break;
                 }
             }

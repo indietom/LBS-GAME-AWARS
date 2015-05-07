@@ -77,6 +77,7 @@ namespace LbsGameAwards
                 {
                     if (p.HitBox().Intersects(turretHitBox) && !p.enemy && p.Damege > 0)
                     {
+                        p.OnImpact();
                         if (hurtCount <= 0)
                         {
                             Hp -= (sbyte)p.Damege;
@@ -95,6 +96,7 @@ namespace LbsGameAwards
                             Hp -= (sbyte)p.Damege;
                             hurtCount = 1;
                         }
+                        p.OnImpact();
                         p.destroy = true;
                     }
                 }
