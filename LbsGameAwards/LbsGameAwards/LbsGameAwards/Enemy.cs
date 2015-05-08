@@ -31,6 +31,7 @@ namespace LbsGameAwards
         short maxHurtCount;
         short changeDirectionCount;
         short animationOffset;
+        short moveToPosCount = 1;
 
         Color bloodColor;
 
@@ -258,7 +259,12 @@ namespace LbsGameAwards
                     turretHitBox = new Rectangle((int)turretPos.X-16, (int)turretPos.Y-16, 32, 32);
                     turretPos = Pos;
 
-                    Rotation = AimAt(tankTarget, false);
+                    if(moveToPosCount <= 0) Rotation = AimAt(tankTarget, false);
+                    else Rotation = AimAt(new Vector2(320, 240), false);
+
+                    if (moveToPosCount >= 1) moveToPosCount += 1;
+
+                    if (moveToPosCount >= 128*3 && OnScreen()) moveToPosCount = 0;
 
                     tankTarget = new Vector2(Lerp(tankTarget.X, newTankTarget.X, 0.007f), Lerp(tankTarget.Y, newTankTarget.Y, 0.007f));
 
@@ -269,6 +275,21 @@ namespace LbsGameAwards
                         if (DistanceTo(newTankTarget) >= 128)
                             changeDirectionCount = 0;
                     }
+                    
+                    if(moveToPosCount <= 0)
+                    {
+                        if(Game1.currentRoom.tileIntersection(HitBox(), 4))
+                        {
+                            changeDirectionCount = 128;
+                        }
+                        foreach(Door d in Game1.doors)
+                        {
+                            if(!d.open && d.HitBox().Intersects(HitBox()))
+                            {
+                                changeDirectionCount = 128;
+                            }
+                        }
+                    }
 
                     AngleMath();
                     Angle = Rotation;
@@ -276,6 +297,7 @@ namespace LbsGameAwards
                     break;
             }
 
+            if(type != 1)
             foreach(Enemy e in Game1.enemies)
             {
                 if(e.HitBox().Intersects(HitBox()) && e.type == type)

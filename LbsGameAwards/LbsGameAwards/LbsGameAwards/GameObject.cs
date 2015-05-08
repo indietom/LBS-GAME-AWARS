@@ -70,6 +70,11 @@ namespace LbsGameAwards
             }
         }
 
+        public bool OnScreen()
+        {
+            return Pos.X < 640 && Pos.X > 0 && Pos.Y < 640 && Pos.Y > 0;
+        }
+
         // I wanted this for some reason at 2 am, can't remember why
         public int DeFrame(int spriteCoord)
         {
