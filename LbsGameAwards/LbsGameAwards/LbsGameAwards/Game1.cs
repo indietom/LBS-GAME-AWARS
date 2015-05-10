@@ -44,6 +44,7 @@ namespace LbsGameAwards
         }
 
         Texture2D spritesheet;
+        Texture2D transitionScreen;
         SpriteFont font;
         SpriteFont smallFont;
         SpriteFont bigFont;
@@ -52,6 +53,7 @@ namespace LbsGameAwards
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
             spritesheet = Content.Load<Texture2D>("spritesheet");
+            transitionScreen = Content.Load<Texture2D>("transitionScreen");
             font = Content.Load<SpriteFont>("font");
             bigFont = Content.Load<SpriteFont>("BigFont");
             smallFont = Content.Load<SpriteFont>("SmallFont");
@@ -67,7 +69,9 @@ namespace LbsGameAwards
         {
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 this.Exit();
-            
+
+            Globals.TransitionUpdate();
+
             foreach (Player p in players)
                 p.Update();
 
@@ -109,6 +113,7 @@ namespace LbsGameAwards
             if(Mouse.GetState().LeftButton == ButtonState.Pressed)
             {
                 if (loots.Count <= 10) particles.Add(new Particle(new Vector2(Mouse.GetState().X, Mouse.GetState().Y), 0, 0, -90, 5));
+                Globals.transition = true;
             }
 
             for (int i = projectiles.Count() - 1; i >= 0; i--)
@@ -174,6 +179,7 @@ namespace LbsGameAwards
             spriteBatch.Begin();
             foreach(TextEffect t in textEffects) t.Draw(spriteBatch, bigFont, smallFont);
             ui.Draw(spriteBatch, spritesheet, smallFont, bigFont);
+            spriteBatch.Draw(transitionScreen, Globals.transitionScreenPos, Color.White);
             spriteBatch.End();
 
             base.Draw(gameTime);

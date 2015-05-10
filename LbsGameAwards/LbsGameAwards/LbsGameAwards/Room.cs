@@ -64,11 +64,6 @@ namespace LbsGameAwards
             }
         }
 
-        public void Transition()
-        {
-
-        }
-
         public void SpawnEnemies()
         {
             Random random = new Random();
