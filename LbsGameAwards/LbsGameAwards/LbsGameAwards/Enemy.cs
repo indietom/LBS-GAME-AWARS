@@ -253,6 +253,20 @@ namespace LbsGameAwards
             AnimationCount += 1;
             if (MaxFrame > 0) SpriteCoords = new Point(Frame(CurrentFrame, Size.X) + animationOffset, SpriteCoords.Y);
 
+            if (type == 1 && moveToPosCount >= 1)
+            {
+                foreach(Door d in Game1.doors)
+                {
+                    if (new Rectangle((int)d.Pos.X, (int)d.Pos.Y, 32, 32).Intersects(HitBox()))
+                    {
+                        foreach(Door d2 in Game1.doors)
+                        {
+                            if (d2.Tag == d.Tag) d2.open = true;
+                        }
+                    }
+                }
+            }
+
             switch(type)
             {
                 case 1:

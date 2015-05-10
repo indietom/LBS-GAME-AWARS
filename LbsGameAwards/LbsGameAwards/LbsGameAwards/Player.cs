@@ -350,6 +350,7 @@ namespace LbsGameAwards
                 {
                     if(new Rectangle((int)d.Pos.X, (int)d.Pos.Y, 32, 32).Intersects(HitBox()))
                     {
+                        Globals.currentRoom = Game1.currentRoom.doorLeadsTo[d.Tag];
                         if(d.Tag == 0)
                         {
                             Pos = new Vector2(640 + 128, 480/2-16);

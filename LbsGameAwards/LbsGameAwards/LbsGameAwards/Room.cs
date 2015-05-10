@@ -24,7 +24,7 @@ namespace LbsGameAwards
 
         short totalAmountOfEnemy;
 
-        byte[] doorLeadsTo = new byte[4];
+        public byte[] doorLeadsTo = new byte[4];
 
         int[,] map;
 
