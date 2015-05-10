@@ -10,16 +10,18 @@ namespace LbsGameAwards
     {
         public static int CurrentEnemyTag { get; set; }
 
+        public static byte currentRoom;
+
         public static Vector2 transitionScreenPos = new Vector2(0, -480);
 
         static short transistionCount;
         public static bool transition;
+        public static bool spawnPlayer;
 
         public static void TransitionUpdate()
         {
             if(transition)
             {
-                Console.WriteLine("LE");
                 if (transitionScreenPos.Y <= -1)
                 {
                     transitionScreenPos += new Vector2(0, 8);
@@ -32,6 +34,7 @@ namespace LbsGameAwards
                 {
                     transition = false;
                     transistionCount = 0;
+                    spawnPlayer = true;
                 }
             }
             else

@@ -188,7 +188,7 @@ namespace LbsGameAwards
                         rotated = true;
                         explosive = true;
                         explosionSize = 32;
-                        Console.WriteLine("e");
+                        //Console.WriteLine("e");
                         break;
                 }
             }

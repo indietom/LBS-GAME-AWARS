@@ -32,7 +32,7 @@ namespace LbsGameAwards
         string doorLine;
         string[] enemyLine;
 
-        bool cleard;
+        public bool cleard;
         bool hasSpawnedClearText;
         bool spawnMines;
 
@@ -143,7 +143,7 @@ namespace LbsGameAwards
                 }
                 foreach (Door d in Game1.doors)
                 {
-                    //d.open = true;
+                    d.open = true;
                 }
             }
         }

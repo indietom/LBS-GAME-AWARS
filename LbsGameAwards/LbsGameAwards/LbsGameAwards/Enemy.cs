@@ -213,7 +213,7 @@ namespace LbsGameAwards
                     }
       
                     //Speed = Lerp(Speed, orginalSpeed, 0.1f);
-                    Console.WriteLine(Speed);
+                    //Console.WriteLine(Speed);
                     break;
             }
         }

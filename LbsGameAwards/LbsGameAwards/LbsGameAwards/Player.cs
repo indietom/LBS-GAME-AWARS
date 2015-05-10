@@ -17,6 +17,7 @@ namespace LbsGameAwards
         public bool inputActive;
         public bool dead;
         public bool invisible;
+        public bool transitioning;
 
         byte respawnCount;
         byte maxRespawnCount;
@@ -340,11 +341,43 @@ namespace LbsGameAwards
                 VelX = 0;
             }
         }
+        
+        void TransitionUpdate()
+        {
+            if (Game1.currentRoom.cleard && !transitioning)
+            {
+                foreach(Door d in Game1.doors)
+                {
+                    if(new Rectangle((int)d.Pos.X, (int)d.Pos.Y, 32, 32).Intersects(HitBox()))
+                    {
+                        if(d.Tag == 0)
+                        {
+                            Pos = new Vector2(640 + 128, 480/2-16);
+                        }
+                        if (d.Tag == 2)
+                        {
+                            Pos = new Vector2(-128, 480 / 2 - 16);
+                        }
+                        if (d.Tag == 1)
+                        {
+                            Pos = new Vector2(640/2-16, 480 + 128);
+                        }
+                        if (d.Tag == 3)
+                        {
+                            Pos = new Vector2(640 / 2 - 16, -128);
+                        }
+                        transitioning = true;
+                        Globals.transition = true;
+                    }
+                }
+            }
+        }
 
         public void Update()
         {
             Z = ZOrder();
 
+            TransitionUpdate();
             TileCollisionLogic();
             AssignFireRates();
             Movment();
