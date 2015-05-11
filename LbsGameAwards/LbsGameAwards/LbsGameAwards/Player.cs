@@ -32,6 +32,8 @@ namespace LbsGameAwards
         short maxInvisibleCount;
         short spawnCount;
         short maxSpawnCount = 128*2;
+        short transitionCount;
+        short maxTransitionCount;
         public short Ammo { get; private set; }
         public short MaxAmmo { get; private set; }
 
@@ -349,31 +351,56 @@ namespace LbsGameAwards
         
         void TransitionUpdate()
         {
+            if(transitionCount >= 1)
+            {
+                if (direction == 0) SpriteCoords = new Point(Frame(CurrentFrame), Frame(4));
+                if (direction == 1) SpriteCoords = new Point(Frame(CurrentFrame), Frame(2));
+                if (direction == 2) SpriteCoords = new Point(Frame(CurrentFrame), Frame(0));
+                if (direction == 3) SpriteCoords = new Point(Frame(CurrentFrame), Frame(6));
+
+                Pos = new Vector2(Lerp(Pos.X, 320, 0.01f), Lerp(Pos.Y, 240, 0.01f));
+                
+                transitionCount += 1;
+
+                AnimationCount += 1;
+
+                if(transitionCount >= 128)
+                {
+                    inputActive = true;
+                    transitioning = false;
+                    transitionCount = 0;
+                }
+            }
+
             if (Game1.currentRoom.cleard && !transitioning)
             {
                 foreach(Door d in Game1.doors)
                 {
                     if(new Rectangle((int)d.Pos.X, (int)d.Pos.Y, 32, 32).Intersects(HitBox()))
                     {
+                        inputActive = false;
                         Globals.currentRoom = Game1.currentRoom.doorLeadsTo[d.Tag];
                         if(d.Tag == 0)
                         {
-                            Pos = new Vector2(640 + 128, 480/2-16);
+                            Pos = new Vector2(640 + 228, 480/2-16);
                         }
                         if (d.Tag == 2)
                         {
-                            Pos = new Vector2(-128, 480 / 2 - 16);
+                            Pos = new Vector2(-228, 480 / 2 - 16);
                         }
                         if (d.Tag == 1)
                         {
-                            Pos = new Vector2(640/2-16, 480 + 128);
+                            Pos = new Vector2(640/2-16, 480 + 228);
                         }
                         if (d.Tag == 3)
                         {
-                            Pos = new Vector2(640 / 2 - 16, -128);
+                            Pos = new Vector2(640 / 2 - 16, -228);
                         }
+                        direction = d.Tag;
                         transitioning = true;
                         Globals.transition = true;
+                        CurrentFrame = 0;
+                        transitionCount = 1;
                     }
                 }
             }
