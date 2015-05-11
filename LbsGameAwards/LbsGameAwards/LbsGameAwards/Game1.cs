@@ -34,6 +34,7 @@ namespace LbsGameAwards
         static internal List<Particle> particles = new List<Particle>();
 
         static internal Ui ui = new Ui();
+        static internal SpawnManager spawnManager = new SpawnManager();
 
         static internal Room currentRoom = new Room("test", 1);
 
@@ -69,6 +70,8 @@ namespace LbsGameAwards
         {
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 this.Exit();
+
+            spawnManager.UpdatePowerUpSpawn();
 
             Globals.TransitionUpdate();
 
@@ -112,9 +115,11 @@ namespace LbsGameAwards
             }
             if(Mouse.GetState().LeftButton == ButtonState.Pressed)
             {
-                if (loots.Count <= 10) particles.Add(new Particle(new Vector2(Mouse.GetState().X, Mouse.GetState().Y), 0, 0, -90, 5));
-                Globals.transition = true;
+                if(loots.Count <= 1) spawnManager.spawnLootPile(new Vector2(Mouse.GetState().X, Mouse.GetState().Y), 64, -1);
+                //Globals.transition = true;
             }
+
+            Console.WriteLine(loots.Count());
 
             for (int i = projectiles.Count() - 1; i >= 0; i--)
                 if (projectiles[i].destroy) projectiles.RemoveAt(i);

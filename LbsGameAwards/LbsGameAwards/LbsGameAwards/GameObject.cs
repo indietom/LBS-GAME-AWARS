@@ -133,6 +133,11 @@ namespace LbsGameAwards
             return (float)Math.Sqrt((Pos.X - target.X) * (Pos.X - target.X) + (Pos.Y - target.Y) * (Pos.Y - target.Y));
         }
 
+        public float DistanceTo(Vector2 target, Vector2 target2)
+        {
+            return (float)Math.Sqrt((target2.X - target.X) * (target2.X - target.X) + (target2.Y - target.Y) * (target2.Y - target.Y));
+        }
+
         public void DrawSprite(SpriteBatch spriteBatch, Texture2D spritesheet)
         {
             Rectangle soruceRectangle = new Rectangle(SpriteCoords.X, SpriteCoords.Y, Size.X, Size.Y);

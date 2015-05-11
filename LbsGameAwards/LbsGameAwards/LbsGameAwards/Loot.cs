@@ -12,6 +12,8 @@ namespace LbsGameAwards
 
         byte type;
 
+        public bool pickedUp;
+
         public Loot(Vector2 pos2, byte type2)
         {
             Pos = pos2;
@@ -23,7 +25,14 @@ namespace LbsGameAwards
 
         public void Update()
         {
-            Z = ZOrder();
+            if (pickedUp) Z = ZOrder();
+            else Z = 1;
+            
+            if(pickedUp)
+            {
+                Pos = new Vector2(Lerp(Pos.X, -64, 0.05f), Lerp(Pos.Y, -64, 0.05f));
+                if (Pos.Y <= -16) destroy = true;
+            }
         }
     }
 }

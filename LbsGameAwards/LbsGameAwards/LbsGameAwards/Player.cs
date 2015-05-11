@@ -291,9 +291,14 @@ namespace LbsGameAwards
                 {
                     if (!p.special)
                     {
-                        if (GunType != p.Type)
+                        if (GunType != p.Type+1)
                         {
                             GunType = (byte)(p.Type + 1);
+                            Ammo = MaxAmmo;
+                        }
+                        else
+                        {
+                            Score += 1000;
                             Ammo = MaxAmmo;
                         }
                     }
@@ -388,11 +393,11 @@ namespace LbsGameAwards
 
             foreach(Loot l in Game1.loots)
             {
-                if(l.HitBox().Intersects(HitBox()))
+                if(l.HitBox().Intersects(HitBox()) && !l.pickedUp)
                 {
                     Score += l.Worth;
                     Game1.textEffects.Add(new TextEffect(l.Pos, "+" + l.Worth.ToString(), l.Pos - new Vector2(3, 32), 0.05f, 1, 1, Color.White, 100, false));
-                    l.destroy = true;
+                    l.pickedUp = true;
                 }
             }
 
