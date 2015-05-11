@@ -72,6 +72,7 @@ namespace LbsGameAwards
                 this.Exit();
 
             spawnManager.UpdatePowerUpSpawn();
+            spawnManager.UpdateLootSpawn();
 
             Globals.TransitionUpdate();
 
