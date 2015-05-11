@@ -22,8 +22,8 @@ namespace LbsGameAwards
         {
             Random random = new Random();
 
-            spawnLootCount += 1;
-            if(spawnLootCount >= maxSpawnLootCount && Game1.loots <= 150)
+            if(!Game1.currentRoom.cleard) spawnLootCount += 1;
+            if(spawnLootCount >= maxSpawnLootCount && Game1.loots.Count() <= 150)
             {
                 spawnLootPile(new Vector2(320 - random.Next(-200, 200), 240 - random.Next(-150, 150)), (byte)random.Next(16, 32), (sbyte)random.Next(-1, 3));
                 spawnLootCount = 0;
@@ -35,7 +35,7 @@ namespace LbsGameAwards
         {
             Random random = new Random();
 
-            spawnPowerUpCount += 1;
+            if (!Game1.currentRoom.cleard) spawnPowerUpCount += 1;
             if(spawnPowerUpCount >= maxSpawnPowerUpCount)
             {
                 chanceOfSpecial = (byte)random.Next(11);
