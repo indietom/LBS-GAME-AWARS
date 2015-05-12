@@ -184,7 +184,7 @@ namespace LbsGameAwards
                     }
                     if (GunType == 5 && fireRate <= 0)
                     {
-                        Game1.projectiles.Add(new Projectile(GetCenter, (shootDirection * -45) + random.Next(-4, 4), random.Next(1, 3), 1, 2, 3, false));
+                        Game1.projectiles.Add(new Projectile(GetCenter, (shootDirection * -45) + random.Next(-4, 4), random.Next(1, 3), 100, 2, 3, false));
                         fireRate += 1;
                     }
                 }
@@ -256,6 +256,7 @@ namespace LbsGameAwards
                 dead = false;
                 inputActive = true;
                 MaxAnimationCount = 4;
+                Lives -= 1;
                 spawnCount = 0;
             }
         }
@@ -417,6 +418,8 @@ namespace LbsGameAwards
             Input();
             CheckHealth();
             PowerUpLogic();
+
+            Console.WriteLine(Game1.enemies.Count());
 
             foreach(Loot l in Game1.loots)
             {

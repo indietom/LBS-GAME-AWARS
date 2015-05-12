@@ -26,17 +26,17 @@ namespace LbsGameAwards
 
             if(metal)
             {
-                SpriteCoords = new Point(Frame(frame, 16) + 332, 232);
+                SpriteCoords = new Point(Frame(frame, 16) + 331, 232);
             }
             else
             {
-                SpriteCoords = new Point(Frame(frame, 16) + 233, 232);
+                SpriteCoords = new Point(Frame(frame, 16) + 232, 232);
             }
         }
 
         public void Update()
         {
-            Z = Scale / 10;
+            Z = 1;
 
             AngleMath();
             Pos += Vel;

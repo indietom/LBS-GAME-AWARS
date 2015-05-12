@@ -64,6 +64,18 @@ namespace LbsGameAwards
             Random random = new Random();
             if(Hp <= 0)
             {
+                bool metal = (bloodColor == Color.LightGreen) ? false : true;
+                for (int i = 0; i < 50; i++)
+                {
+                    Vector2 randomOffset = Vector2.Zero;
+                    if (rotated)
+                        randomOffset = new Vector2(random.Next(-Size.X / 2, Size.X / 2), random.Next(-Size.Y / 2, Size.Y / 2));
+                    else
+                        randomOffset = new Vector2(random.Next(-Size.X, Size.X), random.Next(-Size.Y, Size.Y));
+
+                    Game1.gibs.Add(new Gib(Pos + randomOffset, random.Next(360), random.Next(16) / 5, random.Next(20, 30) / 12, (byte)random.Next(5), metal));
+                }
+
                 byte tmpExplosionSize = (Size.X >= 32) ? (byte)Size.X : (byte)32;
                 for (int i = 0; i < 10; i++)
                 {
