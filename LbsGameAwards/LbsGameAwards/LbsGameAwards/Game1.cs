@@ -32,6 +32,7 @@ namespace LbsGameAwards
         static internal List<Loot> loots = new List<Loot>();
         static internal List<TextEffect> textEffects = new List<TextEffect>();
         static internal List<Particle> particles = new List<Particle>();
+        static internal List<Gib> gibs = new List<Gib>();
 
         static internal Ui ui = new Ui();
         static internal SpawnManager spawnManager = new SpawnManager();
@@ -68,6 +69,8 @@ namespace LbsGameAwards
 
         protected override void Update(GameTime gameTime)
         {
+            Random random = new Random();
+
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 this.Exit();
 
@@ -103,6 +106,9 @@ namespace LbsGameAwards
             foreach (Particle p in particles)
                 p.Update();
 
+            foreach (Gib g in gibs)
+                g.Update();
+
             currentRoom.Update();
 
             ui.Update();
@@ -116,7 +122,8 @@ namespace LbsGameAwards
             }
             if(Mouse.GetState().LeftButton == ButtonState.Pressed)
             {
-                if(loots.Count <= 1) spawnManager.spawnLootPile(new Vector2(Mouse.GetState().X, Mouse.GetState().Y), 64, -1);
+                //if(loots.Count <= 1) spawnManager.spawnLootPile(new Vector2(Mouse.GetState().X, Mouse.GetState().Y), 64, -1);
+                gibs.Add(new Gib(new Vector2(Mouse.GetState().X, Mouse.GetState().Y), random.Next(360), random.Next(16)/5, 2, 0, false));
                 //Globals.transition = true;
             }
 
@@ -146,6 +153,9 @@ namespace LbsGameAwards
             for (int i = particles.Count - 1; i >= 0; i--)
                 if (particles[i].destroy) particles.RemoveAt(i);
 
+            for (int i = gibs.Count - 1; i >= 0; i--)
+                if (gibs[i].destroy) gibs.RemoveAt(i);
+
             base.Update(gameTime);
         }
 
@@ -171,6 +181,8 @@ namespace LbsGameAwards
                 l.DrawSprite(spriteBatch, spritesheet);
             foreach (Particle p in particles)
                 p.DrawSprite(spriteBatch, spritesheet);
+            foreach (Gib g in gibs)
+                g.DrawSprite(spriteBatch, spritesheet);
 
             foreach (Enemy e in enemies)
             {
