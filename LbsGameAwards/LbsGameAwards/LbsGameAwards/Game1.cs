@@ -122,12 +122,12 @@ namespace LbsGameAwards
             }
             if(Mouse.GetState().LeftButton == ButtonState.Pressed)
             {
-                //if(loots.Count <= 1) spawnManager.spawnLootPile(new Vector2(Mouse.GetState().X, Mouse.GetState().Y), 64, -1);
-                gibs.Add(new Gib(new Vector2(Mouse.GetState().X, Mouse.GetState().Y), random.Next(360), random.Next(16)/5, random.Next(20, 30)/12, (byte)random.Next(5), true));
+                if(loots.Count <= 1) spawnManager.spawnLootPile(new Vector2(Mouse.GetState().X, Mouse.GetState().Y), 64, -1);
+                //gibs.Add(new Gib(new Vector2(Mouse.GetState().X, Mouse.GetState().Y), random.Next(360), random.Next(16)/5, random.Next(20, 30)/12, (byte)random.Next(5), true));
                 //Globals.transition = true;
             }
 
-            Console.WriteLine(loots.Count());
+            //Console.WriteLine(loots.Count());
 
             for (int i = projectiles.Count() - 1; i >= 0; i--)
                 if (projectiles[i].destroy) projectiles.RemoveAt(i);

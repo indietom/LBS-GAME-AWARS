@@ -12,6 +12,7 @@ namespace LbsGameAwards
         public int Score { private set; get; }
 
         float friction;
+        float orginalFricton;
         float maxSpeed;
 
         public bool inputActive;
@@ -66,6 +67,7 @@ namespace LbsGameAwards
             Ammo = MaxAmmo;
             MaxAnimationCount = 4;
             Lives = 7;
+            orginalFricton = friction;
         }
 
         public void Movment()
@@ -337,6 +339,20 @@ namespace LbsGameAwards
                 }
             }
 
+            if (Game1.currentRoom.tileIntersection(new Rectangle((int)Pos.X+10, (int)Pos.Y+29, 15, 4), 6))
+            {
+                dead = true;
+            }
+
+            if (Game1.currentRoom.tileIntersection(playerBox, 5))
+            {
+                friction = 0.999f;
+            }
+            else
+            {
+                friction = orginalFricton;
+            }
+
             if (Game1.currentRoom.tileIntersection(new Rectangle((int)Pos.X, (int)((Pos.Y + 12) + VelY), 32, 20), 4))
             {
                 Pos += new Vector2(0, -VelY);
@@ -373,7 +389,7 @@ namespace LbsGameAwards
                 }
             }
 
-            if (Game1.currentRoom.cleard && !transitioning)
+            if (Game1.currentRoom.cleard && !transitioning && !dead)
             {
                 foreach(Door d in Game1.doors)
                 {
@@ -419,8 +435,6 @@ namespace LbsGameAwards
             CheckHealth();
             PowerUpLogic();
 
-            Console.WriteLine(Game1.enemies.Count());
-
             foreach(Loot l in Game1.loots)
             {
                 if(l.HitBox().Intersects(HitBox()) && !l.pickedUp)
@@ -438,13 +452,14 @@ namespace LbsGameAwards
 
             if(GunType != 1) fireRate = (fireRate >= 1) ? (short)(fireRate + 1) : fireRate;
 
-            if(fireRate == 1 && GunType != 4)
+            if(fireRate == 2 && GunType != 4)
             {
                 Ammo -= 1;
             }
 
             if(fireRate >= maxFireRate)
             {
+                Console.WriteLine("L");
                 if (GunType == 4) Ammo -= 1;
                 fireRate = 0;
             }

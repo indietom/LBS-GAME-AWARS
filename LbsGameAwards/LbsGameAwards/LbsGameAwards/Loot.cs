@@ -25,11 +25,14 @@ namespace LbsGameAwards
 
         public void Update()
         {
+            Random random = new Random();
+
             if (pickedUp) Z = ZOrder();
             else Z = 1;
             
             if(pickedUp)
             {
+                Game1.particles.Add(new Particle(Pos, 0, 1, random.Next(360), 0));
                 Pos = new Vector2(Lerp(Pos.X, -64, 0.05f), Lerp(Pos.Y, -64, 0.05f));
                 if (Pos.Y <= -16) destroy = true;
             }
