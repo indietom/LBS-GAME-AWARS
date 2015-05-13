@@ -52,6 +52,10 @@ namespace LbsGameAwards
                     Rotation += 10f;
                     Z = 0.01f;
                     break;
+                case 1:
+                    if (CurrentFrame == MaxFrame - 1) destroy = true;
+                    Z = 1;
+                    break;
             }
         }
 
@@ -79,6 +83,14 @@ namespace LbsGameAwards
                     MaxFrame = 5;
                     MaxAnimationCount = 4;
                     rotated = true;
+                    break;
+                case 1:
+                    SpriteCoords = new Point(298, 364);
+                    SetSize(8);
+                    MaxFrame = 5;
+                    MaxAnimationCount = 2;
+                    rotated = true;
+                    Rotation = Angle;
                     break;
             }
             animationOffset = (short)(SpriteCoords.X + 1);

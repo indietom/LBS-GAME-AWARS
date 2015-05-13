@@ -32,6 +32,8 @@ namespace LbsGameAwards
                 }
                 if (transistionCount >= 16)
                 {
+                    // TODO: Change room
+                    Game1.currentRoom = new Room("Room" + CurrentEnemyTag, currentRoom);
                     transition = false;
                     transistionCount = 0;
                     spawnPlayer = true;

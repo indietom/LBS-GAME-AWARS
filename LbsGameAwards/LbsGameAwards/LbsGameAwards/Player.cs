@@ -60,7 +60,7 @@ namespace LbsGameAwards
             maxSpeed = 3;
             friction = 0.90f;
             inputActive = true;
-            GunType = 5;
+            GunType = 2;
             MaxFrame = 4;
             MaxAmmo = 50;
             Ammo = MaxAmmo;

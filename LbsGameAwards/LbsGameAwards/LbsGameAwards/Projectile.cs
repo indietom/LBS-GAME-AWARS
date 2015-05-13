@@ -105,6 +105,7 @@ namespace LbsGameAwards
 
         public void Update()
         {
+            Random random = new Random();
             if(MaxFrame > 0)
             {
                 Animate();
@@ -119,6 +120,7 @@ namespace LbsGameAwards
                 if(d.HitBox().Intersects(HitBox()))
                 {
                     OnImpact();
+                    if (!explosive) Game1.particles.Add(new Particle(Pos, 0, 1, random.Next(360), 0));
                     destroy = true;
                 }
             }
@@ -126,6 +128,7 @@ namespace LbsGameAwards
             if(Game1.currentRoom.tileIntersection(HitBox(), 4))
             {
                 destroy = true;
+                if(!explosive) Game1.particles.Add(new Particle(Pos, 0, 1, random.Next(360), 0));
                 OnImpact();
             }
 
