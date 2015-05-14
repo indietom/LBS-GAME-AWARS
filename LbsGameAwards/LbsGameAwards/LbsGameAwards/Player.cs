@@ -211,7 +211,13 @@ namespace LbsGameAwards
                 }
             }
 
+            if (spawnCount == 2)
+            {
+                Game1.textEffects.Add(new TextEffect(new Vector2(250, 700), "GET READY!", new Vector2(250, 240), 0.06f, 2, 1, Color.White, 128+64, true));
+            }
+
             spawnCount = (dead) ? (short)(spawnCount + 1) : spawnCount;
+
             if(spawnCount == maxSpawnCount/2-1)
             {
                 Game1.explosions.Add(new Explosion(Pos, 32, Color.Red));

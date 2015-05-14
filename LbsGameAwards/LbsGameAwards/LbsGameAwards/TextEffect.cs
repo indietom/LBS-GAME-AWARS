@@ -78,6 +78,9 @@ namespace LbsGameAwards
                 case 1:
                     color = FlashColors(new Color[4] { Color.Yellow, Color.Red, Color.Blue, Color.Green }, 4, true);
                     break;
+                case 2:
+  
+                    break;
             }
         }
 
