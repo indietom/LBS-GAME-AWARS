@@ -33,6 +33,7 @@ namespace LbsGameAwards
         static internal List<TextEffect> textEffects = new List<TextEffect>();
         static internal List<Particle> particles = new List<Particle>();
         static internal List<Gib> gibs = new List<Gib>();
+        static internal List<Helper> helpers = new List<Helper>();
 
         static internal Ui ui = new Ui();
         static internal SpawnManager spawnManager = new SpawnManager();
@@ -42,6 +43,7 @@ namespace LbsGameAwards
         protected override void Initialize()
         {
             players.Add(new Player());
+            helpers.Add(new Helper(new Vector2(320, 240)));
             base.Initialize();
         }
 
@@ -58,7 +60,9 @@ namespace LbsGameAwards
             transitionScreen = Content.Load<Texture2D>("transitionScreen");
             font = Content.Load<SpriteFont>("font");
             bigFont = Content.Load<SpriteFont>("BigFont");
-            smallFont = Content.Load<SpriteFont>("SmallFont");  
+            smallFont = Content.Load<SpriteFont>("SmallFont");
+
+            SoundManager.Load(Content);
         }
 
         protected override void UnloadContent()
@@ -108,14 +112,17 @@ namespace LbsGameAwards
             foreach (Gib g in gibs)
                 g.Update();
 
+            foreach (Helper h in helpers)
+                h.Update();
+
             currentRoom.Update();
 
             ui.Update();
 
             if(Keyboard.GetState().IsKeyDown(Keys.F1))
             {
-                if(enemies.Count == 0) enemies.Add(new Enemy(new Vector2(320, 240), 4));
-                //if (powerUps.Count == 0) powerUps.Add(new PowerUp(new Vector2(320, 240), 3, false));
+                //if(enemies.Count == 0) enemies.Add(new Enemy(new Vector2(320, 240), 4));
+                if (powerUps.Count == 0) powerUps.Add(new PowerUp(new Vector2(320, 240), 2, false));
                 //if (doors.Count == 0) doors.Add(new Door(new Vector2(320 + 128, 240+3), true));
                 enemies.Clear();
             }
@@ -130,6 +137,9 @@ namespace LbsGameAwards
 
             for (int i = projectiles.Count() - 1; i >= 0; i--)
                 if (projectiles[i].destroy) projectiles.RemoveAt(i);
+
+            for (int i = helpers.Count() - 1; i >= 0; i--)
+                if (helpers[i].destroy) helpers.RemoveAt(i);
 
             for (int i = explosions.Count - 1; i >= 0; i--)
                 if (explosions[i].destroy) explosions.RemoveAt(i);
@@ -166,6 +176,8 @@ namespace LbsGameAwards
 
             currentRoom.Draw(spriteBatch, spritesheet, font);
 
+            foreach (Helper h in helpers)
+                h.DrawSprite(spriteBatch, spritesheet);
             foreach (Player p in players)
             {
                 p.DrawSprite(spriteBatch, spritesheet);

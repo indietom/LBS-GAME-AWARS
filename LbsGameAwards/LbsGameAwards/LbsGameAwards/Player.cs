@@ -25,11 +25,11 @@ namespace LbsGameAwards
         byte respawnCount;
         byte maxRespawnCount;
         byte direction;
-        byte shootDirection;
+        public byte ShootDirection { get; private set; }
         public byte Lives { private set; get; }
         public byte GunType { get; private set; }
 
-        short fireRate;
+        public short FireRate { get; private set; }
         short maxFireRate;
         short invisibleCount;
         short maxInvisibleCount = 128*2;
@@ -123,80 +123,87 @@ namespace LbsGameAwards
                 {
                     if(keyboard.IsKeyDown(shootUp))
                     {
-                        shootDirection = 1;
+                        ShootDirection = 1;
                     }
                     else if(keyboard.IsKeyDown(shootDown))
                     {
-                        shootDirection = 7;
+                        ShootDirection = 7;
                     }
                     else
                     {
-                        shootDirection = 0;
+                        ShootDirection = 0;
                     }
                 }
                 if (keyboard.IsKeyDown(shootLeft))
                 {
                     if (keyboard.IsKeyDown(shootUp))
                     {
-                        shootDirection = 3;
+                        ShootDirection = 3;
                     }
                     else if (keyboard.IsKeyDown(shootDown))
                     {
-                        shootDirection = 5;
+                        ShootDirection = 5;
                     }
                     else
                     {
-                        shootDirection = 4;
+                        ShootDirection = 4;
                     }
                 }
                 if(!keyboard.IsKeyDown(shootLeft) && !keyboard.IsKeyDown(shootRight))
                 {
-                    if (keyboard.IsKeyDown(shootDown)) shootDirection = 6;
-                    if (keyboard.IsKeyDown(shootUp)) shootDirection = 2;
+                    if (keyboard.IsKeyDown(shootDown)) ShootDirection = 6;
+                    if (keyboard.IsKeyDown(shootUp)) ShootDirection = 2;
                 }
                 
                 if ((keyboard.IsKeyDown(shootDown) || keyboard.IsKeyDown(shootUp) || keyboard.IsKeyDown(shootRight) || keyboard.IsKeyDown(shootLeft)))
                 {
-                    if(GunType == 0 && fireRate <= 0)
+                    if(GunType == 0 && FireRate <= 0)
                     {
-                        Game1.projectiles.Add(new Projectile(GetCenter + new Vector2(-4, -8), shootDirection * -45, 7, 1, 0, 0, false));
-                        fireRate = 1;
+                        Game1.projectiles.Add(new Projectile(GetCenter + new Vector2(-4, -8), ShootDirection * -45, 7, 1, 0, 0, false));
+                        FireRate = 1;
                     }
 
                     if (GunType == 1)
                     {
-                        if(fireRate == 0 || fireRate == 8 || fireRate == 8*2 ) Game1.projectiles.Add(new Projectile(GetCenter + new Vector2(-4, -8), (shootDirection * -45)+random.Next(-8, 9), 7, 1, 0, 0, false));
-                        fireRate += 1;
+                        if (FireRate == 0 || FireRate == 8 || FireRate == 8 * 2)
+                        {
+                            Game1.projectiles.Add(new Projectile(GetCenter + new Vector2(-4, -8), (ShootDirection * -45) + random.Next(-8, 9), 7, 1, 0, 0, false));
+                            SoundManager.shoot.Play();
+                        }
+                        FireRate += 1;
                     }
 
-                    if (GunType == 2 && fireRate <= 0)
+                    if (GunType == 2 && FireRate <= 0)
                     {
+                        SoundManager.shoot.Play();
                         for (int i = -1; i < 2; i++ )
-                            Game1.projectiles.Add(new Projectile(GetCenter + new Vector2(-4, -8),(shootDirection * -45)+i*8, 7, 1, 0, 0, false));
-                        fireRate = 1;
+                            Game1.projectiles.Add(new Projectile(GetCenter + new Vector2(-4, -8),(ShootDirection * -45)+i*8, 7, 1, 0, 0, false));
+                        FireRate = 1;
                     }
 
-                    if (GunType == 3 && fireRate <= 0)
+                    if (GunType == 3 && FireRate <= 0)
                     {
-                        Game1.projectiles.Add(new Projectile(GetCenter + new Vector2(-4, -8), (shootDirection * -45) + random.Next(-16, 17), 15 + random.Next(-8, 5), 1, 1, 1, false));
-                        fireRate = 1;
+                        SoundManager.shoot.Play();
+                        Game1.projectiles.Add(new Projectile(GetCenter + new Vector2(-4, -8), (ShootDirection * -45) + random.Next(-16, 17), 15 + random.Next(-8, 5), 1, 1, 1, false));
+                        FireRate = 1;
                     }
                     if (GunType == 4)
                     {
-                        if (fireRate <= maxFireRate / 2) Game1.projectiles.Add(new Projectile(Pos+new Vector2(0, -5), (shootDirection * -45) + random.Next(-8, 9), random.Next(5, 11), 1, 0, 2, false));
-                        fireRate += 1;
+                        if (FireRate <= maxFireRate / 2) Game1.projectiles.Add(new Projectile(Pos+new Vector2(0, -5), (ShootDirection * -45) + random.Next(-8, 9), random.Next(5, 11), 1, 0, 2, false));
+                        FireRate += 1;
                     }
-                    if (GunType == 5 && fireRate <= 0)
+                    if (GunType == 5 && FireRate <= 0)
                     {
-                        Game1.projectiles.Add(new Projectile(GetCenter, (shootDirection * -45) + random.Next(-4, 4), random.Next(1, 3), 100, 2, 3, false));
-                        fireRate += 1;
+                        SoundManager.shoot.Play();
+                        Game1.projectiles.Add(new Projectile(GetCenter, (ShootDirection * -45) + random.Next(-4, 4), random.Next(1, 3), 100, 2, 3, false));
+                        FireRate += 1;
                     }
                 }
                 else
                 {
                     if(GunType == 1)
                     {
-                        fireRate = 0;
+                        FireRate = 0;
                     }
                 }
             }
@@ -215,6 +222,7 @@ namespace LbsGameAwards
 
             if (spawnCount == 2)
             {
+                SoundManager.dead.Play();
                 Game1.textEffects.Add(new TextEffect(new Vector2(250, 700), "GET READY!", new Vector2(250, 240), 0.06f, 2, 1, Color.White, 128+64, true));
             }
 
@@ -250,6 +258,8 @@ namespace LbsGameAwards
                 SpriteCoords = new Point(Frame(CurrentFrame), 1);
                 AnimationCount += 1;
                 Pos = new Vector2(Lerp(Pos.X, 320, 0.009f), Pos.Y);
+                invisible = true;
+                invisibleCount = 1;
                 foreach(Door d in Game1.doors)
                 {
                     if(d.Tag == 0)
@@ -318,6 +328,7 @@ namespace LbsGameAwards
                     else
                     {
                         if (p.Type == 0) Lives += 1;
+                        if (p.Type == 2) invisible = true;
                     }
                     p.destroy = true;
                 }
@@ -444,6 +455,8 @@ namespace LbsGameAwards
         {
             Z = ZOrder();
 
+            if (GunType == 0) Ammo = 0;
+
             if (invisible && invisibleCount < 1) invisibleCount = 1;
             if (invisibleCount >= 1) invisibleCount += 1;
             if(invisibleCount >= maxInvisibleCount)
@@ -470,23 +483,22 @@ namespace LbsGameAwards
                 }
             }
 
-            if(!dead) SpriteCoords = new Point(Frame(CurrentFrame), Frame(shootDirection));
+            if(!dead) SpriteCoords = new Point(Frame(CurrentFrame), Frame(ShootDirection));
             Animate();
 
             GunType = (GunType != 0 && Ammo <= 0) ? (byte)0 : GunType;
 
-            if(GunType != 1) fireRate = (fireRate >= 1) ? (short)(fireRate + 1) : fireRate;
+            if(GunType != 1) FireRate = (FireRate >= 1) ? (short)(FireRate + 1) : FireRate;
 
-            if(fireRate == 2 && GunType != 4)
+            if(FireRate == 2 && GunType != 4)
             {
                 Ammo -= 1;
             }
 
-            if(fireRate >= maxFireRate)
+            if(FireRate >= maxFireRate)
             {
-                Console.WriteLine("L");
                 if (GunType == 4) Ammo -= 1;
-                fireRate = 0;
+                FireRate = 0;
             }
         }
     }
