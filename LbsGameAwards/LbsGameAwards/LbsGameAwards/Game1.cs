@@ -49,6 +49,8 @@ namespace LbsGameAwards
 
         Texture2D spritesheet;
         Texture2D transitionScreen;
+        Texture2D bossSheet;
+
         SpriteFont font;
         SpriteFont smallFont;
         SpriteFont bigFont;
@@ -58,6 +60,7 @@ namespace LbsGameAwards
             spriteBatch = new SpriteBatch(GraphicsDevice);
             spritesheet = Content.Load<Texture2D>("spritesheet");
             transitionScreen = Content.Load<Texture2D>("transitionScreen");
+            bossSheet = Content.Load<Texture2D>("bossSheet");
             font = Content.Load<SpriteFont>("font");
             bigFont = Content.Load<SpriteFont>("BigFont");
             smallFont = Content.Load<SpriteFont>("SmallFont");
