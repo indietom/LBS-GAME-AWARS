@@ -122,7 +122,7 @@ namespace LbsGameAwards
 
             foreach(Player p in Game1.players)
             {
-                if (attackCount >= maxAttackCount && type != 1)
+                if (attackCount >= maxAttackCount && type != 1 && !p.invisible)
                 {
                     if (DistanceTo(p.Pos) <= attackDistance && type != 4) p.dead = true;
                     attackCount = 0;

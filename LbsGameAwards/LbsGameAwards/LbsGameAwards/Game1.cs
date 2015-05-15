@@ -58,8 +58,7 @@ namespace LbsGameAwards
             transitionScreen = Content.Load<Texture2D>("transitionScreen");
             font = Content.Load<SpriteFont>("font");
             bigFont = Content.Load<SpriteFont>("BigFont");
-            smallFont = Content.Load<SpriteFont>("SmallFont");
-            
+            smallFont = Content.Load<SpriteFont>("SmallFont");  
         }
 
         protected override void UnloadContent()
@@ -168,7 +167,10 @@ namespace LbsGameAwards
             currentRoom.Draw(spriteBatch, spritesheet, font);
 
             foreach (Player p in players)
+            {
                 p.DrawSprite(spriteBatch, spritesheet);
+                p.DrawShield(spriteBatch, spritesheet);
+            }
             foreach (Projectile p in projectiles)
                 p.DrawSprite(spriteBatch, spritesheet);
             foreach (Explosion e in explosions)

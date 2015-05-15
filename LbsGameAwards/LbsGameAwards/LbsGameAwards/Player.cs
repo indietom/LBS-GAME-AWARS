@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 namespace LbsGameAwards
@@ -17,7 +19,7 @@ namespace LbsGameAwards
 
         public bool inputActive;
         public bool dead;
-        public bool invisible;
+        public bool invisible = true;
         public bool transitioning;
 
         byte respawnCount;
@@ -30,7 +32,7 @@ namespace LbsGameAwards
         short fireRate;
         short maxFireRate;
         short invisibleCount;
-        short maxInvisibleCount;
+        short maxInvisibleCount = 128*2;
         short spawnCount;
         short maxSpawnCount = 128*2;
         short transitionCount;
@@ -204,7 +206,7 @@ namespace LbsGameAwards
         {
             foreach(Projectile p in Game1.projectiles)
             {
-                if(p.HitBox().Intersects(HitBox()) && p.enemy)
+                if (p.HitBox().Intersects(HitBox()) && p.enemy && !invisible)
                 {
                     dead = true;
                     p.destroy = true;
@@ -345,7 +347,7 @@ namespace LbsGameAwards
                 }
             }
 
-            if (Game1.currentRoom.tileIntersection(new Rectangle((int)Pos.X+10, (int)Pos.Y+29, 15, 4), 6))
+            if (Game1.currentRoom.tileIntersection(new Rectangle((int)Pos.X+10, (int)Pos.Y+29, 15, 4), 6) && !invisible)
             {
                 dead = true;
             }
@@ -429,9 +431,26 @@ namespace LbsGameAwards
             }
         }
 
+        public void DrawShield(SpriteBatch spriteBatch, Texture2D spritesheet)
+        {
+            if(invisible)
+            {
+                short shieldX = (invisibleCount >= (short)(maxInvisibleCount / 2)) ? (short)34 : (short)1;
+                spriteBatch.Draw(spritesheet, Pos, new Rectangle(shieldX, 298, 32, 32), Color.White, 0, Vector2.Zero, 1.0f, SpriteEffects.None, Z + 0.01f);
+            }
+        }
+
         public void Update()
         {
             Z = ZOrder();
+
+            if (invisible && invisibleCount < 1) invisibleCount = 1;
+            if (invisibleCount >= 1) invisibleCount += 1;
+            if(invisibleCount >= maxInvisibleCount)
+            {
+                invisibleCount = 0;
+                invisible = false;
+            }
 
             TransitionUpdate();
             TileCollisionLogic();
