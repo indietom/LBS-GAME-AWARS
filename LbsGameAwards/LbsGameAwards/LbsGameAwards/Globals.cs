@@ -12,7 +12,7 @@ namespace LbsGameAwards
 
         public static int CurrentEnemyTag { get; set; }
 
-        public static byte currentRoom = 2;
+        public static byte currentRoom = 1;
 
         public static Vector2 transitionScreenPos = new Vector2(0, -480);
 
@@ -35,7 +35,8 @@ namespace LbsGameAwards
                 if (transistionCount >= 16)
                 {
                     // TODO: Change room
-                    Game1.currentRoom = new Room("Room" + CurrentEnemyTag, currentRoom);
+                    Console.WriteLine(Globals.currentRoom);
+                    Game1.currentRoom = new Room("Room" + currentRoom, currentRoom);
                     transition = false;
                     transistionCount = 0;
                     spawnPlayer = true;
@@ -54,6 +55,7 @@ namespace LbsGameAwards
         {
             Game1.textEffects.Clear();
             Game1.enemies.Clear();
+            Game1.projectiles.Clear();
             Game1.powerUps.Clear();
             Game1.loots.Clear();
         }

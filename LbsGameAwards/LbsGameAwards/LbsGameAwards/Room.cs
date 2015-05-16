@@ -38,6 +38,8 @@ namespace LbsGameAwards
 
         public Room(string mapPath2, byte tag2)
         {
+            Random random = new Random();
+
             mapPath = mapPath2;
             Tag = tag2;
 
@@ -51,6 +53,15 @@ namespace LbsGameAwards
                 for (int i = 0; i < amountOfTypes; i++)
                 {
                     totalAmountOfEnemy += amountOfEnemies[i];
+                }
+
+                if(spawnMines)
+                {
+                    byte amountOfMines = (byte)random.Next(5, 10);
+                    for (int i = 0; i < amountOfMines; i++)
+                    {
+                        Game1.enemies.Add(new Enemy(new Vector2(random.Next(48, 640 - 48 + 16), random.Next(48, 480 - 48 + 16)), 2));
+                    }
                 }
 
                 for(int i = 0; i < 5; i++)

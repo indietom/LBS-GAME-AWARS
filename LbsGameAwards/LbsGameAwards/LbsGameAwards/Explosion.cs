@@ -53,7 +53,7 @@ namespace LbsGameAwards
             {
                 foreach(Player p in Game1.players)
                 {
-                    if(p.HitBox().Intersects(HitBox()))
+                    if(p.HitBox().Intersects(HitBox()) && !p.invisible)
                     {
                         p.dead = true;
                     }

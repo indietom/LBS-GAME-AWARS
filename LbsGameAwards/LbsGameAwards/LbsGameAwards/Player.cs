@@ -344,7 +344,7 @@ namespace LbsGameAwards
 
             foreach(Door d in Game1.doors)
             {
-                if (!d.open)
+                if (!d.open || !Game1.currentRoom.cleard)
                 {
                     if (d.HitBox().Intersects(new Rectangle((int)Pos.X, (int)((Pos.Y + 12) + VelY), 32, 20)))
                     {
