@@ -45,7 +45,8 @@ namespace LbsGameAwards
         {
             players.Add(new Player());
             helpers.Add(new Helper(new Vector2(320, 240)));
-            bosses.Add(new Boss(new Vector2(500, 240)));
+            //bosses.Add(new Boss(new Vector2(500, 240)));
+            Globals.completedRooms.Add(3);
             base.Initialize();
         }
 
@@ -78,6 +79,11 @@ namespace LbsGameAwards
         protected override void Update(GameTime gameTime)
         {
             Random random = new Random();
+
+            for (int i = 0; i < Globals.completedRooms.Count; i++)
+            {
+                Console.WriteLine(Globals.completedRooms[i]);
+            }
 
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 this.Exit();

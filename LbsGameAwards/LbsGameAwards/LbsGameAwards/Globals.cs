@@ -8,9 +8,11 @@ namespace LbsGameAwards
 {
     class Globals : GameObject
     {
+        internal static List<int> completedRooms = new List<int>();
+
         public static int CurrentEnemyTag { get; set; }
 
-        public static byte currentRoom;
+        public static byte currentRoom = 2;
 
         public static Vector2 transitionScreenPos = new Vector2(0, -480);
 

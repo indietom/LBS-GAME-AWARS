@@ -13,7 +13,7 @@ namespace LbsGameAwards
         byte openCount;
         byte maxOpenCount = 64;
 
-        public byte Tag { private set; get; }
+        public byte Tag { set; get; }
 
         bool vertical;
         public bool open;

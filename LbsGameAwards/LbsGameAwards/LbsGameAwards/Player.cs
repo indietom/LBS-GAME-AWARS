@@ -413,7 +413,7 @@ namespace LbsGameAwards
             {
                 foreach(Door d in Game1.doors)
                 {
-                    if(new Rectangle((int)d.Pos.X, (int)d.Pos.Y, 32, 32).Intersects(HitBox()))
+                    if(new Rectangle((int)d.Pos.X, (int)d.Pos.Y, 32, 32).Intersects(HitBox()) && d.open)
                     {
                         inputActive = false;
                         // TODO: SAVE CLEARED ROOMS IN A LIST

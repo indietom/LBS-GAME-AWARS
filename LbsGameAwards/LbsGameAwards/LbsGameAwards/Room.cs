@@ -134,16 +134,32 @@ namespace LbsGameAwards
             if(totalAmountOfEnemy > 0) SpawnEnemies();
             else if(Game1.enemies.Count <= 0 && Game1.bosses.Count <= 0) cleard = true;
 
-            if(cleard)
-            { 
-                if(!hasSpawnedClearText)
+            for (int i = 0; i < Globals.completedRooms.Count; i++)
+            {
+                foreach (Door d in Game1.doors)
                 {
+                    if (doorLeadsTo[d.Tag] == Globals.completedRooms[i])
+                    {
+                        doorLeadsTo[d.Tag] = 0;
+                    }
+                }
+            }
+
+            if (cleard)
+            {
+                if (!hasSpawnedClearText)
+                {
+                    if (Globals.currentRoom != 0) Globals.completedRooms.Add(Globals.currentRoom);
                     Game1.textEffects.Add(new TextEffect(new Vector2(250, -64), "ROOM CLEARED", new Vector2(250, 240), 0.07f, 0, 1, Color.Gold, 0, true));
                     hasSpawnedClearText = true;
                 }
+
                 foreach (Door d in Game1.doors)
                 {
-                    d.open = true;
+                    if (doorLeadsTo[d.Tag] != 0)
+                    {
+                        d.open = true;
+                    }
                 }
             }
         }
