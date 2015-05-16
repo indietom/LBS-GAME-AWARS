@@ -41,7 +41,7 @@ namespace LbsGameAwards
                 chanceOfSpecial = (byte)random.Next(11);
                 if(chanceOfSpecial == 7)
                 {
-                    Game1.powerUps.Add(new PowerUp(new Vector2(random.Next(64, 640-64), random.Next(64, 480-64)), (byte)random.Next(0, 2), true));
+                    Game1.powerUps.Add(new PowerUp(new Vector2(random.Next(64, 640-64), random.Next(64, 480-64)), (byte)random.Next(0, 3), true));
                 }
                 else
                 {

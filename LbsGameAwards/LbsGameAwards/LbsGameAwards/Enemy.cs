@@ -212,7 +212,7 @@ namespace LbsGameAwards
                         {
                             for(int i = -1; i < 2; i++)
                             {
-                                Game1.projectiles.Add(new Projectile(Pos, shootAngle + (i * -16), 3, 0, 0, 2, true, Z-0.01f));
+                                Game1.projectiles.Add(new Projectile(Pos, shootAngle + (i * -16), 3, 0, 0, 1, true, Z-0.01f));
                             }
                         }
                         AnimationCount = 0;
@@ -258,10 +258,10 @@ namespace LbsGameAwards
             Random random = new Random();
 
             if (type != 2) ZOrder();
-            AttackUpdate();
+            if(!Game1.players[0].dead) AttackUpdate();
             CheckHealth();
             HurtUpdate();
-            Animate();
+            if (!Game1.players[0].dead) Animate();
             AnimationCount += 1;
             if (MaxFrame > 0) SpriteCoords = new Point(Frame(CurrentFrame, Size.X) + animationOffset, SpriteCoords.Y);
 

@@ -329,6 +329,7 @@ namespace LbsGameAwards
                     {
                         if (p.Type == 0) Lives += 1;
                         if (p.Type == 2) invisible = true;
+                        if (p.Type == 1) Game1.helpers.Add(new Helper(Pos + new Vector2(32, 32)));
                     }
                     p.destroy = true;
                 }

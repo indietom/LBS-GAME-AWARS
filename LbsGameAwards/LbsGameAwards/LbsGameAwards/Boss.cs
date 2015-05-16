@@ -33,7 +33,6 @@ namespace LbsGameAwards
 
         public void Movment()
         {
-            currentStage = 2;
             switch(currentStage)
             {
                 case 0:
@@ -162,7 +161,7 @@ namespace LbsGameAwards
             SpriteCoords = new Point(Frame(CurrentFrame, 127), Frame(currentStage, 127));
 
             Movment();
-            Attack();
+            if (!Game1.players[0].dead) Attack();
             CheckHealth();
 
             switch(currentStage)
