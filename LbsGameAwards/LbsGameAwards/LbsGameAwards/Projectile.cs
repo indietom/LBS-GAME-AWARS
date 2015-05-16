@@ -220,11 +220,13 @@ namespace LbsGameAwards
                         MaxAnimationCount = 8;
                         CurrentFrame = MinFrame;
                         SpriteCoords = new Point(Frame(MinFrame), 430);
+                        explosive = true;
                         break;
                     case 3:
                         SetSize(16, 8);
                         SpriteCoords = new Point(199, 10);
                         rotated = true;
+                        explosive = true;
                         break;
                 }
             }

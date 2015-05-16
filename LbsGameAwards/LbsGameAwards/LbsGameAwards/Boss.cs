@@ -28,13 +28,37 @@ namespace LbsGameAwards
 
             maxHp = 80;
             hp = maxHp;
+            Speed = 3;
         }
 
         public void Movment()
         {
+            currentStage = 2;
             switch(currentStage)
             {
+                case 0:
+                    if(direction == 0) Pos += new Vector2(0, Speed);
+                    else Pos += new Vector2(0, -Speed);
 
+                    if (Pos.Y + 128 + 32 >= 480) direction = 1;
+                    if (Pos.Y - 32 <= 0) direction = 0;
+                    break;
+                case 1:
+                    Speed = 4;
+
+                    if (direction == 0) Pos += new Vector2(0, Speed);
+                    else Pos += new Vector2(0, -Speed);
+
+                    if (Pos.Y + 128 + 32 >= 480) direction = 1;
+                    if (Pos.Y - 32 <= 0) direction = 0;
+                    break;
+                case 2:
+                    if(Game1.players[0].Pos.Y + 121 < 480) Pos = new Vector2(Pos.X, Lerp(Pos.Y, Game1.players[0].GetCenter.Y-64, 0.01f));
+                    else
+                    {
+                        Pos = new Vector2(Pos.X, Lerp(Pos.Y, 480-32-128, 0.01f));
+                    }
+                    break;
             }
         }
 
@@ -101,6 +125,7 @@ namespace LbsGameAwards
 
             if(spawnExplosions >= 1 && spawnExplosions < 32)
             {
+                invisibiltyCount = 1;
                 Game1.explosions.Add(new Explosion(Pos + new Vector2(random.Next(Size.X), random.Next(Size.Y)), 32, Color.LightGreen));
             }
 
