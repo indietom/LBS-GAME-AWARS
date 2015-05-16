@@ -152,6 +152,9 @@ namespace LbsGameAwards
                     case 1:
                         Rotation += 5f;
                         break;
+                    case 2:
+                        if (CurrentFrame >= MaxFrame - 1) AnimationCount = 0;
+                        break;
                 }
             }
 
@@ -193,6 +196,8 @@ namespace LbsGameAwards
                         explosionSize = 32;
                         //Console.WriteLine("e");
                         break;
+                    case 4:
+                        break;
                 }
             }
             else
@@ -206,6 +211,19 @@ namespace LbsGameAwards
                     case 1:
                         SetSize(4);
                         SpriteCoords = new Point(175, 10);
+                        rotated = true;
+                        break;
+                    case 2:
+                        SetSize(32);
+                        MinFrame = 12;
+                        MaxFrame = (short)(MinFrame + 5);
+                        MaxAnimationCount = 8;
+                        CurrentFrame = MinFrame;
+                        SpriteCoords = new Point(Frame(MinFrame), 430);
+                        break;
+                    case 3:
+                        SetSize(16, 8);
+                        SpriteCoords = new Point(199, 10);
                         rotated = true;
                         break;
                 }

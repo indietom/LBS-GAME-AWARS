@@ -132,7 +132,7 @@ namespace LbsGameAwards
         public void Update()
         {
             if(totalAmountOfEnemy > 0) SpawnEnemies();
-            else if(Game1.enemies.Count <= 0) cleard = true;
+            else if(Game1.enemies.Count <= 0 && Game1.bosses.Count <= 0) cleard = true;
 
             if(cleard)
             { 

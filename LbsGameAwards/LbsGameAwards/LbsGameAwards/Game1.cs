@@ -34,6 +34,7 @@ namespace LbsGameAwards
         static internal List<Particle> particles = new List<Particle>();
         static internal List<Gib> gibs = new List<Gib>();
         static internal List<Helper> helpers = new List<Helper>();
+        static internal List<Boss> bosses = new List<Boss>();
 
         static internal Ui ui = new Ui();
         static internal SpawnManager spawnManager = new SpawnManager();
@@ -44,6 +45,7 @@ namespace LbsGameAwards
         {
             players.Add(new Player());
             helpers.Add(new Helper(new Vector2(320, 240)));
+            bosses.Add(new Boss(new Vector2(500, 240)));
             base.Initialize();
         }
 
@@ -117,6 +119,8 @@ namespace LbsGameAwards
 
             foreach (Helper h in helpers)
                 h.Update();
+            foreach (Boss b in bosses)
+                b.Update();
 
             currentRoom.Update();
 
@@ -167,6 +171,8 @@ namespace LbsGameAwards
 
             for (int i = gibs.Count - 1; i >= 0; i--)
                 if (gibs[i].destroy) gibs.RemoveAt(i);
+            for (int i = bosses.Count - 1; i >= 0; i--)
+                if (bosses[i].destroy) bosses.RemoveAt(i);
 
             base.Update(gameTime);
         }
@@ -181,6 +187,8 @@ namespace LbsGameAwards
 
             foreach (Helper h in helpers)
                 h.DrawSprite(spriteBatch, spritesheet);
+            foreach (Boss b in bosses)
+                b.DrawSprite(spriteBatch, bossSheet);
             foreach (Player p in players)
             {
                 p.DrawSprite(spriteBatch, spritesheet);
