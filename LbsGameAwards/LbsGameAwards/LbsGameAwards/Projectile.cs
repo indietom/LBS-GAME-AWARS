@@ -115,6 +115,8 @@ namespace LbsGameAwards
 
             if (spriteType != 1) Z = ZOrder();
 
+            if (!OnScreen()) destroy = true;
+
             foreach(Door d in Game1.doors)
             {
                 if(d.HitBox().Intersects(HitBox()))

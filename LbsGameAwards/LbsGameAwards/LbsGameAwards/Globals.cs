@@ -36,7 +36,7 @@ namespace LbsGameAwards
                 {
                     // TODO: Change room
                     Console.WriteLine(Globals.currentRoom);
-                    Game1.currentRoom = new Room("Room" + currentRoom, currentRoom);
+                    Game1.currentRoom = new Room(@"Content\levels\Room" + currentRoom, currentRoom);
                     transition = false;
                     transistionCount = 0;
                     spawnPlayer = true;

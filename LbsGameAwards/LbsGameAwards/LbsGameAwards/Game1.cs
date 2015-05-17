@@ -39,14 +39,14 @@ namespace LbsGameAwards
         static internal Ui ui = new Ui();
         static internal SpawnManager spawnManager = new SpawnManager();
 
-        static internal Room currentRoom = new Room("test", 1);
+        static internal Room currentRoom;
 
         protected override void Initialize()
         {
             players.Add(new Player());
             helpers.Add(new Helper(new Vector2(320, 240)));
             //bosses.Add(new Boss(new Vector2(500, 240)));
-            //currentRoom = new Room("room1", 1);
+            currentRoom = new Room(@"Content\levels\room1", 1);
             base.Initialize();
         }
 

@@ -163,7 +163,7 @@ namespace LbsGameAwards
                     foreach(Player p in Game1.players)
                     {
                         target = new Vector2(Lerp(target.X, p.GetCenter.X, 0.05f), Lerp(target.Y, p.GetCenter.Y, 0.05f));
-                        if (p.HitBox().Intersects(HitBox()))
+                        if (p.HitBox().Intersects(HitBox()) && !p.invisible)
                             p.dead = true;
                     }
 

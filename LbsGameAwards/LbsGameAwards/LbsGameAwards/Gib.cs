@@ -42,7 +42,9 @@ namespace LbsGameAwards
             Pos += Vel;
 
             Rotation += Speed*2;
-            
+
+            if (Scale <= 0.08f) destroy = true;
+
             if(!falling)
             {
                 Scale = Lerp(Scale, peak, 0.2f);
