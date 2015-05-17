@@ -55,6 +55,7 @@ namespace LbsGameAwards
         Texture2D bossSheet;
         Texture2D helpScreen;
         Texture2D gameOverScreen;
+        Texture2D winScreen;
 
         SpriteFont font;
         SpriteFont smallFont;
@@ -68,6 +69,7 @@ namespace LbsGameAwards
             bossSheet = Content.Load<Texture2D>("bossSheet");
             helpScreen = Content.Load<Texture2D>("helpScreen");
             gameOverScreen = Content.Load<Texture2D>("gameOverScreen");
+            winScreen = Content.Load<Texture2D>("winScreen");
             font = Content.Load<SpriteFont>("font");
             bigFont = Content.Load<SpriteFont>("BigFont");
             smallFont = Content.Load<SpriteFont>("SmallFont");
@@ -105,6 +107,14 @@ namespace LbsGameAwards
                     }
                     break;
                 case GameStates.gameOver:
+                    if (Keyboard.GetState().IsKeyDown(Keys.Space))
+                    {
+                        ResetGame();
+                        Globals.completedRooms.Clear();
+                        Globals.gameState = GameStates.game;
+                    }
+                    break;
+                case GameStates.end:
                     if (Keyboard.GetState().IsKeyDown(Keys.Space))
                     {
                         ResetGame();
@@ -203,6 +213,7 @@ namespace LbsGameAwards
 
             for (int i = gibs.Count - 1; i >= 0; i--)
                 if (gibs[i].destroy) gibs.RemoveAt(i);
+
             for (int i = bosses.Count - 1; i >= 0; i--)
                 if (bosses[i].destroy) bosses.RemoveAt(i);
 
@@ -215,7 +226,7 @@ namespace LbsGameAwards
 
             spriteBatch.Begin(SpriteSortMode.FrontToBack, null, null, null, null);
 
-            if (Globals.gameState == GameStates.game || Globals.gameState == GameStates.gameOver)
+            if (Globals.gameState == GameStates.game || Globals.gameState == GameStates.gameOver || Globals.gameState == GameStates.end)
             {
                 currentRoom.Draw(spriteBatch, spritesheet, font);
 
@@ -268,6 +279,9 @@ namespace LbsGameAwards
                     break;
                 case GameStates.gameOver:
                     spriteBatch.Draw(gameOverScreen, Vector2.Zero, Color.White);
+                    break;
+                case GameStates.end:
+                    spriteBatch.Draw(winScreen, Vector2.Zero, Color.White);
                     break;
             }
             spriteBatch.End();

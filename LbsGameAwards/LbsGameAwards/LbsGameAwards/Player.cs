@@ -68,7 +68,7 @@ namespace LbsGameAwards
             MaxAmmo = 50;
             Ammo = MaxAmmo;
             MaxAnimationCount = 4;
-            Lives = 1;
+            Lives = 100;
             orginalFricton = friction;
         }
 

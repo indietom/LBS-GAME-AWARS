@@ -18,6 +18,7 @@ namespace LbsGameAwards
         short maxInvisibiltyCount = 16;
         short spawnExplosions;
         short maxFireRate;
+        short endGameCount;
 
         Vector2 target;
 
@@ -158,6 +159,8 @@ namespace LbsGameAwards
 
         public void Update()
         {
+            Random random = new Random();
+
             Z = ZOrder();
 
             SpriteCoords = new Point(Frame(CurrentFrame, 127), Frame(currentStage, 127));
@@ -165,6 +168,18 @@ namespace LbsGameAwards
             Movment();
             if (!Game1.players[0].dead) Attack();
             CheckHealth();
+
+            if(currentStage == 3)
+            {
+                for (int i = 0; i < 3; i++ )
+                    Game1.explosions.Add(new Explosion(Pos + new Vector2(random.Next(Size.X), random.Next(Size.Y)), 32, Color.LightGreen));
+                endGameCount += 1;
+                if(endGameCount >= 128)
+                {
+                    Globals.gameState = GameStates.end;
+                    destroy = true;
+                }
+            }
 
             switch(currentStage)
             {

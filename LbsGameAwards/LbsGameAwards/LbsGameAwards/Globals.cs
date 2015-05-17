@@ -62,6 +62,7 @@ namespace LbsGameAwards
             Game1.projectiles.Clear();
             Game1.powerUps.Clear();
             Game1.loots.Clear();
+            Game1.explosions.Clear();
         }
     }
 }
