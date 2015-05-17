@@ -26,7 +26,7 @@ namespace LbsGameAwards
         byte maxRespawnCount;
         byte direction;
         public byte ShootDirection { get; private set; }
-        public byte Lives { private set; get; }
+        public sbyte Lives { private set; get; }
         public byte GunType { get; private set; }
 
         public short FireRate { get; private set; }
@@ -68,7 +68,7 @@ namespace LbsGameAwards
             MaxAmmo = 50;
             Ammo = MaxAmmo;
             MaxAnimationCount = 4;
-            Lives = 7;
+            Lives = 1;
             orginalFricton = friction;
         }
 
@@ -220,7 +220,7 @@ namespace LbsGameAwards
                 }
             }
 
-            if (spawnCount == 2)
+            if (spawnCount == 2 && Lives - 1 >= 0)
             {
                 SoundManager.dead.Play();
                 Game1.textEffects.Add(new TextEffect(new Vector2(250, 700), "GET READY!", new Vector2(250, 240), 0.06f, 2, 1, Color.White, 128+64, true));
@@ -230,10 +230,17 @@ namespace LbsGameAwards
 
             if(spawnCount == maxSpawnCount/2-1)
             {
-                Game1.explosions.Add(new Explosion(Pos, 32, Color.Red));
-                Pos = new Vector2(-64, 240 - 16);
-                CurrentFrame = 0;
-                spawnCount += 1;
+                if (Lives - 1 >= 0)
+                {
+                    Game1.explosions.Add(new Explosion(Pos, 32, Color.Red));
+                    Pos = new Vector2(-64, 240 - 16);
+                    CurrentFrame = 0;
+                    spawnCount += 1;
+                }
+                else
+                {
+                    Globals.gameState = GameStates.gameOver;
+                }
             }
             if(dead && spawnCount < maxSpawnCount/2)
             {

@@ -53,6 +53,8 @@ namespace LbsGameAwards
         Texture2D spritesheet;
         Texture2D transitionScreen;
         Texture2D bossSheet;
+        Texture2D helpScreen;
+        Texture2D gameOverScreen;
 
         SpriteFont font;
         SpriteFont smallFont;
@@ -64,6 +66,8 @@ namespace LbsGameAwards
             spritesheet = Content.Load<Texture2D>("spritesheet");
             transitionScreen = Content.Load<Texture2D>("transitionScreen");
             bossSheet = Content.Load<Texture2D>("bossSheet");
+            helpScreen = Content.Load<Texture2D>("helpScreen");
+            gameOverScreen = Content.Load<Texture2D>("gameOverScreen");
             font = Content.Load<SpriteFont>("font");
             bigFont = Content.Load<SpriteFont>("BigFont");
             smallFont = Content.Load<SpriteFont>("SmallFont");
@@ -76,6 +80,14 @@ namespace LbsGameAwards
 
         }
 
+        public void ResetGame()
+        {
+            players[0] = new Player();
+            Globals.ClearScreen();
+            Globals.currentRoom = 0;
+            currentRoom = new Room(@"Content\levels\room1", 1);
+        }
+
         protected override void Update(GameTime gameTime)
         {
             Random random = new Random();
@@ -83,64 +95,83 @@ namespace LbsGameAwards
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 this.Exit();
 
-            spawnManager.UpdatePowerUpSpawn();
-            spawnManager.UpdateLootSpawn();
-
-            Globals.TransitionUpdate();
-
-            foreach (Player p in players)
-                p.Update();
-
-            foreach (Projectile p in projectiles)
-                p.Update();
-
-            foreach (Explosion e in explosions)
-                e.Update();
-
-            foreach (Enemy e in enemies)
-                e.Update();
-
-            foreach (PowerUp p in powerUps)
-                p.Update();
-
-            foreach (Door d in doors)
-                d.Update();
-
-            foreach (Loot l in loots)
-                l.Update();
-
-            foreach (TextEffect t in textEffects)
-                t.Update();
-
-            foreach (Particle p in particles)
-                p.Update();
-
-            foreach (Gib g in gibs)
-                g.Update();
-
-            foreach (Helper h in helpers)
-                h.Update();
-            foreach (Boss b in bosses)
-                b.Update();
-
-            currentRoom.Update();
-
-            ui.Update();
-
-            if(Keyboard.GetState().IsKeyDown(Keys.F1))
+            switch (Globals.gameState)
             {
-                //if(enemies.Count == 0) enemies.Add(new Enemy(new Vector2(320, 240), 4));
-                if (powerUps.Count == 0) powerUps.Add(new PowerUp(new Vector2(320, 240), 2, false));
-                //if (doors.Count == 0) doors.Add(new Door(new Vector2(320 + 128, 240+3), true));
-                enemies.Clear();
-            }
-            if(Mouse.GetState().LeftButton == ButtonState.Pressed)
-            {
-                if(loots.Count <= 1) spawnManager.spawnLootPile(new Vector2(Mouse.GetState().X, Mouse.GetState().Y), 64, -1);
-                //gibs.Add(new Gib(new Vector2(Mouse.GetState().X, Mouse.GetState().Y), random.Next(360), random.Next(16)/5, random.Next(20, 30)/12, (byte)random.Next(5), true));
-                //Globals.transition = true;
-            }
+                case GameStates.startScreen:
+                    if(Keyboard.GetState().IsKeyDown(Keys.Space))
+                    {
+                        ResetGame();
+                        Globals.gameState = GameStates.game;
+                    }
+                    break;
+                case GameStates.gameOver:
+                    if (Keyboard.GetState().IsKeyDown(Keys.Space))
+                    {
+                        ResetGame();
+                        Globals.completedRooms.Clear();
+                        Globals.gameState = GameStates.game;
+                    }
+                    break;
+                case GameStates.game:
+                    spawnManager.UpdatePowerUpSpawn();
+                    spawnManager.UpdateLootSpawn();
 
+                    Globals.TransitionUpdate();
+
+                    foreach (Player p in players)
+                        p.Update();
+
+                    foreach (Projectile p in projectiles)
+                        p.Update();
+
+                    foreach (Explosion e in explosions)
+                        e.Update();
+
+                    foreach (Enemy e in enemies)
+                        e.Update();
+
+                    foreach (PowerUp p in powerUps)
+                        p.Update();
+
+                    foreach (Door d in doors)
+                        d.Update();
+
+                    foreach (Loot l in loots)
+                        l.Update();
+
+                    foreach (TextEffect t in textEffects)
+                        t.Update();
+
+                    foreach (Particle p in particles)
+                        p.Update();
+
+                    foreach (Gib g in gibs)
+                        g.Update();
+
+                    foreach (Helper h in helpers)
+                        h.Update();
+                    foreach (Boss b in bosses)
+                        b.Update();
+
+                    currentRoom.Update();
+
+                    ui.Update();
+
+                    if (Keyboard.GetState().IsKeyDown(Keys.F1))
+                    {
+                        //if(enemies.Count == 0) enemies.Add(new Enemy(new Vector2(320, 240), 4));
+                        if (powerUps.Count == 0) powerUps.Add(new PowerUp(new Vector2(320, 240), 2, false));
+                        //if (doors.Count == 0) doors.Add(new Door(new Vector2(320 + 128, 240+3), true));
+                        enemies.Clear();
+                    }
+                    if (Mouse.GetState().LeftButton == ButtonState.Pressed)
+                    {
+                        if (loots.Count <= 1) spawnManager.spawnLootPile(new Vector2(Mouse.GetState().X, Mouse.GetState().Y), 64, -1);
+                        //gibs.Add(new Gib(new Vector2(Mouse.GetState().X, Mouse.GetState().Y), random.Next(360), random.Next(16)/5, random.Next(20, 30)/12, (byte)random.Next(5), true));
+                        //Globals.transition = true;
+                    }
+                    break;
+            }
             //Console.WriteLine(loots.Count());
 
             for (int i = projectiles.Count() - 1; i >= 0; i--)
@@ -184,46 +215,61 @@ namespace LbsGameAwards
 
             spriteBatch.Begin(SpriteSortMode.FrontToBack, null, null, null, null);
 
-            currentRoom.Draw(spriteBatch, spritesheet, font);
-
-            foreach (Helper h in helpers)
-                h.DrawSprite(spriteBatch, spritesheet);
-            foreach (Boss b in bosses)
-                b.DrawSprite(spriteBatch, bossSheet);
-            foreach (Player p in players)
+            if (Globals.gameState == GameStates.game || Globals.gameState == GameStates.gameOver)
             {
-                p.DrawSprite(spriteBatch, spritesheet);
-                p.DrawShield(spriteBatch, spritesheet);
+                currentRoom.Draw(spriteBatch, spritesheet, font);
+
+                foreach (Helper h in helpers)
+                    h.DrawSprite(spriteBatch, spritesheet);
+                foreach (Boss b in bosses)
+                    b.DrawSprite(spriteBatch, bossSheet);
+                foreach (Player p in players)
+                {
+                    p.DrawSprite(spriteBatch, spritesheet);
+                    p.DrawShield(spriteBatch, spritesheet);
+                }
+                foreach (Projectile p in projectiles)
+                    p.DrawSprite(spriteBatch, spritesheet);
+                foreach (Explosion e in explosions)
+                    e.DrawSprite(spriteBatch, spritesheet);
+                foreach (PowerUp p in powerUps)
+                    p.Draw(spriteBatch, spritesheet);
+                foreach (Door d in doors)
+                    d.DrawSprite(spriteBatch, spritesheet);
+                foreach (Loot l in loots)
+                    l.DrawSprite(spriteBatch, spritesheet);
+                foreach (Particle p in particles)
+                    p.DrawSprite(spriteBatch, spritesheet);
+                foreach (Gib g in gibs)
+                    g.DrawSprite(spriteBatch, spritesheet);
+
+                foreach (Enemy e in enemies)
+                {
+                    e.DrawSprite(spriteBatch, spritesheet);
+                    e.Draw(spriteBatch, spritesheet);
+                }
+
+                //currentRoom.Draw(spriteBatch, spritesheet);
             }
-            foreach (Projectile p in projectiles)
-                p.DrawSprite(spriteBatch, spritesheet);
-            foreach (Explosion e in explosions)
-                e.DrawSprite(spriteBatch, spritesheet);
-            foreach (PowerUp p in powerUps)
-                p.Draw(spriteBatch, spritesheet);
-            foreach (Door d in doors)
-                d.DrawSprite(spriteBatch, spritesheet);
-            foreach (Loot l in loots)
-                l.DrawSprite(spriteBatch, spritesheet);
-            foreach (Particle p in particles)
-                p.DrawSprite(spriteBatch, spritesheet);
-            foreach (Gib g in gibs)
-                g.DrawSprite(spriteBatch, spritesheet);
-
-            foreach (Enemy e in enemies)
-            {
-                e.DrawSprite(spriteBatch, spritesheet);
-                e.Draw(spriteBatch, spritesheet);
-            }
-
-            //currentRoom.Draw(spriteBatch, spritesheet);
-
             spriteBatch.End();
 
             spriteBatch.Begin();
-            foreach(TextEffect t in textEffects) t.Draw(spriteBatch, bigFont, smallFont);
-            ui.Draw(spriteBatch, spritesheet, smallFont, bigFont);
-            spriteBatch.Draw(transitionScreen, Globals.transitionScreenPos, Color.White);
+            switch (Globals.gameState)
+            {
+                case GameStates.startScreen:
+                    spriteBatch.Draw(transitionScreen, Vector2.Zero, Color.White);
+                    spriteBatch.DrawString(bigFont, "PRESS SPACE TO START", new Vector2(350, 350), Color.White);
+                    spriteBatch.Draw(helpScreen, new Vector2(0, 150), Color.White);
+                    break;
+                case GameStates.game:
+                    foreach (TextEffect t in textEffects) t.Draw(spriteBatch, bigFont, smallFont);
+                    ui.Draw(spriteBatch, spritesheet, smallFont, bigFont);
+                    spriteBatch.Draw(transitionScreen, Globals.transitionScreenPos, Color.White);
+                    break;
+                case GameStates.gameOver:
+                    spriteBatch.Draw(gameOverScreen, Vector2.Zero, Color.White);
+                    break;
+            }
             spriteBatch.End();
 
             base.Draw(gameTime);

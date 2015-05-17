@@ -82,6 +82,16 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="helpScreen.png">
+      <Name>helpScreen</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="gameOverScreen.png">
+      <Name>gameOverScreen</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
     <Content Include="levels\room10room">
       <Name>room10room</Name>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

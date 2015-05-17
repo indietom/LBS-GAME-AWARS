@@ -26,6 +26,7 @@ namespace LbsGameAwards
 
             foreach(Player p in Game1.players)
             {
+                if (p.Score <= 0) displayScore = 0;
                 displayScore = Lerp(displayScore, p.Score, 0.1f);
             }
         }

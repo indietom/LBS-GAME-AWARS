@@ -6,9 +6,13 @@ using Microsoft.Xna.Framework;
 
 namespace LbsGameAwards
 {
+    enum GameStates { startScreen, game, gameOver, end };
+
     class Globals : GameObject
     {
         internal static List<int> completedRooms = new List<int>();
+
+        internal static GameStates gameState;
 
         public static int CurrentEnemyTag { get; set; }
 
