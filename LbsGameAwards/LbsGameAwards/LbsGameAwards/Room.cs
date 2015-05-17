@@ -145,6 +145,11 @@ namespace LbsGameAwards
             if(totalAmountOfEnemy > 0) SpawnEnemies();
             else if(Game1.enemies.Count <= 0 && Game1.bosses.Count <= 0) cleard = true;
 
+            if(Globals.currentRoom == 12 && Game1.bosses.Count() <= 0)
+            {
+                Game1.bosses.Add(new Boss(new Vector2(420, 240)));
+            }
+
             for (int i = 0; i < Globals.completedRooms.Count; i++)
             {
                 foreach (Door d in Game1.doors)

@@ -257,8 +257,13 @@ namespace LbsGameAwards
         {
             Random random = new Random();
 
+            if (Game1.players[0].dead)
+            {
+                attackCount = 0;
+            }
+
             if (type != 2) ZOrder();
-            if(!Game1.players[0].dead) AttackUpdate();
+            AttackUpdate();
             CheckHealth();
             HurtUpdate();
             if (!Game1.players[0].dead) Animate();

@@ -65,6 +65,8 @@ namespace LbsGameAwards
         {
             Random random = new Random();
 
+            if (Game1.players[0].transitioning || Game1.players[0].dead) fireRate = 0;
+
             switch(currentStage)
             {
                 case 0:
