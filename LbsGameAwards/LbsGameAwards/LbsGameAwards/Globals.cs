@@ -14,6 +14,8 @@ namespace LbsGameAwards
 
         internal static GameStates gameState;
 
+        public static string reason;
+
         public static int CurrentEnemyTag { get; set; }
         public static int CurrentHightScore { get; private set; }
 

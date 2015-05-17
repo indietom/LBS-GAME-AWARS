@@ -26,7 +26,7 @@ namespace LbsGameAwards
         byte maxRespawnCount;
         byte direction;
         public byte ShootDirection { get; private set; }
-        public sbyte Lives { private set; get; }
+        public sbyte Lives { set; get; }
         public byte GunType { get; private set; }
 
         public short FireRate { get; private set; }

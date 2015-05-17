@@ -161,6 +161,13 @@ namespace LbsGameAwards
                 }
             }
 
+            if (doorLeadsTo[0] == 0 && doorLeadsTo[1] == 0 && doorLeadsTo[2] == 0 && doorLeadsTo[3] == 0 && Globals.currentRoom != 12)
+            {
+                Globals.reason = "YOU LOCKED YOURSELF IN AND CAN NOT CONTINUE";
+                Game1.players[0].Lives = 0;
+                Game1.players[0].dead = true;
+            }
+
             if (cleard)
             {
                 if (!hasSpawnedClearText)

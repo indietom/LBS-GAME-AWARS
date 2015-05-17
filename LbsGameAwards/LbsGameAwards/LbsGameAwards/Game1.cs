@@ -87,6 +87,7 @@ namespace LbsGameAwards
             players[0] = new Player();
             Globals.ClearScreen();
             Globals.currentRoom = 0;
+            Globals.reason = "";
             currentRoom = new Room(@"Content\levels\room1", 1);
         }
 
@@ -284,6 +285,7 @@ namespace LbsGameAwards
                     spriteBatch.Draw(gameOverScreen, Vector2.Zero, Color.White);
                     spriteBatch.DrawString(bigFont, "YOUR SCORE: " + players[0].Score.ToString(), new Vector2(150, 200), Color.Yellow);
                     spriteBatch.DrawString(bigFont, "HIGHSCORE: " + players[0].Score.ToString(), new Vector2(150, 250), Color.Yellow);
+                    spriteBatch.DrawString(bigFont, Globals.reason, new Vector2(150, 350), Color.Yellow);
                     break;
                 case GameStates.end:
                     spriteBatch.Draw(winScreen, Vector2.Zero, Color.White);
