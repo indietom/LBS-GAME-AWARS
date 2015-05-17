@@ -15,6 +15,12 @@ namespace LbsGameAwards
         internal static GameStates gameState;
 
         public static int CurrentEnemyTag { get; set; }
+        public static int CurrentHightScore { get; private set; }
+
+        public static void UpdateHighScore()
+        {
+            if (Game1.players[0].Score > CurrentHightScore) CurrentHightScore = Game1.players[0].Score;
+        }
 
         public static byte currentRoom = 1;
 

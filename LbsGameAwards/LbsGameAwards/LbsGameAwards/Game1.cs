@@ -94,6 +94,8 @@ namespace LbsGameAwards
         {
             Random random = new Random();
 
+            Globals.UpdateHighScore();
+
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 this.Exit();
 
@@ -103,6 +105,7 @@ namespace LbsGameAwards
                     if(Keyboard.GetState().IsKeyDown(Keys.Space))
                     {
                         ResetGame();
+                        Globals.completedRooms.Clear();
                         Globals.gameState = GameStates.game;
                     }
                     break;
@@ -279,9 +282,13 @@ namespace LbsGameAwards
                     break;
                 case GameStates.gameOver:
                     spriteBatch.Draw(gameOverScreen, Vector2.Zero, Color.White);
+                    spriteBatch.DrawString(bigFont, "YOUR SCORE: " + players[0].Score.ToString(), new Vector2(150, 200), Color.Yellow);
+                    spriteBatch.DrawString(bigFont, "HIGHSCORE: " + players[0].Score.ToString(), new Vector2(150, 250), Color.Yellow);
                     break;
                 case GameStates.end:
                     spriteBatch.Draw(winScreen, Vector2.Zero, Color.White);
+                    spriteBatch.DrawString(bigFont, "YOUR SCORE: " + players[0].Score.ToString(), new Vector2(150, 200), Color.Yellow);
+                    spriteBatch.DrawString(bigFont, "HIGHSCORE: " + players[0].Score.ToString(), new Vector2(150, 250), Color.Yellow);
                     break;
             }
             spriteBatch.End();

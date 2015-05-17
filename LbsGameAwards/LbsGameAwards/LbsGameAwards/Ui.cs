@@ -58,6 +58,7 @@ namespace LbsGameAwards
                     }
                 }
                 spriteBatch.DrawString(bigFont, "SCORE: " + Convert.ToInt32(displayScore).ToString(), new Vector2(8, 50), new Color(0.9f+(Game1.players[0].Score - displayScore) / 10, 0.9f, 0.9f));
+                spriteBatch.DrawString(bigFont, "HI-SCORE: " + Globals.CurrentHightScore.ToString(), new Vector2(8, 80), new Color(0.9f + (Game1.players[0].Score - displayScore) / 10, 0.9f, 0.9f));
             }
         }
     }

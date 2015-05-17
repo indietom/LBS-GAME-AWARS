@@ -11,7 +11,7 @@ namespace LbsGameAwards
 {
     class Player : GameObject
     {
-        public int Score { private set; get; }
+        public int Score { set; get; }
 
         float friction;
         float orginalFricton;
@@ -68,7 +68,7 @@ namespace LbsGameAwards
             MaxAmmo = 50;
             Ammo = MaxAmmo;
             MaxAnimationCount = 4;
-            Lives = 100;
+            Lives = 20;
             orginalFricton = friction;
         }
 
