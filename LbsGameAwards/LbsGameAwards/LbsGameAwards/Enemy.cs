@@ -11,7 +11,9 @@ namespace LbsGameAwards
     class Enemy : GameObject
     {
         public sbyte Hp { get; set; }
-        
+
+        int worth;
+
         byte type;
         byte direction;
 
@@ -57,6 +59,7 @@ namespace LbsGameAwards
             AssignType();
             orginalSpeed = Speed;
             OrginalColor = color;
+            worth = (type * 100) + 100;
         }
 
         public void CheckHealth()
@@ -64,6 +67,7 @@ namespace LbsGameAwards
             Random random = new Random();
             if(Hp <= 0)
             {
+                Game1.players[0].Score += worth;
                 bool metal = (bloodColor == Color.LightGreen) ? false : true;
                 for (int i = 0; i < 50; i++)
                 {
